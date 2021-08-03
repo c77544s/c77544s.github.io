@@ -116,12 +116,12 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">2</span>
+          <span class="site-state-item-count">3</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
@@ -151,6 +151,88 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/07/31/Spring-Boot%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE%E5%8E%9F%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/07/31/Spring-Boot%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE%E5%8E%9F%E7%90%86/" class="post-title-link" itemprop="url">Spring Boot自动配置原理</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-07-31 15:46:24" itemprop="dateCreated datePublished" datetime="2021-07-31T15:46:24+08:00">2021-07-31</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-08-03 19:29:18" itemprop="dateModified" datetime="2021-08-03T19:29:18+08:00">2021-08-03</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>我们知道，Spring Boot 项目创建完成后，即使不进行任何的配置，也能够顺利地运行，这都要归功于 Spring Boot 的自动化配置。</p>
+<p>Spring Boot 默认使用 application.properties 或 application.yml 作为其全局配置文件，我们可以在该配置文件中对各种自动配置属性（server.port、logging.level.* 、spring.config.active.no-profile 等等）进行修改，并使之生效，那么您有没有想过这些属性是否有据可依呢？答案是肯定的。</p>
+<p>Spring Boot 官方文档：常见应用属性中对所有的配置属性都进行了列举和解释，我们可以根据官方文档对 Spring Boot 进行配置，但 Spring Boot 中的配置属性数量庞大，仅仅依靠官方文档进行配置也十分麻烦。我们只有了解了 Spring Boot 自动配置的原理，才能更加轻松熟练地对 Spirng Boot 进行配置。本节为你揭开 SpringBoot 自动配置的神秘面纱。</p>
+<h1 id="Spring-Factories机制"><a href="#Spring-Factories机制" class="headerlink" title="Spring Factories机制"></a>Spring Factories机制</h1><p>Spring Boot 的自动配置是基于 Spring Factories 机制实现的。</p>
+<p>Spring Factories 机制是 Spring Boot 中的一种服务发现机制，这种扩展机制与 Java SPI 机制十分相似。Spring Boot 会自动扫描所有 Jar 包类路径下 META-INF/spring.factories 文件，并读取其中的内容，进行实例化，这种机制也是 Spring Boot Starter 的基础。</p>
+<h1 id="SpringApplication这个类主要做了以下几件事情"><a href="#SpringApplication这个类主要做了以下几件事情" class="headerlink" title="SpringApplication这个类主要做了以下几件事情"></a>SpringApplication这个类主要做了以下几件事情</h1><ol>
+<li>推断应用是普通项目还是web项目</li>
+<li>查找并加载初始化器，设置到initializers中</li>
+<li>找到所有的应用程序监听器，设置到listers中</li>
+<li>推断并设置main方法的定义类，找到运行的主类</li>
+</ol>
+<p><a target="_blank" rel="noopener" href="http://c.biancheng.net/spring_boot/auto-config.html">具体内容惦记我</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
