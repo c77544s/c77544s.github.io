@@ -116,12 +116,12 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-count">4</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
@@ -151,6 +151,135 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/04/Spring-Cloud%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B01/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/08/04/Spring-Cloud%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B01/" class="post-title-link" itemprop="url">Spring Cloud学习笔记1</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2021-08-04 19:35:00 / Modified: 22:24:13" itemprop="dateCreated datePublished" datetime="2021-08-04T19:35:00+08:00">2021-08-04</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="Spring-Cloud-模块的相关介绍如下："><a href="#Spring-Cloud-模块的相关介绍如下：" class="headerlink" title="Spring Cloud 模块的相关介绍如下："></a>Spring Cloud 模块的相关介绍如下：</h2><ol>
+<li>Eureka：服务注册中心，用于服务管理。</li>
+<li>Ribbon：基于客户端的负载均衡组件。</li>
+<li>Hystrix：容错框架，能够防止服务的雪崩效应。</li>
+<li>Feign：Web 服务客户端，能够简化 HTTP 接口的调用。</li>
+<li>Zuul：API 网关，提供路由转发、请求过滤等功能。</li>
+<li>Config：分布式配置管理。</li>
+<li>Sleuth：服务跟踪。</li>
+<li>Stream：构建消息驱动的微服务应用程序的框架。</li>
+<li>Bus：消息代理的集群消息总线。</li>
+</ol>
+<p>除了上述模块，还有 Cli、Task等。这里只记几种常用的</p>
+<h1 id="SpringCloud-和-Dubbo的区别"><a href="#SpringCloud-和-Dubbo的区别" class="headerlink" title="SpringCloud 和 Dubbo的区别"></a>SpringCloud 和 Dubbo的区别</h1><table>
+<thead>
+<tr>
+<th align="center">功能名称</th>
+<th align="center">Dubbo</th>
+<th align="center">Spring Cloud</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">服务注册中心</td>
+<td align="center">ZooKeeper</td>
+<td align="center">Spring Cloud Netflix Eureka</td>
+</tr>
+<tr>
+<td align="center">服务调用方式</td>
+<td align="center">RPC</td>
+<td align="center">REST API</td>
+</tr>
+<tr>
+<td align="center">服务网关</td>
+<td align="center">无</td>
+<td align="center">Spring Cloud Netflix Zuul</td>
+</tr>
+<tr>
+<td align="center">断路器</td>
+<td align="center">不完善</td>
+<td align="center">Spring Cloud Netflix Hystrix</td>
+</tr>
+<tr>
+<td align="center">分布式配置</td>
+<td align="center">无</td>
+<td align="center">Spring Cloud Config</td>
+</tr>
+<tr>
+<td align="center">服务跟踪</td>
+<td align="center">无</td>
+<td align="center">Spring Cloud Sleuth</td>
+</tr>
+<tr>
+<td align="center">消息总线</td>
+<td align="center">无</td>
+<td align="center">Spring Cloud Bus</td>
+</tr>
+<tr>
+<td align="center">数据流</td>
+<td align="center">无</td>
+<td align="center">Spring Cloud Stream</td>
+</tr>
+</tbody></table>
+<h1 id="CAP定理"><a href="#CAP定理" class="headerlink" title="CAP定理"></a>CAP定理</h1><p>在分布式系统领域有个著名的 CAP 定理，即 C 为数据一致性；A 为服务可用性；P 为服务对网络分区故障的容错性。这三个特性在任何分布式系统中都不能同时满足，最多同时满足两个。</p>
+<p>为什么 Eureka 比 Zookeeper 更适合作为注册中心呢？主要是因为 Eureka 是基于 AP 原则构建的，而 ZooKeeper 是基于 CP 原则构建的。</p>
+<p>Zookeeper 有一个 Leader，而且在这个 Leader 无法使用的时候通过 Paxos（ZAB）算法选举出一个新的 Leader。这个 Leader 的任务就是保证写数据的时候只向这个 Leader 写入，Leader 会同步信息到其他节点。通过这个操作就可以保证数据的一致性。</p>
+<p>总而言之，想要保证 AP 就要用 Eureka，想要保证 CP 就要用 Zookeeper。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -191,7 +320,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-08-03 19:29:18" itemprop="dateModified" datetime="2021-08-03T19:29:18+08:00">2021-08-03</time>
+        <time title="Modified: 2021-08-04 19:46:04" itemprop="dateModified" datetime="2021-08-04T19:46:04+08:00">2021-08-04</time>
       </span>
 
   
@@ -215,7 +344,7 @@
 <li>找到所有的应用程序监听器，设置到listers中</li>
 <li>推断并设置main方法的定义类，找到运行的主类</li>
 </ol>
-<p><a target="_blank" rel="noopener" href="http://c.biancheng.net/spring_boot/auto-config.html">具体内容惦记我</a></p>
+<p><a target="_blank" rel="noopener" href="http://c.biancheng.net/spring_boot/auto-config.html">具体内容点击我</a></p>
 
       
     </div>
