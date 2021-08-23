@@ -116,7 +116,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-count">5</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -151,6 +151,128 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/22/%E9%9D%A2%E8%AF%95%E9%A2%98%E7%AC%94%E8%AE%B0-mysql%E7%AF%87/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/08/22/%E9%9D%A2%E8%AF%95%E9%A2%98%E7%AC%94%E8%AE%B0-mysql%E7%AF%87/" class="post-title-link" itemprop="url">面试题笔记-mysql篇</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-08-22 19:57:28" itemprop="dateCreated datePublished" datetime="2021-08-22T19:57:28+08:00">2021-08-22</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-08-23 09:32:48" itemprop="dateModified" datetime="2021-08-23T09:32:48+08:00">2021-08-23</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="数据库三大范式是什么"><a href="#数据库三大范式是什么" class="headerlink" title="数据库三大范式是什么"></a>数据库三大范式是什么</h2><p>第一范式：每个列都不可以再拆分。</p>
+<p>第二范式：在第一范式的基础上，非主键列完全依赖于主键，而不能是依赖于主键的一部分。</p>
+<p>第三范式：在第二范式的基础上，非主键列只依赖于主键，不依赖于其他非主键。</p>
+<p>在设计数据库结构的时候，要尽量遵守三范式，如果不遵守，必须有足够的理由。比如性能。事实上我们经常会为了性能而妥协数据库的设计。</p>
+<h2 id="mysql有关权限的表都有哪几个"><a href="#mysql有关权限的表都有哪几个" class="headerlink" title="mysql有关权限的表都有哪几个"></a>mysql有关权限的表都有哪几个</h2><p>MySQL服务器通过权限表来控制用户对数据库的访问，权限表存放在mysql数据库里，由mysql_install_db脚本初始化。这些权限表分别user，db，table_priv，columns_priv和host。下面分别介绍一下这些表的结构和内容：</p>
+<p><strong>user权限表</strong>：记录允许连接到服务器的用户帐号信息，里面的权限是全局级的。<br><strong>db权限表</strong>：记录各个帐号在各个数据库上的操作权限。<br><strong>table_priv权限表</strong>：记录数据表级的操作权限。<br><strong>columns_priv权限表</strong>：记录数据列级的操作权限。<br><strong>host权限表</strong>：配合db权限表对给定主机上数据库级操作权限作更细致的控制。这个权限表不受GRANT和REVOKE语句的影响。</p>
+<h2 id="MySQL-复制表"><a href="#MySQL-复制表" class="headerlink" title="MySQL 复制表"></a>MySQL 复制表</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SHOW</span> <span class="keyword">CREATE</span> <span class="keyword">TABLE</span> 表名</span><br></pre></td></tr></table></figure>
+
+<p>Example:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">show</span> <span class="keyword">create</span> <span class="keyword">table</span> <span class="keyword">user</span></span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>Table</th>
+<th>Create Table</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>User</td>
+<td>CREATE TABLE <code>user</code> (                         <code>id</code> int NOT NULL AUTO_INCREMENT,                         <code>name</code> varchar(20) DEFAULT NULL,                         <code>age</code> int DEFAULT NULL,                         <code>sex</code> char(1) DEFAULT NULL,                         <code>phone</code> varchar(16) DEFAULT NULL,                         PRIMARY KEY (<code>id</code>) ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT=’用户表’</td>
+</tr>
+</tbody></table>
+<p>修改表名为新的表名再执行一遍即可</p>
+<h2 id="获取服务器元数据"><a href="#获取服务器元数据" class="headerlink" title="获取服务器元数据"></a>获取服务器元数据</h2><table>
+<thead>
+<tr>
+<th align="left">命令</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">SELECT VERSION( )</td>
+<td align="left">服务器版本信息</td>
+</tr>
+<tr>
+<td align="left">SELECT DATABASE( )</td>
+<td align="left">当前数据库名 (或者返回空)</td>
+</tr>
+<tr>
+<td align="left">SELECT USER( )</td>
+<td align="left">当前用户名</td>
+</tr>
+<tr>
+<td align="left">SHOW STATUS</td>
+<td align="left">服务器状态</td>
+</tr>
+<tr>
+<td align="left">SHOW VARIABLES</td>
+<td align="left">服务器配置变量</td>
+</tr>
+</tbody></table>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
