@@ -20,23 +20,30 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.6.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
-<meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://example.com/index.html">
+<meta name="description" content="[TOC] 线程的创建和启动多线程实现的原理# Java语言的JVM允许程序运行多个线程，多线程可以通过Java中的java.lang.Thread类来体现。 Thread类的特性 每个线程都是通过某个特定的Thread对象的run()方法来完成操作的，经常吧run()方法的主体称为线程体。 通过Thread方法的start()方法来启动这个线程，而非直接调用run()。    方式一：继承于Th">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java多线程">
+<meta property="og:url" content="http://example.com/2021/08/23/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="[TOC] 线程的创建和启动多线程实现的原理# Java语言的JVM允许程序运行多个线程，多线程可以通过Java中的java.lang.Thread类来体现。 Thread类的特性 每个线程都是通过某个特定的Thread对象的run()方法来完成操作的，经常吧run()方法的主体称为线程体。 通过Thread方法的start()方法来启动这个线程，而非直接调用run()。    方式一：继承于Th">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.vgy.me/qiV0by.png">
+<meta property="article:published_time" content="2021-08-23T08:16:54.000Z">
+<meta property="article:modified_time" content="2021-08-23T08:46:35.986Z">
 <meta property="article:author" content="John Doe">
+<meta property="article:tag" content="多线程">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.vgy.me/qiV0by.png">
 
 
-<link rel="canonical" href="http://example.com/">
+<link rel="canonical" href="http://example.com/2021/08/23/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":true,"isPost":false,"lang":"en","comments":"","permalink":"","path":"index.html","title":""}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2021/08/23/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B/","path":"2021/08/23/Java多线程/","title":"Java多线程"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>Hexo</title>
+<title>Java多线程 | Hexo</title>
   
 
 
@@ -90,7 +97,7 @@
 
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           Table of Contents
@@ -103,6 +110,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%88%9B%E5%BB%BA%E5%92%8C%E5%90%AF%E5%8A%A8"><span class="nav-number">1.</span> <span class="nav-text">线程的创建和启动</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%AE%9E%E7%8E%B0%E7%9A%84%E5%8E%9F%E7%90%86"><span class="nav-number">1.1.</span> <span class="nav-text">多线程实现的原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E5%BC%8F%E4%B8%80%EF%BC%9A%E7%BB%A7%E6%89%BF%E4%BA%8EThread%E7%B1%BB"><span class="nav-number">1.2.</span> <span class="nav-text">方式一：继承于Thread类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E5%BC%8F%E4%B8%80%EF%BC%9A%E5%88%9B%E5%BB%BAThread%E5%8C%BF%E5%90%8D%E5%AD%90%E7%B1%BB%EF%BC%88%E4%B9%9F%E5%B1%9E%E4%BA%8E%E6%96%B9%E6%B3%95%E4%B8%80%EF%BC%89"><span class="nav-number">1.3.</span> <span class="nav-text">方式一：创建Thread匿名子类（也属于方法一）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E5%BC%8F%E4%BA%8C%EF%BC%9A%E5%AE%9E%E7%8E%B0Runnable%E6%8E%A5%E5%8F%A3"><span class="nav-number">1.4.</span> <span class="nav-text">方式二：实现Runnable接口</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AF%94%E8%BE%83%E5%88%9B%E5%BB%BA%E7%BA%BF%E7%A8%8B%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E5%BC%8F"><span class="nav-number">1.4.1.</span> <span class="nav-text">比较创建线程的两种方式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E5%BC%8F%E4%B8%89%EF%BC%9A%E5%AE%9E%E7%8E%B0Callable%E6%8E%A5%E5%8F%A3"><span class="nav-number">1.5.</span> <span class="nav-text">方式三：实现Callable接口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E5%BC%8F%E5%9B%9B%EF%BC%9A%E7%BA%BF%E7%A8%8B%E6%B1%A0"><span class="nav-number">1.6.</span> <span class="nav-text">方式四：线程池</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Thread%E7%B1%BB%E7%9A%84%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">Thread类的常用方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E7%9A%84%E8%B0%83%E5%BA%A6"><span class="nav-number">3.</span> <span class="nav-text">线程的调度</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#cpu%E7%9A%84%E8%B0%83%E5%BA%A6%E7%AD%96%E7%95%A5"><span class="nav-number">3.1.</span> <span class="nav-text">cpu的调度策略</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java%E7%9A%84%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95%EF%BC%9A"><span class="nav-number">3.2.</span> <span class="nav-text">Java的调度算法：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="nav-number">4.</span> <span class="nav-text">线程的生命周期</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E5%90%8C%E6%AD%A5%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3"><span class="nav-number">5.</span> <span class="nav-text">线程同步问题解决</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E5%BC%8F%E4%B8%80%EF%BC%9A%E5%90%8C%E6%AD%A5%E4%BB%A3%E7%A0%81%E5%9D%97"><span class="nav-number">5.1.</span> <span class="nav-text">方式一：同步代码块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E5%BC%8F%E4%BA%8C%EF%BC%9A%E5%90%8C%E6%AD%A5%E6%96%B9%E6%B3%95"><span class="nav-number">5.2.</span> <span class="nav-text">方式二：同步方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%90%8C%E6%AD%A5%E8%A7%A3%E5%86%B3%E6%87%92%E6%B1%89%E6%A8%A1%E5%BC%8F%E7%9A%84%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98"><span class="nav-number">5.3.</span> <span class="nav-text">使用同步解决懒汉模式的线程安全问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E5%BC%8F%E4%B8%89%EF%BC%9ALock%E9%94%81-JDK5-0%E6%96%B0%E7%89%B9%E6%80%A7"><span class="nav-number">5.4.</span> <span class="nav-text">方式三：Lock锁 -JDK5.0新特性</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E7%9A%84%E9%80%9A%E4%BF%A1"><span class="nav-number">6.</span> <span class="nav-text">线程的通信</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -150,122 +158,17 @@
 </noscript>
 
 
-    <div class="main-inner index posts-expand">
+    <div class="main-inner post posts-expand">
 
-    
+
+  
 
 
 <div class="post-block">
   
   
 
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/23/Rabbitmq%E7%AC%94%E8%AE%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/08/23/Rabbitmq%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">Rabbitmq笔记</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2021-08-23 16:51:42 / Modified: 16:53:16" itemprop="dateCreated datePublished" datetime="2021-08-23T16:51:42+08:00">2021-08-23</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>[TOC]</p>
-<h1 id="AMQP简介"><a href="#AMQP简介" class="headerlink" title="AMQP简介"></a>AMQP简介</h1><p>AMQP（高级消息队列协议）是一个网络协议。它支持符合要求的客户端应用（application）和消息中间件代理（messaging middleware broker）之间进行通信。</p>
-<h2 id="消息代理和他们所扮演的角色"><a href="#消息代理和他们所扮演的角色" class="headerlink" title="消息代理和他们所扮演的角色"></a>消息代理和他们所扮演的角色</h2><p>消息代理（message brokers）从发布者（publishers）亦称生产者（producers）那儿接收消息，并根据既定的路由规则把接收到的消息发送给处理消息的消费者（consumers）。</p>
-<p>由于AMQP是一个网络协议，所以这个过程中的发布者，消费者，消息代理 可以存在于不同的设备上。</p>
-<h2 id="AMQP-0-9-1-模型简介"><a href="#AMQP-0-9-1-模型简介" class="headerlink" title="AMQP 0-9-1 模型简介"></a>AMQP 0-9-1 模型简介</h2><p>AMQP 0-9-1的工作过程如下图：消息（message）被发布者（publisher）发送给交换机（exchange），交换机常常被比喻成邮局或者邮箱。然后交换机将收到的消息根据路由规则分发给绑定的队列（queue）。最后AMQP代理会将消息投递给订阅了此队列的消费者，或者消费者按照需求自行获取。</p>
-<p><img src="https://www.rabbitmq.com/img/tutorials/intro/hello-world-example-routing.png" alt="enter image description here"></p>
-<h2 id="AMQP是一个可编程的协议"><a href="#AMQP是一个可编程的协议" class="headerlink" title="AMQP是一个可编程的协议"></a>AMQP是一个可编程的协议</h2><p>AMQP 0-9-1是一个可编程协议，某种意义上说AMQP的实体和路由规则是由应用本身定义的，而不是由消息代理定义。包括像声明队列和交换机，定义他们之间的绑定，订阅队列等等关于协议本身的操作。</p>
-<p>这虽然能让开发人员自由发挥，但也需要他们注意潜在的定义冲突。当然这在实践中很少会发生，如果发生，会以配置错误（misconfiguration）的形式表现出来。</p>
-<p>应用程序（Applications）声明AMQP实体，定义需要的路由方案，或者删除不再需要的AMQP实体。</p>
-<h2 id="交换机和交换机类型"><a href="#交换机和交换机类型" class="headerlink" title="交换机和交换机类型"></a>交换机和交换机类型</h2><p>交换机是用来发送消息的AMQP实体。交换机拿到一个消息之后将它路由给一个或零个队列。它使用哪种路由算法是由交换机类型和被称作绑定（bindings）的规则所决定的。AMQP 0-9-1的代理提供了四种交换机</p>
-<table>
-<thead>
-<tr>
-<th>Name（交换机类型）</th>
-<th>Default pre-declared names（预声明的默认名称）</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Direct exchange（直连交换机）</td>
-<td>(Empty string) and amq.direct</td>
-</tr>
-<tr>
-<td>Fanout exchange（扇型交换机）</td>
-<td>amq.fanout</td>
-</tr>
-<tr>
-<td>Topic exchange（主题交换机）</td>
-<td>amq.topic</td>
-</tr>
-<tr>
-<td>Headers exchange（头交换机）</td>
-<td>amq.match (and amq.headers in RabbitMQ)</td>
-</tr>
-</tbody></table>
-<p>除交换机类型外，在声明交换机时还可以附带许多其他的属性，其中最重要的几个分别是：</p>
-<ul>
-<li>Name</li>
-<li>Durability （消息代理重启后，交换机是否还存在）</li>
-<li>Auto-delete （当所有与之绑定的消息队列都完成了对此交换机的使用后，删掉它）</li>
-<li>Arguments（依赖代理本身）</li>
-</ul>
-<p>交换机可以有两个状态：持久（durable）、暂存（transient）。持久化的交换机会在消息代理（broker）重启后依旧存在，而暂存的交换机则不会（它们需要在代理再次上线后重新被声明）。然而并不是所有的应用场景都需要持久化的交换机。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/23/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -278,9 +181,9 @@
       <meta itemprop="name" content="Hexo">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/08/23/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B/" class="post-title-link" itemprop="url">Java多线程</a>
-        </h2>
+        <h1 class="post-title" itemprop="name headline">
+          Java多线程
+        </h1>
 
         <div class="post-meta-container">
           <div class="post-meta">
@@ -304,7 +207,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>[TOC]</p>
+        <p>[TOC]</p>
 <h1 id="线程的创建和启动"><a href="#线程的创建和启动" class="headerlink" title="线程的创建和启动"></a>线程的创建和启动</h1><h2 id="多线程实现的原理"><a href="#多线程实现的原理" class="headerlink" title="多线程实现的原理#"></a>多线程实现的原理<a target="_blank" rel="noopener" href="https://www.cnblogs.com/13roky/p/14707360.html#21-%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%AE%9E%E7%8E%B0%E7%9A%84%E5%8E%9F%E7%90%86">#</a></h2><ul>
 <li>Java语言的JVM允许程序运行多个线程，多线程可以通过Java中的java.lang.Thread类来体现。</li>
 <li>Thread类的特性<ul>
@@ -456,7 +359,6 @@
 </ol>
 <p>[参考来源](<a target="_blank" rel="noopener" href="https://www.cnblogs.com/13roky/p/14707360.html">Java多线程详解——一篇文章搞懂Java多线程 - 13roky - 博客园 (cnblogs.com)</a>)</p>
 
-      
     </div>
 
     
@@ -464,551 +366,28 @@
     
 
     <footer class="post-footer">
-        <div class="post-eof"></div>
-      
+          <div class="post-tags">
+              <a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" rel="tag"># 多线程</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/08/22/%E9%9D%A2%E8%AF%95%E9%A2%98%E7%AC%94%E8%AE%B0-mysql%E7%AF%87/" rel="prev" title="面试题笔记-mysql篇">
+                  <i class="fa fa-chevron-left"></i> 面试题笔记-mysql篇
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/08/23/Rabbitmq%E7%AC%94%E8%AE%B0/" rel="next" title="Rabbitmq笔记">
+                  Rabbitmq笔记 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
     </footer>
   </article>
 </div>
 
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/22/%E9%9D%A2%E8%AF%95%E9%A2%98%E7%AC%94%E8%AE%B0-mysql%E7%AF%87/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/08/22/%E9%9D%A2%E8%AF%95%E9%A2%98%E7%AC%94%E8%AE%B0-mysql%E7%AF%87/" class="post-title-link" itemprop="url">面试题笔记-mysql篇</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-08-22 19:57:28" itemprop="dateCreated datePublished" datetime="2021-08-22T19:57:28+08:00">2021-08-22</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-08-23 09:32:48" itemprop="dateModified" datetime="2021-08-23T09:32:48+08:00">2021-08-23</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="数据库三大范式是什么"><a href="#数据库三大范式是什么" class="headerlink" title="数据库三大范式是什么"></a>数据库三大范式是什么</h2><p>第一范式：每个列都不可以再拆分。</p>
-<p>第二范式：在第一范式的基础上，非主键列完全依赖于主键，而不能是依赖于主键的一部分。</p>
-<p>第三范式：在第二范式的基础上，非主键列只依赖于主键，不依赖于其他非主键。</p>
-<p>在设计数据库结构的时候，要尽量遵守三范式，如果不遵守，必须有足够的理由。比如性能。事实上我们经常会为了性能而妥协数据库的设计。</p>
-<h2 id="mysql有关权限的表都有哪几个"><a href="#mysql有关权限的表都有哪几个" class="headerlink" title="mysql有关权限的表都有哪几个"></a>mysql有关权限的表都有哪几个</h2><p>MySQL服务器通过权限表来控制用户对数据库的访问，权限表存放在mysql数据库里，由mysql_install_db脚本初始化。这些权限表分别user，db，table_priv，columns_priv和host。下面分别介绍一下这些表的结构和内容：</p>
-<p><strong>user权限表</strong>：记录允许连接到服务器的用户帐号信息，里面的权限是全局级的。<br><strong>db权限表</strong>：记录各个帐号在各个数据库上的操作权限。<br><strong>table_priv权限表</strong>：记录数据表级的操作权限。<br><strong>columns_priv权限表</strong>：记录数据列级的操作权限。<br><strong>host权限表</strong>：配合db权限表对给定主机上数据库级操作权限作更细致的控制。这个权限表不受GRANT和REVOKE语句的影响。</p>
-<h2 id="MySQL-复制表"><a href="#MySQL-复制表" class="headerlink" title="MySQL 复制表"></a>MySQL 复制表</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SHOW</span> <span class="keyword">CREATE</span> <span class="keyword">TABLE</span> 表名</span><br></pre></td></tr></table></figure>
-
-<p>Example:</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">show</span> <span class="keyword">create</span> <span class="keyword">table</span> <span class="keyword">user</span></span><br></pre></td></tr></table></figure>
-
-<table>
-<thead>
-<tr>
-<th>Table</th>
-<th>Create Table</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>User</td>
-<td>CREATE TABLE <code>user</code> (                         <code>id</code> int NOT NULL AUTO_INCREMENT,                         <code>name</code> varchar(20) DEFAULT NULL,                         <code>age</code> int DEFAULT NULL,                         <code>sex</code> char(1) DEFAULT NULL,                         <code>phone</code> varchar(16) DEFAULT NULL,                         PRIMARY KEY (<code>id</code>) ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT=’用户表’</td>
-</tr>
-</tbody></table>
-<p>修改表名为新的表名再执行一遍即可</p>
-<h2 id="获取服务器元数据"><a href="#获取服务器元数据" class="headerlink" title="获取服务器元数据"></a>获取服务器元数据</h2><table>
-<thead>
-<tr>
-<th align="left">命令</th>
-<th align="left">描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">SELECT VERSION( )</td>
-<td align="left">服务器版本信息</td>
-</tr>
-<tr>
-<td align="left">SELECT DATABASE( )</td>
-<td align="left">当前数据库名 (或者返回空)</td>
-</tr>
-<tr>
-<td align="left">SELECT USER( )</td>
-<td align="left">当前用户名</td>
-</tr>
-<tr>
-<td align="left">SHOW STATUS</td>
-<td align="left">服务器状态</td>
-</tr>
-<tr>
-<td align="left">SHOW VARIABLES</td>
-<td align="left">服务器配置变量</td>
-</tr>
-</tbody></table>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/04/Spring-Cloud%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B01/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/08/04/Spring-Cloud%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B01/" class="post-title-link" itemprop="url">Spring Cloud学习笔记1</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2021-08-04 19:35:00 / Modified: 22:24:13" itemprop="dateCreated datePublished" datetime="2021-08-04T19:35:00+08:00">2021-08-04</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="Spring-Cloud-模块的相关介绍如下："><a href="#Spring-Cloud-模块的相关介绍如下：" class="headerlink" title="Spring Cloud 模块的相关介绍如下："></a>Spring Cloud 模块的相关介绍如下：</h2><ol>
-<li>Eureka：服务注册中心，用于服务管理。</li>
-<li>Ribbon：基于客户端的负载均衡组件。</li>
-<li>Hystrix：容错框架，能够防止服务的雪崩效应。</li>
-<li>Feign：Web 服务客户端，能够简化 HTTP 接口的调用。</li>
-<li>Zuul：API 网关，提供路由转发、请求过滤等功能。</li>
-<li>Config：分布式配置管理。</li>
-<li>Sleuth：服务跟踪。</li>
-<li>Stream：构建消息驱动的微服务应用程序的框架。</li>
-<li>Bus：消息代理的集群消息总线。</li>
-</ol>
-<p>除了上述模块，还有 Cli、Task等。这里只记几种常用的</p>
-<h1 id="SpringCloud-和-Dubbo的区别"><a href="#SpringCloud-和-Dubbo的区别" class="headerlink" title="SpringCloud 和 Dubbo的区别"></a>SpringCloud 和 Dubbo的区别</h1><table>
-<thead>
-<tr>
-<th align="center">功能名称</th>
-<th align="center">Dubbo</th>
-<th align="center">Spring Cloud</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">服务注册中心</td>
-<td align="center">ZooKeeper</td>
-<td align="center">Spring Cloud Netflix Eureka</td>
-</tr>
-<tr>
-<td align="center">服务调用方式</td>
-<td align="center">RPC</td>
-<td align="center">REST API</td>
-</tr>
-<tr>
-<td align="center">服务网关</td>
-<td align="center">无</td>
-<td align="center">Spring Cloud Netflix Zuul</td>
-</tr>
-<tr>
-<td align="center">断路器</td>
-<td align="center">不完善</td>
-<td align="center">Spring Cloud Netflix Hystrix</td>
-</tr>
-<tr>
-<td align="center">分布式配置</td>
-<td align="center">无</td>
-<td align="center">Spring Cloud Config</td>
-</tr>
-<tr>
-<td align="center">服务跟踪</td>
-<td align="center">无</td>
-<td align="center">Spring Cloud Sleuth</td>
-</tr>
-<tr>
-<td align="center">消息总线</td>
-<td align="center">无</td>
-<td align="center">Spring Cloud Bus</td>
-</tr>
-<tr>
-<td align="center">数据流</td>
-<td align="center">无</td>
-<td align="center">Spring Cloud Stream</td>
-</tr>
-</tbody></table>
-<h1 id="CAP定理"><a href="#CAP定理" class="headerlink" title="CAP定理"></a>CAP定理</h1><p>在分布式系统领域有个著名的 CAP 定理，即 C 为数据一致性；A 为服务可用性；P 为服务对网络分区故障的容错性。这三个特性在任何分布式系统中都不能同时满足，最多同时满足两个。</p>
-<p>为什么 Eureka 比 Zookeeper 更适合作为注册中心呢？主要是因为 Eureka 是基于 AP 原则构建的，而 ZooKeeper 是基于 CP 原则构建的。</p>
-<p>Zookeeper 有一个 Leader，而且在这个 Leader 无法使用的时候通过 Paxos（ZAB）算法选举出一个新的 Leader。这个 Leader 的任务就是保证写数据的时候只向这个 Leader 写入，Leader 会同步信息到其他节点。通过这个操作就可以保证数据的一致性。</p>
-<p>总而言之，想要保证 AP 就要用 Eureka，想要保证 CP 就要用 Zookeeper。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/07/31/Spring-Boot%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE%E5%8E%9F%E7%90%86/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/07/31/Spring-Boot%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE%E5%8E%9F%E7%90%86/" class="post-title-link" itemprop="url">Spring Boot自动配置原理</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-07-31 15:46:24" itemprop="dateCreated datePublished" datetime="2021-07-31T15:46:24+08:00">2021-07-31</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-08-04 19:46:04" itemprop="dateModified" datetime="2021-08-04T19:46:04+08:00">2021-08-04</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>我们知道，Spring Boot 项目创建完成后，即使不进行任何的配置，也能够顺利地运行，这都要归功于 Spring Boot 的自动化配置。</p>
-<p>Spring Boot 默认使用 application.properties 或 application.yml 作为其全局配置文件，我们可以在该配置文件中对各种自动配置属性（server.port、logging.level.* 、spring.config.active.no-profile 等等）进行修改，并使之生效，那么您有没有想过这些属性是否有据可依呢？答案是肯定的。</p>
-<p>Spring Boot 官方文档：常见应用属性中对所有的配置属性都进行了列举和解释，我们可以根据官方文档对 Spring Boot 进行配置，但 Spring Boot 中的配置属性数量庞大，仅仅依靠官方文档进行配置也十分麻烦。我们只有了解了 Spring Boot 自动配置的原理，才能更加轻松熟练地对 Spirng Boot 进行配置。本节为你揭开 SpringBoot 自动配置的神秘面纱。</p>
-<h1 id="Spring-Factories机制"><a href="#Spring-Factories机制" class="headerlink" title="Spring Factories机制"></a>Spring Factories机制</h1><p>Spring Boot 的自动配置是基于 Spring Factories 机制实现的。</p>
-<p>Spring Factories 机制是 Spring Boot 中的一种服务发现机制，这种扩展机制与 Java SPI 机制十分相似。Spring Boot 会自动扫描所有 Jar 包类路径下 META-INF/spring.factories 文件，并读取其中的内容，进行实例化，这种机制也是 Spring Boot Starter 的基础。</p>
-<h1 id="SpringApplication这个类主要做了以下几件事情"><a href="#SpringApplication这个类主要做了以下几件事情" class="headerlink" title="SpringApplication这个类主要做了以下几件事情"></a>SpringApplication这个类主要做了以下几件事情</h1><ol>
-<li>推断应用是普通项目还是web项目</li>
-<li>查找并加载初始化器，设置到initializers中</li>
-<li>找到所有的应用程序监听器，设置到listers中</li>
-<li>推断并设置main方法的定义类，找到运行的主类</li>
-</ol>
-<p><a target="_blank" rel="noopener" href="http://c.biancheng.net/spring_boot/auto-config.html">具体内容点击我</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/07/27/frp%E5%AE%9E%E7%8E%B0%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/07/27/frp%E5%AE%9E%E7%8E%B0%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/" class="post-title-link" itemprop="url">frp实现内网穿透</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2021-07-27 19:45:48 / Modified: 19:48:35" itemprop="dateCreated datePublished" datetime="2021-07-27T19:45:48+08:00">2021-07-27</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>工作中遇到项目中需要开发公众号的情况，公众号平台需要指定域名，且要求端口需要是80或443端口才行。而公司的公网域名和端口已经被使用，为了方便开发调试，使用了frp来实现内网穿透。这里使用的frp版本为<code>0.35.1</code></p>
-<h1 id="frp简介"><a href="#frp简介" class="headerlink" title="frp简介"></a>frp简介</h1><h2 id="frp是什么"><a href="#frp是什么" class="headerlink" title="frp是什么"></a>frp是什么</h2><p>frp 是一个高性能的反向代理应用，可以帮助您轻松地进行内网穿透，对外网提供服务，支持 tcp, http, https 等协议类型，并且 web 服务支持根据域名进行路由转发。</p>
-<h2 id="frp-的作用"><a href="#frp-的作用" class="headerlink" title="frp 的作用"></a>frp 的作用</h2><ul>
-<li>利用处于内网或防火墙后的机器，对外网环境提供 http 或 https 服务。</li>
-<li>对于 http 服务支持基于域名的虚拟主机，支持自定义域名绑定，使多个域名可以共用一个80端口。</li>
-<li>利用处于内网或防火墙后的机器，对外网环境提供 tcp 服务，例如在家里通过 ssh 访问处于公司内网环境内的主机。</li>
-<li>可查看通过代理的所有 http 请求和响应的详细信息。（待开发）</li>
-</ul>
-<h2 id="frp的架构"><a href="#frp的架构" class="headerlink" title="frp的架构"></a>frp的架构</h2><p><img src="https://img-blog.csdnimg.cn/20210205154405707.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MjE3NzMwMg==,size_16,color_FFFFFF,t_70" alt="frp的架构"></p>
-<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><ol>
-<li><p><strong>有公网ip的设备（云服务器，VPS都可以）</strong></p>
-</li>
-<li><p><strong>保证公网设备响应的端口要对外开启，如果是云服务器则到响应的云服务器产商的控制台中开启，以供后续使用</strong></p>
-</li>
-<li><p><strong>如果有使用域名的需求的话，记得将域名映射到公网ip</strong></p>
-</li>
-</ol>
-<h2 id="frp下载地址"><a href="#frp下载地址" class="headerlink" title="frp下载地址"></a>frp下载地址</h2><p>github页面地址：<a target="_blank" rel="noopener" href="https://github.com/fatedier/frp/releases">https://github.com/fatedier/frp/releases</a><br><img src="https://img-blog.csdnimg.cn/20210205142940274.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MjE3NzMwMg==,size_16,color_FFFFFF,t_70" alt="frp下载"><br>跟据自己的机器下载对应的版本就好~不然不兼容版本无法运行！！<br>我下载的是：<br>linux服务器：<a target="_blank" rel="noopener" href="https://github.com/fatedier/frp/releases/download/v0.35.1/frp_0.35.1_linux_amd64.tar.gz">frp_0.35.1_linux_amd64.tar.gz</a><br>windows内网机器：<a target="_blank" rel="noopener" href="https://github.com/fatedier/frp/releases/download/v0.35.1/frp_0.35.1_windows_amd64.zip">frp_0.35.1_windows_amd64.zip</a></p>
-<p>如果是32位系统就选386结尾的！</p>
-<h2 id="frp的文件结构"><a href="#frp的文件结构" class="headerlink" title="frp的文件结构"></a>frp的文件结构</h2><p>以windows版本为例<br><img src="https://img-blog.csdnimg.cn/20210205144552881.png" alt="frp文件结构"><br>可以看出，frp中包含了frpc和frps，c即client客户端，s即server服务端。</p>
-<p>frpc.ini、frps.ini 分别是客户端的配置文件和服务端的配置文件，修改配置也是在这里修改</p>
-<p>一般情况下公网机器上只用运行frps，内网机器只用运行frpc</p>
-<h1 id="frp配置与使用"><a href="#frp配置与使用" class="headerlink" title="frp配置与使用"></a>frp配置与使用</h1><h2 id="linux公网服务器的配置-windows配置同理，这里不做说明"><a href="#linux公网服务器的配置-windows配置同理，这里不做说明" class="headerlink" title="linux公网服务器的配置(windows配置同理，这里不做说明)"></a>linux公网服务器的配置(windows配置同理，这里不做说明)</h2><p>1、下载frp文件</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ wget https://github.com/fatedier/frp/releases/download/v0.35.1/frp_0.35.1_linux_amd64.tar.gz</span><br></pre></td></tr></table></figure>
-<p>2、下载完后解压压缩包</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ tar -zxvf frp_0.35.1_linux_amd64.tar.gz</span><br></pre></td></tr></table></figure>
-<p>3、根据需求修改配置（见下文）</p>
-<p>4、启动frps</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> frp_0.35.1_linux_amd64/ </span><br><span class="line">$ ./frps -c ./frps.ini</span><br></pre></td></tr></table></figure>
-
-<h2 id="通过-ssh-访问公司内网机器"><a href="#通过-ssh-访问公司内网机器" class="headerlink" title="通过 ssh 访问公司内网机器"></a>通过 ssh 访问公司内网机器</h2><p><strong>1、 服务器端：修改 frps.ini 文件，配置一个名为 ssh 的反向代理：</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># frps.ini</span></span><br><span class="line">[common]</span><br><span class="line">bind_port = 7000 <span class="comment">#该端口用于与内网通信</span></span><br><span class="line"></span><br><span class="line">[ssh]</span><br><span class="line">listen_port = 6000 <span class="comment">#该端口用于监听ssh请求</span></span><br><span class="line">auth_token = 123</span><br></pre></td></tr></table></figure>
-
-<p><strong>2、 服务器端：启动 frps：</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ./frps -c ./frps.ini</span><br></pre></td></tr></table></figure>
-
-<p><strong>3、 客户端：修改 frpc.ini 文件：</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># frpc.ini</span></span><br><span class="line">[common]</span><br><span class="line">server_addr = x.x.x.x <span class="comment">#frps 所在服务器的 IP</span></span><br><span class="line">server_port = 7000 <span class="comment">#frps 配置中bind_port的端口，两者要一直，不然怎么通信</span></span><br><span class="line">auth_token = 123</span><br><span class="line"></span><br><span class="line">[ssh]</span><br><span class="line">local_port = 22 <span class="comment">#本地ssh监听的端口</span></span><br></pre></td></tr></table></figure>
-
-<p><strong>4、客户端：启动 frpc：</strong></p>
-<p>1）linux系统的启动方式：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ./frpc -c ./frpc.ini</span><br></pre></td></tr></table></figure>
-<p>2）windows系统需要cmd启动frpc.exe：<br><img src="https://img-blog.csdnimg.cn/20210205151509674.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MjE3NzMwMg==,size_16,color_FFFFFF,t_70" alt="windows启动frpc.exe"></p>
-<p><strong>5、 通过 ssh 访问内网机器，假设用户名为 test：</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -oPort=6000 <span class="built_in">test</span>@x.x.x.x</span><br></pre></td></tr></table></figure>
-
-<h2 id="通过IP或指定域名访问部署于内网的-web-服务"><a href="#通过IP或指定域名访问部署于内网的-web-服务" class="headerlink" title="通过IP或指定域名访问部署于内网的 web 服务"></a>通过IP或指定域名访问部署于内网的 web 服务</h2><p>有时想要让其他人通过域名访问或者测试我们在本地搭建的 web 服务，但是由于本地机器没有公网 IP，无法将域名解析到本地的机器，通过 frp 就可以实现这一功能，以下示例为 http 服务，https 服务配置方法相同， vhost_http_port 替换为 vhost_https_port， type 设置为 https 即可。</p>
-<p><strong>1、 修改 frps.ini 文件，配置一个名为 web 的 http 反向代理，设置 http 访问端口为 80，绑定IP或域名：</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># frps.ini</span></span><br><span class="line">[common] </span><br><span class="line">bind_port = 7000 <span class="comment">#该端口用于与内网通信</span></span><br><span class="line">vhost_http_port = 80 <span class="comment">#公网访问的端口，如果是https，这里替换为vhost_https_port</span></span><br><span class="line"></span><br><span class="line">[web]</span><br><span class="line"><span class="built_in">type</span> = http <span class="comment">#如果是https，这里替换为https</span></span><br><span class="line">custom_domains = www.yourdomain.com <span class="comment">#这里是你的公网服务器IP或域名</span></span><br><span class="line">auth_token = 123</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>上述的 [web] 下的配置可以不要</p>
-</blockquote>
-<p><strong>2、 服务器端：启动 frps：</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ./frps -c ./frps.ini</span><br></pre></td></tr></table></figure>
-
-<p><strong>3、 客户端：修改 frpc.ini 文件：</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># frpc.ini</span></span><br><span class="line">[common]</span><br><span class="line">server_addr = x.x.x.x <span class="comment">#frps 所在服务器的 IP</span></span><br><span class="line">server_port = 7000 <span class="comment">#frps 配置中bind_port的端口，两者要一直，不然怎么通信</span></span><br><span class="line">auth_token = 123</span><br><span class="line"></span><br><span class="line">[web]</span><br><span class="line"><span class="built_in">type</span> = http <span class="comment">#如果是https，这里替换为https</span></span><br><span class="line">local_port = 8080 <span class="comment">#内网环境web服务的端口</span></span><br><span class="line">custom_domains = www.yourdomain.com <span class="comment">#这里是你的公网服务器IP或域名，如果需要IP或域名同时可以访问，将IP和域名使用逗号分隔写到这里！！！！！！！！！！！</span></span><br></pre></td></tr></table></figure>
-
-<p><strong>4、客户端：启动 frpc：</strong></p>
-<p>1）linux系统的启动方式：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ./frpc -c ./frpc.ini</span><br></pre></td></tr></table></figure>
-<p>2）windows系统需要cmd启动frpc.exe：<br><img src="https://img-blog.csdnimg.cn/20210205151509674.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MjE3NzMwMg==,size_16,color_FFFFFF,t_70" alt="windows启动frpc.exe"></p>
-<p><strong>5、通过浏览器访问 <a target="_blank" rel="noopener" href="http://www.yourdomain.com/">http://www.yourdomain.com</a></strong>(没有配域名这边就写ip地址)<strong>:端口</strong>(frps中vhost_http_port的值) <strong>即可访问到处于内网机器上的 web 服务。</strong></p>
-<h2 id="更多配置"><a href="#更多配置" class="headerlink" title="更多配置"></a>更多配置</h2><p>DNS、提供文件服务等更多功能，可以参考<a target="_blank" rel="noopener" href="https://gitee.com/wefeng/frp">https://gitee.com/wefeng/frp</a></p>
-<h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><p>frp是一款方便、快捷、高效的内网穿透工具，但是需要有公网IP的机器，而且访问速度同时受限于内网所处网络和公网机器网络的速度，不过平常使用已经是很不错的选择了。frp还有其他妙用，这里就不再赘述。</p>
-<p>如果有帮到你，那就点赞支持下吧，或者有什么问题，还请留言或者私信~</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/07/27/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/07/27/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-07-27 19:37:49" itemprop="dateCreated datePublished" datetime="2021-07-27T19:37:49+08:00">2021-07-27</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
 
 
 
