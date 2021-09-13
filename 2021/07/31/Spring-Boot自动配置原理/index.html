@@ -27,12 +27,15 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="我们知道，Spring Boot 项目创建完成后，即使不进行任何的配置，也能够顺利地运行，这都要归功于 Spring Boot 的自动化配置。 Spring Boot 默认使用 application.properties 或 application.yml 作为其全局配置文件，我们可以在该配置文件中对各种自动配置属性（server.port、logging.level.* 、spring.con">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/.com//caopeisheng/Hexo-Blog/source/_posts/Spring-Boot%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE%E5%8E%9F%E7%90%86/image-20210907163302698.png">
+<meta property="og:image" content="http://example.com/.com//caopeisheng/Hexo-Blog/source/_posts/Spring-Boot%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE%E5%8E%9F%E7%90%86/image-20210907163615424.png">
 <meta property="article:published_time" content="2021-07-31T07:46:24.000Z">
-<meta property="article:modified_time" content="2021-08-04T11:46:04.480Z">
+<meta property="article:modified_time" content="2021-09-07T08:37:35.508Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="Spring Boot">
 <meta property="article:tag" content="自动配置">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/.com//caopeisheng/Hexo-Blog/source/_posts/Spring-Boot%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE%E5%8E%9F%E7%90%86/image-20210907163302698.png">
 
 
 <link rel="canonical" href="http://example.com/2021/07/31/Spring-Boot%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE%E5%8E%9F%E7%90%86/">
@@ -109,7 +112,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Spring-Factories%E6%9C%BA%E5%88%B6"><span class="nav-number">1.</span> <span class="nav-text">Spring Factories机制</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SpringApplication%E8%BF%99%E4%B8%AA%E7%B1%BB%E4%B8%BB%E8%A6%81%E5%81%9A%E4%BA%86%E4%BB%A5%E4%B8%8B%E5%87%A0%E4%BB%B6%E4%BA%8B%E6%83%85"><span class="nav-number">2.</span> <span class="nav-text">SpringApplication这个类主要做了以下几件事情</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Spring-Factories%E6%9C%BA%E5%88%B6"><span class="nav-number">1.</span> <span class="nav-text">Spring Factories机制</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SpringApplication%E8%BF%99%E4%B8%AA%E7%B1%BB%E4%B8%BB%E8%A6%81%E5%81%9A%E4%BA%86%E4%BB%A5%E4%B8%8B%E5%87%A0%E4%BB%B6%E4%BA%8B%E6%83%85"><span class="nav-number">2.</span> <span class="nav-text">SpringApplication这个类主要做了以下几件事情</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Spring-Boot%E7%9A%84%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">3.</span> <span class="nav-text">Spring Boot的配置文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86%E5%89%96%E6%9E%90"><span class="nav-number">4.</span> <span class="nav-text">工作原理剖析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#EnableAutoConfiguration"><span class="nav-number">4.1.</span> <span class="nav-text">@EnableAutoConfiguration</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE%E7%94%9F%E6%95%88"><span class="nav-number">5.</span> <span class="nav-text">自动配置生效</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -123,7 +126,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-count">10</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -199,7 +202,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-08-04 19:46:04" itemprop="dateModified" datetime="2021-08-04T19:46:04+08:00">2021-08-04</time>
+        <time title="Modified: 2021-09-07 16:37:35" itemprop="dateModified" datetime="2021-09-07T16:37:35+08:00">2021-09-07</time>
       </span>
 
   
@@ -223,6 +226,24 @@
 <li>找到所有的应用程序监听器，设置到listers中</li>
 <li>推断并设置main方法的定义类，找到运行的主类</li>
 </ol>
+<h1 id="Spring-Boot的配置文件"><a href="#Spring-Boot的配置文件" class="headerlink" title="Spring Boot的配置文件"></a>Spring Boot的配置文件</h1><p>初识Spring Boot时我们就知道，Spring Boot有一个全局配置文件：application.properties或application.yml。</p>
+<p>我们的各种属性都可以在这个文件中进行配置，最常配置的比如：server.port、logging.level.* 等等，然而我们实际用到的往往只是很少的一部分，那么这些属性是否有据可依呢？答案当然是肯定的，这些属性都可以在官方文档中查找到：</p>
+<p><a target="_blank" rel="noopener" href="https://docs.spring.io/spring-boot/docs/2.1.0.RELEASE/reference/htmlsingle/#common-application-properties">https://docs.spring.io/spring-boot/docs/2.1.0.RELEASE/reference/htmlsingle/#common-application-properties</a></p>
+<h1 id="工作原理剖析"><a href="#工作原理剖析" class="headerlink" title="工作原理剖析"></a>工作原理剖析</h1><p>Spring Boot的启动类上有一个@SpringBootApplication注解，这个注解是Spring Boot项目必不可少的注解。那么自动配置原理一定和这个注解有着千丝万缕的联系！</p>
+<h2 id="EnableAutoConfiguration"><a href="#EnableAutoConfiguration" class="headerlink" title="@EnableAutoConfiguration"></a>@EnableAutoConfiguration</h2><p> @SpringBootApplication是一个复合注解或派生注解，在@SpringBootApplication中有一个注解@EnableAutoConfiguration，翻译成人话就是开启自动配置，其定义如下：</p>
+<p><img src="/.com//caopeisheng/Hexo-Blog/source/_posts/Spring-Boot%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE%E5%8E%9F%E7%90%86/image-20210907163302698.png" alt="image-20210907163302698"></p>
+<p>@EnableAutoConfiguration这个注解也是一个派生注解，其中的关键功能由@Import提供，其导入的AutoConfigurationImportSelector的<code>selectImports()</code>方法通过<code>SpringFactoriesLoader.loadFactoryNames()</code>扫描所有具有META-INF/spring.factories的jar包。spring-boot-autoconfigure-x.x.x.x.jar里就有一个这样的spring.factories文件。</p>
+<p>这个spring.factories文件也是一组一组的key=value的形式，其中一个key是EnableAutoConfiguration类的全类名，而它的value是一个xxxxAutoConfiguration的类名的列表，这些类名以逗号分隔，如下图所示：</p>
+<p><img src="/.com//caopeisheng/Hexo-Blog/source/_posts/Spring-Boot%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE%E5%8E%9F%E7%90%86/image-20210907163615424.png" alt="image-20210907163615424"></p>
+<p>这个@EnableAutoConfiguration注解通过@SpringBootApplication被间接的标记在了Spring Boot的启动类上。在SpringApplication.run(…)的内部就会执行selectImports()方法，找到所有JavaConfig自动配置类的全限定名对应的class，然后将所有自动配置类加载到Spring容器中。</p>
+<h1 id="自动配置生效"><a href="#自动配置生效" class="headerlink" title="自动配置生效"></a>自动配置生效</h1><p>每一个XxxxAutoConfiguration自动配置类都是在某些条件之下才会生效的，这些条件的限制在Spring Boot中以注解的形式体现，常见的条件注解有如下几项：</p>
+<blockquote>
+<p>@ConditionalOnBean：当容器里有指定的bean的条件下。</p>
+<p>@ConditionalOnMissingBean：当容器里不存在指定bean的条件下。</p>
+<p>@ConditionalOnClass：当类路径下有指定类的条件下。</p>
+<p>@ConditionalOnMissingClass：当类路径下不存在指定类的条件下。</p>
+<p>@ConditionalOnProperty：指定的属性是否有指定的值，比如@ConditionalOnProperties(prefix=”xxx.xxx”, value=”enable”, matchIfMissing=true)，代表当xxx.xxx为enable时条件的布尔值为true，如果没有设置的情况下也为true。</p>
+</blockquote>
 <p><a target="_blank" rel="noopener" href="http://c.biancheng.net/spring_boot/auto-config.html">具体内容点击我</a></p>
 
     </div>

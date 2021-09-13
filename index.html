@@ -116,7 +116,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-count">10</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -151,6 +151,93 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/13/%E5%A4%9A%E7%BA%BF%E7%A8%8B1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/09/13/%E5%A4%9A%E7%BA%BF%E7%A8%8B1/" class="post-title-link" itemprop="url">多线程1</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2021-09-13 14:49:22 / Modified: 15:15:37" itemprop="dateCreated datePublished" datetime="2021-09-13T14:49:22+08:00">2021-09-13</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="停止线程："><a href="#停止线程：" class="headerlink" title="停止线程："></a>停止线程：</h2><ul>
+<li>不推荐使用JDK提供的stop()、destroy()、方法</li>
+<li>推荐线程自己停下来</li>
+<li>建议使用一个标志位终止变量，当flag=false，则终止线程运行。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CreateThreadRunnable</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Boolean flag = <span class="keyword">true</span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">while</span> (flag) &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;thread...run&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">stop</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.flag = <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        CreateThreadRunnable p = <span class="keyword">new</span> CreateThreadRunnable();</span><br><span class="line">        <span class="keyword">new</span> Thread(p).start();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">100</span>; i++) &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;i=&quot;</span> + i);</span><br><span class="line">            <span class="keyword">if</span> (i == <span class="number">99</span>) &#123;</span><br><span class="line">                p.stop();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>sleep()</p>
+<p>yield()</p>
+<ul>
+<li>线程礼让，让当前线程暂停，但是不阻塞</li>
+<li>运行状态到就绪状态</li>
+<li><strong>让CPU重新调度，礼让不一定成功，看CPU心情</strong></li>
+</ul>
+<p>join()</p>
+<ul>
+<li>Join合并线程，待此线程执行完成后，再执行其他线程，其他线程阻塞</li>
+<li>可以想象成插队</li>
+</ul>
+<p>Thread.state 查看线程状态 </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">enum</span> <span class="title">State</span> </span>&#123;</span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 尚未启动的线程的线程状态</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        NEW,</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 可运行线程的线程状态。 处于可运行状态的线程正在 Java 虚拟机中执行，</span></span><br><span class="line"><span class="comment">         * 但它可能正在等待来自操作系统的其他资源，例如处理器。</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        RUNNABLE,</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 线程阻塞等待监视器锁的线程状态。 处于阻塞状态的线程正在等待监视器锁进入同步块/方法</span></span><br><span class="line"><span class="comment">         * 或在调用Object.wait后重新进入同步块/方法。</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        BLOCKED,</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 等待线程的线程状态。 由于调用以下方法之一，线程处于等待状态：</span></span><br><span class="line"><span class="comment">         * Object.wait没有超时</span></span><br><span class="line"><span class="comment">         * Thread.join没有超时</span></span><br><span class="line"><span class="comment">         * LockSupport.park</span></span><br><span class="line"><span class="comment">         * 处于等待状态的线程正在等待另一个线程执行特定操作。 </span></span><br><span class="line"><span class="comment">         * 例如，在对象上调用Object.wait()的线程正在等待另一个线程在该对象上</span></span><br><span class="line"><span class="comment">         * 调用Object.notify()或Object.notifyAll() 。 调用Thread.join() 的线程正在等待指定的线程终止。</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        WAITING,</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 具有指定等待时间的等待线程的线程状态。 由于使用指定的正等待时间调用以下方法之一，线程处于定时等待状态：</span></span><br><span class="line"><span class="comment">         * Thread.sleep</span></span><br><span class="line"><span class="comment">         * Object.wait超时</span></span><br><span class="line"><span class="comment">         * Thread.join超时</span></span><br><span class="line"><span class="comment">         * LockSupport.parkNanos</span></span><br><span class="line"><span class="comment">         * LockSupport.parkUntil</span></span><br><span class="line"><span class="comment">         * /</span></span><br><span class="line"><span class="comment">        TIMED_WAITING,</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">        /**</span></span><br><span class="line"><span class="comment">         * 终止线程的线程状态。 线程已完成执行。</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        TERMINATED;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/.com//caopeisheng/Hexo-Blog/source/_posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B1/image-20210913151519171.png" alt="image-20210913151519171"></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -363,7 +450,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-08-26 14:32:19" itemprop="dateModified" datetime="2021-08-26T14:32:19+08:00">2021-08-26</time>
+        <time title="Modified: 2021-09-11 15:33:13" itemprop="dateModified" datetime="2021-09-11T15:33:13+08:00">2021-09-11</time>
       </span>
 
   
@@ -376,13 +463,44 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <img src="/Users/caopeisheng/Library/Application Support/typora-user-images/image-20210825195314252.png" alt="image-20210825195314252" style="zoom:50%;" />
+          <p><img src="/.com//caopeisheng/Hexo-Blog/source/_posts/JVM%E7%9F%A5%E8%AF%86%E7%82%B9/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B.png" alt="image-20210911130213222"></p>
+<img src="/Users/caopeisheng/Library/Application Support/typora-user-images/image-20210825195314252.png" alt="image-20210825195314252" style="zoom:50%;">
 
 <p>JVM调优99%都是在调 <strong>方法区</strong> 和 <strong>堆</strong> ，且大部分是堆， 垃圾回收也回收这两个区域</p>
-<p><img src="/Users/caopeisheng/Hexo-Blog/source/picture/image-20210825215354387.png" alt="image-20210825215354387"></p>
+<p><img src="/.com//caopeisheng/Hexo-Blog/source/picture/image-20210825215354387.png" alt="image-20210825215354387"></p>
 <h2 id="双亲委派机制"><a href="#双亲委派机制" class="headerlink" title="双亲委派机制"></a>双亲委派机制</h2><p>java为了安全会有一个类的加载顺序</p>
 <p><strong>APP –&gt; EXT(ext文件夹下的jar) –&gt; ROOT（rt.jar）（最终执行）</strong></p>
 <p>所以，即使在项目中定义了一个String类，且和rt.jar（rt就是root的缩写） 中的String包明相同，也只会加载 rt.jar中的String</p>
+<h2 id="沙箱安全机制"><a href="#沙箱安全机制" class="headerlink" title="沙箱安全机制"></a>沙箱安全机制</h2><h3 id="组成沙箱的基本组件"><a href="#组成沙箱的基本组件" class="headerlink" title="组成沙箱的基本组件"></a>组成沙箱的基本组件</h3><p>**<code>字节码校验器</code>**：确保Java类文件遵守Java语言规范。也可以帮助Java实现内存保护。但并不是所有的类都会经过字节码校验，比如核心类。（java javax）</p>
+<p><strong>类装载器</strong>：在3个方面对Java沙箱起作用：</p>
+<ul>
+<li>防止恶意代码干涉善意代码  //eg 双亲委派机制</li>
+<li>守护了被信任的类库边界 //eg 双亲委派机制</li>
+<li>将代码归入保护域，确定了代码可以进行那些操作</li>
+</ul>
+<h2 id="JVM堆内存"><a href="#JVM堆内存" class="headerlink" title="JVM堆内存"></a>JVM堆内存</h2><p>![image-20210830165415294](/Users/caopeisheng/Library/Application Support/typora-user-images/image-20210830165415294.png)</p>
+<p><strong>永久区</strong></p>
+<p>这个区域是常驻内存的。用来存放一些jdk自身存在的Class对象。Interface元数据，存储的是java运行时的一些环境或类信息，这个区域不存在垃圾回收！</p>
+<p>一个启动类加载了太多的第三方jar包、tomcat部署太多应用、大量动态生成的反射类等情况，不断加载，知道内存满，就会出现OOM</p>
+<p>jdk1.6：永久代，常量池在方法区中</p>
+<p>jdk1.7 ：永久代，但是慢慢的退化了，去永久代，常量池在堆中</p>
+<p>jdk1.8后：无永久代，常量池在元空间</p>
+<p>![image-20210830170324793](/Users/caopeisheng/Library/Application Support/typora-user-images/image-20210830170324793.png)</p>
+<h2 id="JVM参数调优"><a href="#JVM参数调优" class="headerlink" title="JVM参数调优"></a>JVM参数调优</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">long</span> max = Runtime.getRuntime().maxMemory();</span><br><span class="line">    <span class="keyword">long</span> total = Runtime.getRuntime().totalMemory();</span><br><span class="line">    System.out.println(<span class="string">&quot;max=&quot;</span>+max/(<span class="keyword">double</span>)<span class="number">1024</span>/<span class="number">1024</span> + <span class="string">&quot;MB&quot;</span>);</span><br><span class="line">    System.out.println(<span class="string">&quot;total=&quot;</span>+total/(<span class="keyword">double</span>)<span class="number">1024</span>/<span class="number">1024</span> + <span class="string">&quot;MB&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// OOM问题解决:</span></span><br><span class="line">    <span class="comment">//1.尝试扩大堆内存看结果</span></span><br><span class="line">    <span class="comment">//2。分析内存，看哪里出问题</span></span><br><span class="line">    <span class="comment">// 默认情况下：分配的总内存是 电脑内存的1/4，而初始化的内存：1/64 （粗略值）</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这时候填入JVM参数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-Xms1024m -Xmx1024m -XX:+PrintGCDetails</span><br></pre></td></tr></table></figure>
+
+<p><code>-Xms1024m</code> 是指： JVM启动时整个堆(包括年轻代，年老代)的初始化大小。</p>
+<p><code>-Xmx1024m</code> 是指： JVM启动时整个堆的最大值。</p>
+<p><code>-Xmn1024m</code>是指：年轻代的空间大小，剩下的是年老代的空间。</p>
+<p><code>-XX:+PrintGCDetails</code>    是指，打印GC的信息</p>
+<p><code>-XX:+HeapDumpOnOutOfMemoryError</code> 是指：打印出OOM的Dump文件</p>
+<p>![image-20210830173444956](/Users/caopeisheng/Library/Application Support/typora-user-images/image-20210830173444956.png)</p>
+<h2 id="GC算法"><a href="#GC算法" class="headerlink" title="GC算法"></a>GC算法</h2><p>相关概念：<strong>标记清除法、标记压缩、复制算法</strong>、引用计数器（一般不使用）</p>
+<p><strong>新生代使用：复制算法</strong> （from survivor、to survivor）</p>
+<p><strong>老年代使用：标记清除法+标记压缩法</strong></p>
+<p>一般不使用引用计数器法的实现</p>
 
       
     </div>
@@ -531,10 +649,16 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2021-08-23 16:51:42 / Modified: 16:53:16" itemprop="dateCreated datePublished" datetime="2021-08-23T16:51:42+08:00">2021-08-23</time>
+      <time title="Created: 2021-08-23 16:51:42" itemprop="dateCreated datePublished" datetime="2021-08-23T16:51:42+08:00">2021-08-23</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-09-02 19:22:38" itemprop="dateModified" datetime="2021-09-02T19:22:38+08:00">2021-09-02</time>
+      </span>
 
   
 </div>
@@ -551,7 +675,7 @@
 <h2 id="消息代理和他们所扮演的角色"><a href="#消息代理和他们所扮演的角色" class="headerlink" title="消息代理和他们所扮演的角色"></a>消息代理和他们所扮演的角色</h2><p>消息代理（message brokers）从发布者（publishers）亦称生产者（producers）那儿接收消息，并根据既定的路由规则把接收到的消息发送给处理消息的消费者（consumers）。</p>
 <p>由于AMQP是一个网络协议，所以这个过程中的发布者，消费者，消息代理 可以存在于不同的设备上。</p>
 <h2 id="AMQP-0-9-1-模型简介"><a href="#AMQP-0-9-1-模型简介" class="headerlink" title="AMQP 0-9-1 模型简介"></a>AMQP 0-9-1 模型简介</h2><p>AMQP 0-9-1的工作过程如下图：消息（message）被发布者（publisher）发送给交换机（exchange），交换机常常被比喻成邮局或者邮箱。然后交换机将收到的消息根据路由规则分发给绑定的队列（queue）。最后AMQP代理会将消息投递给订阅了此队列的消费者，或者消费者按照需求自行获取。</p>
-<p><img src="https://www.rabbitmq.com/img/tutorials/intro/hello-world-example-routing.png" alt="enter image description here"></p>
+<p><img src="/.com//caopeisheng/Hexo-Blog/source/_posts/Rabbitmq%E7%AC%94%E8%AE%B0/hello-world-example-routing.png" alt="hello-world-example-routing"></p>
 <h2 id="AMQP是一个可编程的协议"><a href="#AMQP是一个可编程的协议" class="headerlink" title="AMQP是一个可编程的协议"></a>AMQP是一个可编程的协议</h2><p>AMQP 0-9-1是一个可编程协议，某种意义上说AMQP的实体和路由规则是由应用本身定义的，而不是由消息代理定义。包括像声明队列和交换机，定义他们之间的绑定，订阅队列等等关于协议本身的操作。</p>
 <p>这虽然能让开发人员自由发挥，但也需要他们注意潜在的定义冲突。当然这在实践中很少会发生，如果发生，会以配置错误（misconfiguration）的形式表现出来。</p>
 <p>应用程序（Applications）声明AMQP实体，定义需要的路由方案，或者删除不再需要的AMQP实体。</p>
@@ -1111,7 +1235,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-08-04 19:46:04" itemprop="dateModified" datetime="2021-08-04T19:46:04+08:00">2021-08-04</time>
+        <time title="Modified: 2021-09-07 16:37:35" itemprop="dateModified" datetime="2021-09-07T16:37:35+08:00">2021-09-07</time>
       </span>
 
   
@@ -1135,6 +1259,24 @@
 <li>找到所有的应用程序监听器，设置到listers中</li>
 <li>推断并设置main方法的定义类，找到运行的主类</li>
 </ol>
+<h1 id="Spring-Boot的配置文件"><a href="#Spring-Boot的配置文件" class="headerlink" title="Spring Boot的配置文件"></a>Spring Boot的配置文件</h1><p>初识Spring Boot时我们就知道，Spring Boot有一个全局配置文件：application.properties或application.yml。</p>
+<p>我们的各种属性都可以在这个文件中进行配置，最常配置的比如：server.port、logging.level.* 等等，然而我们实际用到的往往只是很少的一部分，那么这些属性是否有据可依呢？答案当然是肯定的，这些属性都可以在官方文档中查找到：</p>
+<p><a target="_blank" rel="noopener" href="https://docs.spring.io/spring-boot/docs/2.1.0.RELEASE/reference/htmlsingle/#common-application-properties">https://docs.spring.io/spring-boot/docs/2.1.0.RELEASE/reference/htmlsingle/#common-application-properties</a></p>
+<h1 id="工作原理剖析"><a href="#工作原理剖析" class="headerlink" title="工作原理剖析"></a>工作原理剖析</h1><p>Spring Boot的启动类上有一个@SpringBootApplication注解，这个注解是Spring Boot项目必不可少的注解。那么自动配置原理一定和这个注解有着千丝万缕的联系！</p>
+<h2 id="EnableAutoConfiguration"><a href="#EnableAutoConfiguration" class="headerlink" title="@EnableAutoConfiguration"></a>@EnableAutoConfiguration</h2><p> @SpringBootApplication是一个复合注解或派生注解，在@SpringBootApplication中有一个注解@EnableAutoConfiguration，翻译成人话就是开启自动配置，其定义如下：</p>
+<p><img src="/.com//caopeisheng/Hexo-Blog/source/_posts/Spring-Boot%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE%E5%8E%9F%E7%90%86/image-20210907163302698.png" alt="image-20210907163302698"></p>
+<p>@EnableAutoConfiguration这个注解也是一个派生注解，其中的关键功能由@Import提供，其导入的AutoConfigurationImportSelector的<code>selectImports()</code>方法通过<code>SpringFactoriesLoader.loadFactoryNames()</code>扫描所有具有META-INF/spring.factories的jar包。spring-boot-autoconfigure-x.x.x.x.jar里就有一个这样的spring.factories文件。</p>
+<p>这个spring.factories文件也是一组一组的key=value的形式，其中一个key是EnableAutoConfiguration类的全类名，而它的value是一个xxxxAutoConfiguration的类名的列表，这些类名以逗号分隔，如下图所示：</p>
+<p><img src="/.com//caopeisheng/Hexo-Blog/source/_posts/Spring-Boot%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE%E5%8E%9F%E7%90%86/image-20210907163615424.png" alt="image-20210907163615424"></p>
+<p>这个@EnableAutoConfiguration注解通过@SpringBootApplication被间接的标记在了Spring Boot的启动类上。在SpringApplication.run(…)的内部就会执行selectImports()方法，找到所有JavaConfig自动配置类的全限定名对应的class，然后将所有自动配置类加载到Spring容器中。</p>
+<h1 id="自动配置生效"><a href="#自动配置生效" class="headerlink" title="自动配置生效"></a>自动配置生效</h1><p>每一个XxxxAutoConfiguration自动配置类都是在某些条件之下才会生效的，这些条件的限制在Spring Boot中以注解的形式体现，常见的条件注解有如下几项：</p>
+<blockquote>
+<p>@ConditionalOnBean：当容器里有指定的bean的条件下。</p>
+<p>@ConditionalOnMissingBean：当容器里不存在指定bean的条件下。</p>
+<p>@ConditionalOnClass：当类路径下有指定类的条件下。</p>
+<p>@ConditionalOnMissingClass：当类路径下不存在指定类的条件下。</p>
+<p>@ConditionalOnProperty：指定的属性是否有指定的值，比如@ConditionalOnProperties(prefix=”xxx.xxx”, value=”enable”, matchIfMissing=true)，代表当xxx.xxx为enable时条件的布尔值为true，如果没有设置的情况下也为true。</p>
+</blockquote>
 <p><a target="_blank" rel="noopener" href="http://c.biancheng.net/spring_boot/auto-config.html">具体内容点击我</a></p>
 
       

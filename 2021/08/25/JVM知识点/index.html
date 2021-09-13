@@ -20,21 +20,22 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.6.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
-<meta name="description" content="JVM调优99%都是在调 方法区 和 堆 ，且大部分是堆， 垃圾回收也回收这两个区域  双亲委派机制java为了安全会有一个类的加载顺序 APP –&gt; EXT(ext文件夹下的jar) –&gt; ROOT（rt.jar）（最终执行） 所以，即使在项目中定义了一个String类，且和rt.jar（rt就是root的缩写） 中的String包明相同，也只会加载 rt.jar中的String">
+<meta name="description" content="JVM调优99%都是在调 方法区 和 堆 ，且大部分是堆， 垃圾回收也回收这两个区域  双亲委派机制java为了安全会有一个类的加载顺序 APP –&gt; EXT(ext文件夹下的jar) –&gt; ROOT（rt.jar）（最终执行） 所以，即使在项目中定义了一个String类，且和rt.jar（rt就是root的缩写） 中的String包明相同，也只会加载 rt.jar中的Strin">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JVM知识点">
 <meta property="og:url" content="http://example.com/2021/08/25/JVM%E7%9F%A5%E8%AF%86%E7%82%B9/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="JVM调优99%都是在调 方法区 和 堆 ，且大部分是堆， 垃圾回收也回收这两个区域  双亲委派机制java为了安全会有一个类的加载顺序 APP –&gt; EXT(ext文件夹下的jar) –&gt; ROOT（rt.jar）（最终执行） 所以，即使在项目中定义了一个String类，且和rt.jar（rt就是root的缩写） 中的String包明相同，也只会加载 rt.jar中的String">
+<meta property="og:description" content="JVM调优99%都是在调 方法区 和 堆 ，且大部分是堆， 垃圾回收也回收这两个区域  双亲委派机制java为了安全会有一个类的加载顺序 APP –&gt; EXT(ext文件夹下的jar) –&gt; ROOT（rt.jar）（最终执行） 所以，即使在项目中定义了一个String类，且和rt.jar（rt就是root的缩写） 中的String包明相同，也只会加载 rt.jar中的Strin">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/.com//caopeisheng/Hexo-Blog/source/_posts/JVM%E7%9F%A5%E8%AF%86%E7%82%B9/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B.png">
 <meta property="og:image" content="http://example.com/Users/caopeisheng/Library/Application%20Support/typora-user-images/image-20210825195314252.png">
-<meta property="og:image" content="http://example.com/Users/caopeisheng/Hexo-Blog/source/picture/image-20210825215354387.png">
+<meta property="og:image" content="http://example.com/.com//caopeisheng/Hexo-Blog/source/picture/image-20210825215354387.png">
 <meta property="article:published_time" content="2021-08-25T11:46:08.000Z">
-<meta property="article:modified_time" content="2021-08-26T06:32:19.977Z">
+<meta property="article:modified_time" content="2021-09-11T07:33:13.455Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="JVM">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/Users/caopeisheng/Library/Application%20Support/typora-user-images/image-20210825195314252.png">
+<meta name="twitter:image" content="http://example.com/.com//caopeisheng/Hexo-Blog/source/_posts/JVM%E7%9F%A5%E8%AF%86%E7%82%B9/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B.png">
 
 
 <link rel="canonical" href="http://example.com/2021/08/25/JVM%E7%9F%A5%E8%AF%86%E7%82%B9/">
@@ -111,7 +112,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%8C%E4%BA%B2%E5%A7%94%E6%B4%BE%E6%9C%BA%E5%88%B6"><span class="nav-number">1.</span> <span class="nav-text">双亲委派机制</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%8C%E4%BA%B2%E5%A7%94%E6%B4%BE%E6%9C%BA%E5%88%B6"><span class="nav-number">1.</span> <span class="nav-text">双亲委派机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B2%99%E7%AE%B1%E5%AE%89%E5%85%A8%E6%9C%BA%E5%88%B6"><span class="nav-number">2.</span> <span class="nav-text">沙箱安全机制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%84%E6%88%90%E6%B2%99%E7%AE%B1%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%BB%84%E4%BB%B6"><span class="nav-number">2.1.</span> <span class="nav-text">组成沙箱的基本组件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JVM%E5%A0%86%E5%86%85%E5%AD%98"><span class="nav-number">3.</span> <span class="nav-text">JVM堆内存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JVM%E5%8F%82%E6%95%B0%E8%B0%83%E4%BC%98"><span class="nav-number">4.</span> <span class="nav-text">JVM参数调优</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GC%E7%AE%97%E6%B3%95"><span class="nav-number">5.</span> <span class="nav-text">GC算法</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -125,7 +126,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-count">10</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -201,7 +202,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-08-26 14:32:19" itemprop="dateModified" datetime="2021-08-26T14:32:19+08:00">2021-08-26</time>
+        <time title="Modified: 2021-09-11 15:33:13" itemprop="dateModified" datetime="2021-09-11T15:33:13+08:00">2021-09-11</time>
       </span>
 
   
@@ -214,13 +215,44 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <img src="/Users/caopeisheng/Library/Application Support/typora-user-images/image-20210825195314252.png" alt="image-20210825195314252" style="zoom:50%;" />
+        <p><img src="/.com//caopeisheng/Hexo-Blog/source/_posts/JVM%E7%9F%A5%E8%AF%86%E7%82%B9/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B.png" alt="image-20210911130213222"></p>
+<img src="/Users/caopeisheng/Library/Application Support/typora-user-images/image-20210825195314252.png" alt="image-20210825195314252" style="zoom:50%;">
 
 <p>JVM调优99%都是在调 <strong>方法区</strong> 和 <strong>堆</strong> ，且大部分是堆， 垃圾回收也回收这两个区域</p>
-<p><img src="/Users/caopeisheng/Hexo-Blog/source/picture/image-20210825215354387.png" alt="image-20210825215354387"></p>
+<p><img src="/.com//caopeisheng/Hexo-Blog/source/picture/image-20210825215354387.png" alt="image-20210825215354387"></p>
 <h2 id="双亲委派机制"><a href="#双亲委派机制" class="headerlink" title="双亲委派机制"></a>双亲委派机制</h2><p>java为了安全会有一个类的加载顺序</p>
 <p><strong>APP –&gt; EXT(ext文件夹下的jar) –&gt; ROOT（rt.jar）（最终执行）</strong></p>
 <p>所以，即使在项目中定义了一个String类，且和rt.jar（rt就是root的缩写） 中的String包明相同，也只会加载 rt.jar中的String</p>
+<h2 id="沙箱安全机制"><a href="#沙箱安全机制" class="headerlink" title="沙箱安全机制"></a>沙箱安全机制</h2><h3 id="组成沙箱的基本组件"><a href="#组成沙箱的基本组件" class="headerlink" title="组成沙箱的基本组件"></a>组成沙箱的基本组件</h3><p>**<code>字节码校验器</code>**：确保Java类文件遵守Java语言规范。也可以帮助Java实现内存保护。但并不是所有的类都会经过字节码校验，比如核心类。（java javax）</p>
+<p><strong>类装载器</strong>：在3个方面对Java沙箱起作用：</p>
+<ul>
+<li>防止恶意代码干涉善意代码  //eg 双亲委派机制</li>
+<li>守护了被信任的类库边界 //eg 双亲委派机制</li>
+<li>将代码归入保护域，确定了代码可以进行那些操作</li>
+</ul>
+<h2 id="JVM堆内存"><a href="#JVM堆内存" class="headerlink" title="JVM堆内存"></a>JVM堆内存</h2><p>![image-20210830165415294](/Users/caopeisheng/Library/Application Support/typora-user-images/image-20210830165415294.png)</p>
+<p><strong>永久区</strong></p>
+<p>这个区域是常驻内存的。用来存放一些jdk自身存在的Class对象。Interface元数据，存储的是java运行时的一些环境或类信息，这个区域不存在垃圾回收！</p>
+<p>一个启动类加载了太多的第三方jar包、tomcat部署太多应用、大量动态生成的反射类等情况，不断加载，知道内存满，就会出现OOM</p>
+<p>jdk1.6：永久代，常量池在方法区中</p>
+<p>jdk1.7 ：永久代，但是慢慢的退化了，去永久代，常量池在堆中</p>
+<p>jdk1.8后：无永久代，常量池在元空间</p>
+<p>![image-20210830170324793](/Users/caopeisheng/Library/Application Support/typora-user-images/image-20210830170324793.png)</p>
+<h2 id="JVM参数调优"><a href="#JVM参数调优" class="headerlink" title="JVM参数调优"></a>JVM参数调优</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">long</span> max = Runtime.getRuntime().maxMemory();</span><br><span class="line">    <span class="keyword">long</span> total = Runtime.getRuntime().totalMemory();</span><br><span class="line">    System.out.println(<span class="string">&quot;max=&quot;</span>+max/(<span class="keyword">double</span>)<span class="number">1024</span>/<span class="number">1024</span> + <span class="string">&quot;MB&quot;</span>);</span><br><span class="line">    System.out.println(<span class="string">&quot;total=&quot;</span>+total/(<span class="keyword">double</span>)<span class="number">1024</span>/<span class="number">1024</span> + <span class="string">&quot;MB&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// OOM问题解决:</span></span><br><span class="line">    <span class="comment">//1.尝试扩大堆内存看结果</span></span><br><span class="line">    <span class="comment">//2。分析内存，看哪里出问题</span></span><br><span class="line">    <span class="comment">// 默认情况下：分配的总内存是 电脑内存的1/4，而初始化的内存：1/64 （粗略值）</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这时候填入JVM参数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-Xms1024m -Xmx1024m -XX:+PrintGCDetails</span><br></pre></td></tr></table></figure>
+
+<p><code>-Xms1024m</code> 是指： JVM启动时整个堆(包括年轻代，年老代)的初始化大小。</p>
+<p><code>-Xmx1024m</code> 是指： JVM启动时整个堆的最大值。</p>
+<p><code>-Xmn1024m</code>是指：年轻代的空间大小，剩下的是年老代的空间。</p>
+<p><code>-XX:+PrintGCDetails</code>    是指，打印GC的信息</p>
+<p><code>-XX:+HeapDumpOnOutOfMemoryError</code> 是指：打印出OOM的Dump文件</p>
+<p>![image-20210830173444956](/Users/caopeisheng/Library/Application Support/typora-user-images/image-20210830173444956.png)</p>
+<h2 id="GC算法"><a href="#GC算法" class="headerlink" title="GC算法"></a>GC算法</h2><p>相关概念：<strong>标记清除法、标记压缩、复制算法</strong>、引用计数器（一般不使用）</p>
+<p><strong>新生代使用：复制算法</strong> （from survivor、to survivor）</p>
+<p><strong>老年代使用：标记清除法+标记压缩法</strong></p>
+<p>一般不使用引用计数器法的实现</p>
 
     </div>
 
