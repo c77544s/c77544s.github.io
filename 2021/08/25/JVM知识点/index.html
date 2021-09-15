@@ -27,15 +27,17 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="JVM调优99%都是在调 方法区 和 堆 ，且大部分是堆， 垃圾回收也回收这两个区域  双亲委派机制java为了安全会有一个类的加载顺序 APP –&gt; EXT(ext文件夹下的jar) –&gt; ROOT（rt.jar）（最终执行） 所以，即使在项目中定义了一个String类，且和rt.jar（rt就是root的缩写） 中的String包明相同，也只会加载 rt.jar中的Strin">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/.com//caopeisheng/Hexo-Blog/source/_posts/JVM%E7%9F%A5%E8%AF%86%E7%82%B9/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B.png">
-<meta property="og:image" content="http://example.com/Users/caopeisheng/Library/Application%20Support/typora-user-images/image-20210825195314252.png">
-<meta property="og:image" content="http://example.com/.com//caopeisheng/Hexo-Blog/source/picture/image-20210825215354387.png">
+<meta property="og:image" content="http://example.com/Users/caopeisheng/Hexo-Blog/source/_posts/JVM%E7%9F%A5%E8%AF%86%E7%82%B9/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B.png">
+<meta property="og:image" content="http://example.com/Users/caopeisheng/Hexo-Blog/source/_posts/JVM知识点/image-20210825195314252.png">
+<meta property="og:image" content="http://example.com/Users/caopeisheng/Hexo-Blog/source/_posts/JVM%E7%9F%A5%E8%AF%86%E7%82%B9/image-20210825215354387.png">
+<meta property="og:image" content="http://example.com/Users/caopeisheng/Hexo-Blog/source/_posts/JVM%E7%9F%A5%E8%AF%86%E7%82%B9/image-20210830165415294.png">
+<meta property="og:image" content="http://example.com/Users/caopeisheng/Hexo-Blog/source/_posts/JVM%E7%9F%A5%E8%AF%86%E7%82%B9/image-20210830170324793.png">
 <meta property="article:published_time" content="2021-08-25T11:46:08.000Z">
-<meta property="article:modified_time" content="2021-09-11T07:33:13.455Z">
+<meta property="article:modified_time" content="2021-09-15T06:07:51.660Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="JVM">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/.com//caopeisheng/Hexo-Blog/source/_posts/JVM%E7%9F%A5%E8%AF%86%E7%82%B9/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B.png">
+<meta name="twitter:image" content="http://example.com/Users/caopeisheng/Hexo-Blog/source/_posts/JVM%E7%9F%A5%E8%AF%86%E7%82%B9/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B.png">
 
 
 <link rel="canonical" href="http://example.com/2021/08/25/JVM%E7%9F%A5%E8%AF%86%E7%82%B9/">
@@ -202,7 +204,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-09-11 15:33:13" itemprop="dateModified" datetime="2021-09-11T15:33:13+08:00">2021-09-11</time>
+        <time title="Modified: 2021-09-15 14:07:51" itemprop="dateModified" datetime="2021-09-15T14:07:51+08:00">2021-09-15</time>
       </span>
 
   
@@ -215,11 +217,11 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p><img src="/.com//caopeisheng/Hexo-Blog/source/_posts/JVM%E7%9F%A5%E8%AF%86%E7%82%B9/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B.png" alt="image-20210911130213222"></p>
-<img src="/Users/caopeisheng/Library/Application Support/typora-user-images/image-20210825195314252.png" alt="image-20210825195314252" style="zoom:50%;">
+        <p><img src="/Users/caopeisheng/Hexo-Blog/source/_posts/JVM%E7%9F%A5%E8%AF%86%E7%82%B9/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B.png" alt="image-20210911130213222"></p>
+<img src="/Users/caopeisheng/Hexo-Blog/source/_posts/JVM知识点/image-20210825195314252.png" alt="image-20210825195314252" style="zoom:50%;">
 
 <p>JVM调优99%都是在调 <strong>方法区</strong> 和 <strong>堆</strong> ，且大部分是堆， 垃圾回收也回收这两个区域</p>
-<p><img src="/.com//caopeisheng/Hexo-Blog/source/picture/image-20210825215354387.png" alt="image-20210825215354387"></p>
+<p><img src="/Users/caopeisheng/Hexo-Blog/source/_posts/JVM%E7%9F%A5%E8%AF%86%E7%82%B9/image-20210825215354387.png" alt="image-20210825215354387"></p>
 <h2 id="双亲委派机制"><a href="#双亲委派机制" class="headerlink" title="双亲委派机制"></a>双亲委派机制</h2><p>java为了安全会有一个类的加载顺序</p>
 <p><strong>APP –&gt; EXT(ext文件夹下的jar) –&gt; ROOT（rt.jar）（最终执行）</strong></p>
 <p>所以，即使在项目中定义了一个String类，且和rt.jar（rt就是root的缩写） 中的String包明相同，也只会加载 rt.jar中的String</p>
@@ -230,14 +232,14 @@
 <li>守护了被信任的类库边界 //eg 双亲委派机制</li>
 <li>将代码归入保护域，确定了代码可以进行那些操作</li>
 </ul>
-<h2 id="JVM堆内存"><a href="#JVM堆内存" class="headerlink" title="JVM堆内存"></a>JVM堆内存</h2><p>![image-20210830165415294](/Users/caopeisheng/Library/Application Support/typora-user-images/image-20210830165415294.png)</p>
+<h2 id="JVM堆内存"><a href="#JVM堆内存" class="headerlink" title="JVM堆内存"></a>JVM堆内存</h2><p><img src="/Users/caopeisheng/Hexo-Blog/source/_posts/JVM%E7%9F%A5%E8%AF%86%E7%82%B9/image-20210830165415294.png" alt="image-20210830165415294"></p>
 <p><strong>永久区</strong></p>
 <p>这个区域是常驻内存的。用来存放一些jdk自身存在的Class对象。Interface元数据，存储的是java运行时的一些环境或类信息，这个区域不存在垃圾回收！</p>
 <p>一个启动类加载了太多的第三方jar包、tomcat部署太多应用、大量动态生成的反射类等情况，不断加载，知道内存满，就会出现OOM</p>
 <p>jdk1.6：永久代，常量池在方法区中</p>
 <p>jdk1.7 ：永久代，但是慢慢的退化了，去永久代，常量池在堆中</p>
 <p>jdk1.8后：无永久代，常量池在元空间</p>
-<p>![image-20210830170324793](/Users/caopeisheng/Library/Application Support/typora-user-images/image-20210830170324793.png)</p>
+<p><img src="/Users/caopeisheng/Hexo-Blog/source/_posts/JVM%E7%9F%A5%E8%AF%86%E7%82%B9/image-20210830170324793.png" alt="image-20210830170324793"></p>
 <h2 id="JVM参数调优"><a href="#JVM参数调优" class="headerlink" title="JVM参数调优"></a>JVM参数调优</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">long</span> max = Runtime.getRuntime().maxMemory();</span><br><span class="line">    <span class="keyword">long</span> total = Runtime.getRuntime().totalMemory();</span><br><span class="line">    System.out.println(<span class="string">&quot;max=&quot;</span>+max/(<span class="keyword">double</span>)<span class="number">1024</span>/<span class="number">1024</span> + <span class="string">&quot;MB&quot;</span>);</span><br><span class="line">    System.out.println(<span class="string">&quot;total=&quot;</span>+total/(<span class="keyword">double</span>)<span class="number">1024</span>/<span class="number">1024</span> + <span class="string">&quot;MB&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// OOM问题解决:</span></span><br><span class="line">    <span class="comment">//1.尝试扩大堆内存看结果</span></span><br><span class="line">    <span class="comment">//2。分析内存，看哪里出问题</span></span><br><span class="line">    <span class="comment">// 默认情况下：分配的总内存是 电脑内存的1/4，而初始化的内存：1/64 （粗略值）</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>这时候填入JVM参数</p>
