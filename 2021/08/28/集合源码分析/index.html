@@ -27,20 +27,20 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="HashCode为什么使用31作为乘数 31 是⼀个奇质数，如果选择偶数会导致乘积运算时数据溢出。  另外在⼆进制中，2个5次⽅是32，那么也就是 31 * i &#x3D;&#x3D; (i &lt;&lt; 5) - i 。这主要是说乘积运算   可以使⽤位移提升性能，同时⽬前的JVM虚拟机也会⾃动⽀持此类的优化。  碰撞少，和33、37、39、41比起来乘数是31的时候，碰撞的概率已经很⼩了，基本稳定。   顺">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/Users/caopeisheng/Hexo-Blog/source/_posts/%E9%9B%86%E5%90%88%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/image-20210828140827836.png">
-<meta property="og:image" content="http://example.com/Users/caopeisheng/Hexo-Blog/source/_posts/%E9%9B%86%E5%90%88%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/image-20210828143930308.png">
-<meta property="og:image" content="http://example.com/Users/caopeisheng/Hexo-Blog/source/_posts/%E9%9B%86%E5%90%88%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/image-20210828150220532.png">
-<meta property="og:image" content="http://example.com/Users/caopeisheng/Hexo-Blog/source/_posts/%E9%9B%86%E5%90%88%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/image-20210828151943345.png">
-<meta property="og:image" content="http://example.com/Users/caopeisheng/Hexo-Blog/source/_posts/%E9%9B%86%E5%90%88%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/image-20210828153305822.png">
-<meta property="og:image" content="http://example.com/Users/caopeisheng/Hexo-Blog/source/_posts/%E9%9B%86%E5%90%88%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/image-20210828154724482.png">
-<meta property="og:image" content="http://example.com/Users/caopeisheng/Hexo-Blog/source/_posts/%E9%9B%86%E5%90%88%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/image-20210828160103343.png">
-<meta property="og:image" content="http://example.com/Users/caopeisheng/Hexo-Blog/source/_posts/%E9%9B%86%E5%90%88%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/image-20210828160132910.png">
-<meta property="og:image" content="http://example.com/Users/caopeisheng/Hexo-Blog/source/_posts/%E9%9B%86%E5%90%88%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/image-20210829120240946.png">
+<meta property="og:image" content="http://example.com/2021/08/28/%E9%9B%86%E5%90%88%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/image-20210828140827836.png">
+<meta property="og:image" content="http://example.com/2021/08/28/%E9%9B%86%E5%90%88%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/image-20210828143930308.png">
+<meta property="og:image" content="http://example.com/2021/08/28/%E9%9B%86%E5%90%88%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/image-20210828150220532.png">
+<meta property="og:image" content="http://example.com/2021/08/28/%E9%9B%86%E5%90%88%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/image-20210828151943345.png">
+<meta property="og:image" content="http://example.com/2021/08/28/%E9%9B%86%E5%90%88%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/image-20210828153305822.png">
+<meta property="og:image" content="http://example.com/2021/08/28/%E9%9B%86%E5%90%88%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/image-20210828154724482.png">
+<meta property="og:image" content="http://example.com/2021/08/28/%E9%9B%86%E5%90%88%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/image-20210828160103343.png">
+<meta property="og:image" content="http://example.com/2021/08/28/%E9%9B%86%E5%90%88%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/image-20210828160132910.png">
+<meta property="og:image" content="http://example.com/2021/08/28/%E9%9B%86%E5%90%88%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/image-20210829120240946.png">
 <meta property="article:published_time" content="2021-08-28T05:54:49.000Z">
-<meta property="article:modified_time" content="2021-09-15T06:11:04.568Z">
+<meta property="article:modified_time" content="2021-09-15T06:23:32.522Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/Users/caopeisheng/Hexo-Blog/source/_posts/%E9%9B%86%E5%90%88%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/image-20210828140827836.png">
+<meta name="twitter:image" content="http://example.com/2021/08/28/%E9%9B%86%E5%90%88%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/image-20210828140827836.png">
 
 
 <link rel="canonical" href="http://example.com/2021/08/28/%E9%9B%86%E5%90%88%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">
@@ -207,7 +207,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-09-15 14:11:04" itemprop="dateModified" datetime="2021-09-15T14:11:04+08:00">2021-09-15</time>
+        <time title="Modified: 2021-09-15 14:23:32" itemprop="dateModified" datetime="2021-09-15T14:23:32+08:00">2021-09-15</time>
       </span>
 
   
@@ -229,7 +229,7 @@
 <p>可以使⽤位移提升性能，同时⽬前的JVM虚拟机也会⾃动⽀持此类的优化。</p>
 <ol start="3">
 <li><p>碰撞少，和33、37、39、41比起来乘数是<strong>31</strong>的时候，碰撞的概率已经很⼩了，基本稳定。</p>
-<p><img src="/Users/caopeisheng/Hexo-Blog/source/_posts/%E9%9B%86%E5%90%88%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/image-20210828140827836.png" alt="image-20210828140827836"></p>
+<p><img src="/2021/08/28/%E9%9B%86%E5%90%88%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/image-20210828140827836.png" alt="image-20210828140827836"></p>
 </li>
 <li><p>顺着往下看，你会发现199的碰撞概率更⼩，这就相当于⼀排奇数的茅坑量多，⾃然会减少碰撞。</p>
 </li>
@@ -248,7 +248,7 @@
 <p>默认初始化的Map⼤⼩是16个⻓度 <code>DEFAULT_INITIAL_CAPACITY = 1 &lt;&lt; 4</code> ，所以获取的Hash值</p>
 <p>并不能直接作为下标使⽤，需要与数组⻓度进⾏取模运算得到⼀个下标值，也就是我们上⾯做的散列列</p>
 <p>⼦。</p>
-<p><img src="/Users/caopeisheng/Hexo-Blog/source/_posts/%E9%9B%86%E5%90%88%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/image-20210828143930308.png" alt="image-20210828143930308"></p>
+<p><img src="/2021/08/28/%E9%9B%86%E5%90%88%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/image-20210828143930308.png" alt="image-20210828143930308"></p>
 <p>说⽩了，使⽤扰动函数就是为了增加随机性，让数据元素更加均衡的散列，减少碰撞</p>
 <h2 id="初始化容量"><a href="#初始化容量" class="headerlink" title="初始化容量"></a>初始化容量</h2><p>HashMap初始化代码：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">HashMap</span><span class="params">(<span class="keyword">int</span> initialCapacity, <span class="keyword">float</span> loadFactor)</span> </span>&#123;</span><br><span class="line"> 	...</span><br><span class="line">	<span class="keyword">this</span>.loadFactor = loadFactor;</span><br><span class="line">	<span class="keyword">this</span>.threshold = tableSizeFor(initialCapacity);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -264,13 +264,13 @@
 <h2 id="扩容元素拆分"><a href="#扩容元素拆分" class="headerlink" title="扩容元素拆分"></a>扩容元素拆分</h2><p>如上所述，数组长度是2的倍数，每次扩容是：原先的长度*2</p>
 <p>扩容最直接的问题，就是需要把元素拆分到新的数组中。拆分元素的过程中，原jdk1.7中会需要重新计算哈希值，但是到jdk1.8中已经进⾏优化，不在需要重新计算，提升了拆分的性能。</p>
 <p>原哈希值和扩容后的长度进行<code>&amp;</code>运算,如果值等于0，则下标位置不变。如果不为0，那么新的位置则是原来位置上加老的数组长度。</p>
-<p><img src="/Users/caopeisheng/Hexo-Blog/source/_posts/%E9%9B%86%E5%90%88%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/image-20210828150220532.png" alt="image-20210828150220532"></p>
+<p><img src="/2021/08/28/%E9%9B%86%E5%90%88%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/image-20210828150220532.png" alt="image-20210828150220532"></p>
 <ul>
 <li>这张图就是原16位⻓度数组元素，像32位数组⻓度中转移的过程。</li>
 <li>其中⻩⾊区域元素 <code>zuio</code> 因计算结果 <code>hash &amp; oldCap</code> 不为1，则被迁移到下标位置24。</li>
 <li>同时还是⽤重新计算哈希值的⽅式验证了，确实分配到24的位置，因为这是在⼆进制计算中补1的过程，所以可以通过上⾯简化的⽅式确定哈希值的位置。</li>
 </ul>
-<h2 id="插入"><a href="#插入" class="headerlink" title="插入"></a>插入</h2><h3 id="插入流程："><a href="#插入流程：" class="headerlink" title="插入流程："></a>插入流程：</h3><p><img src="/Users/caopeisheng/Hexo-Blog/source/_posts/%E9%9B%86%E5%90%88%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/image-20210828151943345.png" alt="image-20210828151943345"></p>
+<h2 id="插入"><a href="#插入" class="headerlink" title="插入"></a>插入</h2><h3 id="插入流程："><a href="#插入流程：" class="headerlink" title="插入流程："></a>插入流程：</h3><p><img src="/2021/08/28/%E9%9B%86%E5%90%88%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/image-20210828151943345.png" alt="image-20210828151943345"></p>
 <p>以上就是HashMap中⼀个数据插⼊的整体流程，包括了；计算下标、何时扩容、何时链表转红⿊树等，</p>
 <p>具体如下；</p>
 <ol>
@@ -291,7 +291,7 @@
 </ol>
 <h3 id="扩容机制"><a href="#扩容机制" class="headerlink" title="扩容机制"></a>扩容机制</h3><p>参考上一小节的扩容元素拆分</p>
 <h3 id="链表树化"><a href="#链表树化" class="headerlink" title="链表树化"></a>链表树化</h3><p>jdk1.8之前的设计只是采⽤链表的⽅式进⾏存放，如果需要从链表中定位到数据时间复杂度就是O(n)，链表越⻓性能越差。因为在jdk1.8中把过⻓的链表也就是<strong>8个</strong>，优化为⾃平衡的红⿊树结构，以此让定位元素的时间复杂度优化近似于O(logn)，这样来提升元素查找的效率。但也不是完全抛弃链表，因为在元素相对不多的情况下，链表的插⼊速度更快，所以综合考虑下设定<strong>阈值为8</strong>才进⾏红⿊树转换操作。</p>
-<p><img src="/Users/caopeisheng/Hexo-Blog/source/_posts/%E9%9B%86%E5%90%88%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/image-20210828153305822.png" alt="image-20210828153305822"></p>
+<p><img src="/2021/08/28/%E9%9B%86%E5%90%88%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/image-20210828153305822.png" alt="image-20210828153305822"></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">final</span> <span class="keyword">void</span> <span class="title">treeifyBin</span><span class="params">(Node&lt;K,V&gt;[] tab, <span class="keyword">int</span> hash)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n, index; Node&lt;K,V&gt; e;</span><br><span class="line">    <span class="comment">// 这块就是我们上⾯提到的，不⼀定树化还可能只是扩容。主要桶数组容量是否⼩于64 MIN_TREEIFY_CAPACITY</span></span><br><span class="line">    <span class="keyword">if</span> (tab == <span class="keyword">null</span> || (n = tab.length) &lt; MIN_TREEIFY_CAPACITY)</span><br><span class="line">        resize();</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> ((e = tab[index = (n - <span class="number">1</span>) &amp; hash]) != <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="comment">// ⼜是单词缩写；hd = head (头部)，tl = tile (结尾)</span></span><br><span class="line">        TreeNode&lt;K,V&gt; hd = <span class="keyword">null</span>, tl = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">do</span> &#123;</span><br><span class="line">            <span class="comment">// 将普通节点转换为树节点，但此时还不是红⿊树，也就是说还不⼀定平衡</span></span><br><span class="line">            TreeNode&lt;K,V&gt; p = replacementTreeNode(e, <span class="keyword">null</span>);</span><br><span class="line">            <span class="keyword">if</span> (tl == <span class="keyword">null</span>)</span><br><span class="line">                hd = p;</span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">                p.prev = tl;</span><br><span class="line">                tl.next = p;</span><br><span class="line">            &#125;</span><br><span class="line">            tl = p;</span><br><span class="line">        &#125; <span class="keyword">while</span> ((e = e.next) != <span class="keyword">null</span>);</span><br><span class="line">        <span class="keyword">if</span> ((tab[index] = hd) != <span class="keyword">null</span>)</span><br><span class="line">            <span class="comment">// 转红⿊树操作，这⾥需要循环⽐较，染⾊、旋转。关于红⿊树，在下⼀章节详细讲解</span></span><br><span class="line">            hd.treeify(tab);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>以上源码主要包括的知识点如下；</p>
@@ -303,7 +303,7 @@
 <h3 id="红黑树转链表"><a href="#红黑树转链表" class="headerlink" title="红黑树转链表"></a>红黑树转链表</h3><p>在链表转红⿊树中，记录了原有链表的顺序。那么，这就简单了，红⿊树转链表时候，直接把TreeNode转换为Node即可，源码如下</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">final</span> Node&lt;K, V&gt; <span class="title">untreeify</span><span class="params">(HashMap&lt;K, V&gt; map)</span> </span>&#123;</span><br><span class="line">    Node&lt;K, V&gt; hd = <span class="keyword">null</span>, tl = <span class="keyword">null</span>;</span><br><span class="line">    <span class="comment">// 遍历TreeNode</span></span><br><span class="line">    <span class="keyword">for</span> (Node&lt;K, V&gt; q = <span class="keyword">this</span>; q != <span class="keyword">null</span>; q = q.next) &#123;</span><br><span class="line">        <span class="comment">// TreeNode替换Node</span></span><br><span class="line">        Node&lt;K, V&gt; p = map.replacementNode(q, <span class="keyword">null</span>);</span><br><span class="line">        <span class="keyword">if</span> (tl == <span class="keyword">null</span>)</span><br><span class="line">            hd = p;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            tl.next = p;</span><br><span class="line">        tl = p;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> hd;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 替换⽅法</span></span><br><span class="line"><span class="function">Node&lt;K, V&gt; <span class="title">replacementNode</span><span class="params">(Node&lt;K, V&gt; p, Node&lt;K, V&gt; next)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Node&lt;&gt;(p.hash, p.key, p.value, next);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h2 id="查找"><a href="#查找" class="headerlink" title="查找"></a>查找</h2><p><img src="/Users/caopeisheng/Hexo-Blog/source/_posts/%E9%9B%86%E5%90%88%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/image-20210828154724482.png" alt="image-20210828154724482"></p>
+<h2 id="查找"><a href="#查找" class="headerlink" title="查找"></a>查找</h2><p><img src="/2021/08/28/%E9%9B%86%E5%90%88%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/image-20210828154724482.png" alt="image-20210828154724482"></p>
 <h2 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h2><p>比较简单，不做介绍</p>
 <h2 id="遍历"><a href="#遍历" class="headerlink" title="遍历"></a>遍历</h2><p><strong>KeySet</strong></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (String key : map.keySet()) &#123;</span><br><span class="line">	System.out.print(key + <span class="string">&quot; &quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -313,10 +313,10 @@
 
 <p>从⽅法上以及⽇常使⽤都知道，KeySet是遍历是⽆序的，但每次使⽤不同⽅式遍历包括 <code>keys.iterator()</code> ，它们遍历的结果是固定的。</p>
 <p><strong>链表和红黑树的遍历如下图所示：</strong></p>
-<p><img src="/Users/caopeisheng/Hexo-Blog/source/_posts/%E9%9B%86%E5%90%88%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/image-20210828160103343.png"></p>
-<p><img src="/Users/caopeisheng/Hexo-Blog/source/_posts/%E9%9B%86%E5%90%88%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/image-20210828160132910.png" alt="image-20210828160132910"></p>
+<p><img src="/2021/08/28/%E9%9B%86%E5%90%88%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/image-20210828160103343.png"></p>
+<p><img src="/2021/08/28/%E9%9B%86%E5%90%88%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/image-20210828160132910.png" alt="image-20210828160132910"></p>
 <h1 id="ArrayList数据结构"><a href="#ArrayList数据结构" class="headerlink" title="ArrayList数据结构"></a>ArrayList数据结构</h1><p><code>Array + List = 数组 + 列表 = ArrayList = 数组列表</code></p>
-<p><img src="/Users/caopeisheng/Hexo-Blog/source/_posts/%E9%9B%86%E5%90%88%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/image-20210829120240946.png" alt="image-20210829120240946"></p>
+<p><img src="/2021/08/28/%E9%9B%86%E5%90%88%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/image-20210829120240946.png" alt="image-20210829120240946"></p>
 <p>ArrayList默认初始化时会申请<strong>10</strong>个⻓度的空间</p>
 <h1 id="ArrayList扩容"><a href="#ArrayList扩容" class="headerlink" title="ArrayList扩容"></a>ArrayList扩容</h1><p>扩容的⻓度计算； <code>int newCapacity = oldCapacity + (oldCapacity &gt;&gt; 1);</code> ，旧容量 + 旧</p>
 <p>容量右移1位，这相当于扩容了原来容量的 <code>(int)3/2</code> 。</p>
