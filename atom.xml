@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2021-09-15T08:47:57.330Z</updated>
+  <updated>2021-09-16T09:08:54.708Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,55 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>synchronized 的锁升级机制</title>
+    <link href="http://example.com/2021/09/16/synchronized-%E7%9A%84%E9%94%81%E5%8D%87%E7%BA%A7%E6%9C%BA%E5%88%B6/"/>
+    <id>http://example.com/2021/09/16/synchronized-%E7%9A%84%E9%94%81%E5%8D%87%E7%BA%A7%E6%9C%BA%E5%88%B6/</id>
+    <published>2021-09-16T08:54:39.000Z</published>
+    <updated>2021-09-16T09:08:54.708Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;&lt;img src=&quot;https://img2020.cnblogs.com/blog/1873356/202006/1873356-20200613184834887-625666670.png&quot;</summary>
+        
+      
+    
+    
+    
+    
+    <category term="synchronized" scheme="http://example.com/tags/synchronized/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Redisson笔记</title>
+    <link href="http://example.com/2021/09/16/Redisson%E7%AC%94%E8%AE%B0/"/>
+    <id>http://example.com/2021/09/16/Redisson%E7%AC%94%E8%AE%B0/</id>
+    <published>2021-09-16T05:16:18.000Z</published>
+    <updated>2021-09-16T08:49:43.785Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;资料来源：&lt;/p&gt;
+&lt;p&gt;[Redisson 分布式锁实战与 watch dog 机制解读](&lt;a href=&quot;https://www.cnblogs.com/keeya/p/14332131.html&quot;&gt;Redisson 分布式锁实战与 watch dog 机制解读 -</summary>
+        
+      
+    
+    
+    
+    
+    <category term="Redisson" scheme="http://example.com/tags/Redisson/"/>
+    
+    <category term="分布式锁" scheme="http://example.com/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/"/>
+    
+  </entry>
   
   <entry>
     <title>JUC笔记</title>
