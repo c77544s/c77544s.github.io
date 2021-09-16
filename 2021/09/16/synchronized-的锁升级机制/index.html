@@ -154,7 +154,7 @@ MathJax = {
           
       </div>
       <div class="markdown-body">
-        <p><img src="https://img2020.cnblogs.com/blog/1873356/202006/1873356-20200613184834887-625666670.png" alt="synchronized锁升级流程图"></p>
+        <p><img src="/2021/09/16/synchronized-%E7%9A%84%E9%94%81%E5%8D%87%E7%BA%A7%E6%9C%BA%E5%88%B6/1873356-20200613184834887-625666670.png" alt="synchronized锁升级流程图"></p>
 <p>Synchronized关键字可以用来修饰方法或者代码块。对于同步方法，JVM 采用 ACC_SYNCHRONIZED 标记符来实现同步。 对于同步代码块。JVM 采用 monitorenter、monitorexit 两个指令来实现同步。</p>
 <p>在JDK1.6之后对对synchronized锁进行了升级，在1.6之前synchronized直接加重量级锁，但是1.6之后对其性能进行了优化，采用锁升级的机制：偏向锁-&gt;自旋锁(轻量级锁)-&gt;重量级锁。</p>
 <p>初次执行到synchronized代码块的时候，锁对象变成偏向锁。线程执行并不会主动释放锁。第二次到达代码块的时候，线程会判断之前的线程是不是自己，如果是自己的话，由于前面没有释放锁的操作，这里也就不用重新加锁，就没有加锁、解锁的开销了。</p>
@@ -167,7 +167,7 @@ MathJax = {
 </ul>
 <p>总共有4种锁状态，级别由低到高依次为：<strong>无锁状态</strong>、<strong>偏向锁状态</strong>、<strong>轻量级锁状态</strong>、<strong>重量级锁状态</strong>。这几个状态会随着竞争情况逐渐升级。</p>
 <p>注意：锁可以升级但不能降级。</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/16538952-895f015b76c2e604.png?imageMogr2/auto-orient/strip%7CimageView2/2/format/webp" alt="img"></p>
+<p><img src="/2021/09/16/synchronized-%E7%9A%84%E9%94%81%E5%8D%87%E7%BA%A7%E6%9C%BA%E5%88%B6/webp.png" alt="img"></p>
 <h2 id="Java-对象头和-Monitor"><a href="#Java-对象头和-Monitor" class="headerlink" title="Java 对象头和 Monitor"></a>Java 对象头和 Monitor</h2><p>在使用 synchronized 来同步代码块的时候，经编译后，会在代码块的起始位置插入 <strong>monitorenter指令</strong>，在结束或异常处插入 <strong>monitorexit指令。</strong>当执行到 monitorenter 指令时，将会尝试获取对象所对应的 **monitor **的所有权，即尝试获得对象的锁。而 synchronized 用的锁是存放在 <strong>Java对象头</strong> 中的。</p>
 <p>所以引出了两个关键词：“Java 对象头” 和 “Monitor”。</p>
 <h4 id="1、Java-对象头"><a href="#1、Java-对象头" class="headerlink" title="1、Java 对象头"></a>1、Java 对象头</h4><p>我们以 Hotspot 虚拟机为例，Hotspot 的对象头主要包括两部分数据：Mark Word（标记字段）、Klass Pointer（类型指针）。</p>

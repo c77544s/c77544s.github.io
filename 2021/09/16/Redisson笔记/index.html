@@ -189,7 +189,7 @@ MathJax = {
 
 
 <h1 id="Watch-dog"><a href="#Watch-dog" class="headerlink" title="Watch dog"></a>Watch dog</h1><p>Redisson如何实现redis分布式锁自动续期？</p>
-<p><img src="https://axin-soochow.oss-cn-hangzhou.aliyuncs.com/20-10/1090617-20190618183025891-1248337684.jpg" alt="img"></p>
+<p><img src="/2021/09/16/Redisson%E7%AC%94%E8%AE%B0/1090617-20190618183025891-1248337684.png" alt="img"></p>
 <p><code>RLock lock = redissonClient.getLock(product);</code></p>
 <p>redisson在获取锁的时候，默认的ttl是30秒，Watch dog会每隔10秒看一下，如果还持有锁，将ttl续期30s（可以通过修改Config.lockWatchdogTimeout来另行指定），从而实现分布式锁的续期。</p>
 <ol>
