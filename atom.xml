@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2021-09-16T09:38:34.505Z</updated>
+  <updated>2021-09-17T03:21:20.874Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Mybatis笔记</title>
+    <link href="http://example.com/2021/09/17/Mybatis%E7%AC%94%E8%AE%B0/"/>
+    <id>http://example.com/2021/09/17/Mybatis%E7%AC%94%E8%AE%B0/</id>
+    <published>2021-09-17T03:13:47.000Z</published>
+    <updated>2021-09-17T03:21:20.874Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;缓存&quot;&gt;&lt;a href=&quot;#缓存&quot; class=&quot;headerlink&quot; title=&quot;缓存&quot;&gt;&lt;/a&gt;缓存&lt;/h2&gt;&lt;h3 id=&quot;SqlSession-一级缓存的工作流程：&quot;&gt;&lt;a href=&quot;#SqlSession-一级缓存的工作流程：&quot;</summary>
+        
+      
+    
+    
+    
+    
+    <category term="Mybatis" scheme="http://example.com/tags/Mybatis/"/>
+    
+  </entry>
   
   <entry>
     <title>synchronized 的锁升级机制</title>
@@ -44,7 +67,7 @@
     <link href="http://example.com/2021/09/16/Redisson%E7%AC%94%E8%AE%B0/"/>
     <id>http://example.com/2021/09/16/Redisson%E7%AC%94%E8%AE%B0/</id>
     <published>2021-09-16T05:16:18.000Z</published>
-    <updated>2021-09-16T09:36:29.072Z</updated>
+    <updated>2021-09-16T09:40:56.147Z</updated>
     
     
       
