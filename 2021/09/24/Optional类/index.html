@@ -11,8 +11,8 @@
   
   <title>
     
-      Tag 
-       : JUC
+      Optional类 
+      
       
       |
     
@@ -110,30 +110,226 @@
 
 
       <div class="flex-container">
-        <!-- 标签详情页，展示某个标签下的文章列表，url形式：https://yoursite/tags/某个标签/ -->
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
 
-<div class="container tag-details">
-  <div class="content-title">
-    <h2>
-      <span>JUC</span>
-    </h2>
-  </div>
+<!-- LaTex Display -->
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']]
+  }
+};
+</script>
+
+
+
   
-    <div class="post-list">
-      <div class="post-item" title="JUC笔记">
-        <span class="time-m-d">2021-09-14</span>
-        <a href="/2021/09/14/JUC%E7%AC%94%E8%AE%B0/">
-          <span>JUC笔记</span>
-        </a>
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">Optional类</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime" title="Update time"></i>
+          2021-09-24 10:21:11
+        </span>
+        
+              <span class="post-tags">
+                <i class="iconfont icon-tags" title="Tags"></i>
+                
+                <span class="span--tag">
+                  <a href="/tags/Optional/" title="Optional">
+                    <b>#</b> Optional
+                  </a>
+                </span>
+                
+                <span class="span--tag">
+                  <a href="/tags/Java8/" title="Java8">
+                    <b>#</b> Java8
+                  </a>
+                </span>
+                
+              </span>
+          
       </div>
+      <div class="markdown-body">
+        <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">Optional</span>&lt;<span class="title">T</span>&gt; <span class="keyword">extends</span> <span class="title">Object</span></span></span><br></pre></td></tr></table></figure>
+
+<p>可能包含或不包含非空值的容器对象。 如果一个值存在， <code>isPresent()</code>将返回<code>true</code>并且<code>get()</code>将返回值。</p>
+<p>提供依赖于存在或不存在包含值的其他方法，例如<a target="_blank" rel="noopener" href="https://www.matools.com/file/manual/jdk_api_1.8_google/java/util/Optional.html#orElse-T-"><code>orElse()</code></a> （如果值不存在则返回默认值）和<a target="_blank" rel="noopener" href="https://www.matools.com/file/manual/jdk_api_1.8_google/java/util/Optional.html#ifPresent-java.util.function.Consumer-"><code>ifPresent()</code></a> （如果值存在<a target="_blank" rel="noopener" href="https://www.matools.com/file/manual/jdk_api_1.8_google/java/util/Optional.html#ifPresent-java.util.function.Consumer-">则</a>执行代码块）。</p>
+<p>这是一个<a target="_blank" rel="noopener" href="https://www.matools.com/file/manual/jdk_api_1.8_google/java/lang/doc-files/ValueBased.html">value-based</a>类; 使用身份敏感的操作（包括引用相等（<code>==</code>），标识哈希码，或同步） <code>Optional</code>可具有不可预测的结果，应当避免。</p>
+<table>
+<thead>
+<tr>
+<th align="left">Modifier and Type</th>
+<th align="left">Method and Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>static &lt;T&gt; Optional&lt;T&gt;</code></td>
+<td align="left"><code>empty()</code><br>返回一个空的 <code>Optional</code>实例。</td>
+</tr>
+<tr>
+<td align="left"><code>boolean</code></td>
+<td align="left"><code>equals(Object obj)</code><br>指示某个其他对象是否等于此可选项。</td>
+</tr>
+<tr>
+<td align="left"><code>Optional&lt;T&gt;</code></td>
+<td align="left"><code>filter(Predicate&lt;? super T&gt; predicate)</code><br>如果一个值存在，并且该值给定的谓词相匹配时，返回一个 <code>Optional</code>描述的值，否则返回一个空的 <code>Optional</code> 。</td>
+</tr>
+<tr>
+<td align="left"><code>&lt;U&gt; Optional&lt;U&gt;</code></td>
+<td align="left"><code>flatMap(Function&lt;? super T,Optional&lt;U&gt;&gt; mapper)</code><br>如果一个值存在，应用提供的 <code>Optional</code>映射函数给它，返回该结果，否则返回一个空的 <code>Optional</code> 。</td>
+</tr>
+<tr>
+<td align="left"><code>T</code></td>
+<td align="left"><code>get()</code><br>如果 <code>Optional</code>中有一个值，返回值，否则抛出 <code>NoSuchElementException</code> 。</td>
+</tr>
+<tr>
+<td align="left"><code>int</code></td>
+<td align="left"><code>hashCode()</code><br>返回当前值的哈希码值（如果有的话），如果没有值，则返回0（零）。</td>
+</tr>
+<tr>
+<td align="left"><code>void</code></td>
+<td align="left"><code>ifPresent(Consumer&lt;? super T&gt; consumer)</code><br>如果存在值，则使用该值调用指定的消费者，否则不执行任何操作。</td>
+</tr>
+<tr>
+<td align="left"><code>boolean</code></td>
+<td align="left"><code>isPresent()</code><br>返回 <code>true</code>如果存在值，否则为 <code>false</code> 。</td>
+</tr>
+<tr>
+<td align="left"><code>&lt;U&gt; Optional&lt;U&gt;</code></td>
+<td align="left"><code>map(Function&lt;? super T,? extends U&gt; mapper)</code><br>如果存在一个值，则应用提供的映射函数，如果结果不为空，则返回一个 <code>Optional</code>结果的 <code>Optional</code> 。</td>
+</tr>
+<tr>
+<td align="left"><code>static &lt;T&gt; Optional&lt;T&gt;</code></td>
+<td align="left"><code>of(T value)</code><br>返回具有 <code>Optional</code>的当前非空值的Optional。</td>
+</tr>
+<tr>
+<td align="left"><code>static &lt;T&gt; Optional&lt;T&gt;</code></td>
+<td align="left"><code>ofNullable(T value)</code><br>返回一个 <code>Optional</code>指定值的Optional，如果非空，则返回一个空的 <code>Optional</code> 。</td>
+</tr>
+<tr>
+<td align="left"><code>T</code></td>
+<td align="left"><code>orElse(T other)</code><br>返回值如果存在，否则返回 <code>other</code> 。</td>
+</tr>
+<tr>
+<td align="left"><code>T</code></td>
+<td align="left"><code>orElseGet(Supplier&lt;? extends T&gt; other)</code><br>返回值（如果存在），否则调用 <code>other</code>并返回该调用的结果。</td>
+</tr>
+<tr>
+<td align="left"><code>&lt;X extends Throwable&gt;T</code></td>
+<td align="left"><code>orElseThrow(Supplier&lt;? extends X&gt; exceptionSupplier)</code><br>返回包含的值（如果存在），否则抛出由提供的供应商创建的异常。</td>
+</tr>
+<tr>
+<td align="left"><code>String</code></td>
+<td align="left"><code>toString()</code><br>返回此可选的非空字符串表示，适用于调试。</td>
+</tr>
+</tbody></table>
+<ul>
+<li><h3 id="从-java-lang-Object类继承的方法"><a href="#从-java-lang-Object类继承的方法" class="headerlink" title="从 java.lang.Object类继承的方法"></a>从 java.lang.<a target="_blank" rel="noopener" href="https://www.matools.com/file/manual/jdk_api_1.8_google/java/lang/Object.html">Object</a>类继承的方法</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">clone, finalize, getClass, notify, notifyAll, wait, wait, wait</span><br></pre></td></tr></table></figure></li>
+</ul>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2021/09/23/Java8-Stream/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime" title="Update time"></i>
+              2021-09-24 10:21:11
+            </span>
+            
+                  <span class="post-tags">
+                    <i class="iconfont icon-tags" title="Tags"></i>
+                    
+                    <span class="span--tag">
+                      <a href="/tags/Optional/" title="Optional">
+                        <b>#</b> Optional
+                      </a>
+                    </span>
+                    
+                    <span class="span--tag">
+                      <a href="/tags/Java8/" title="Java8">
+                        <b>#</b> Java8
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+          </div>
+        </div>
+      
     </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8E-java-lang-Object%E7%B1%BB%E7%BB%A7%E6%89%BF%E7%9A%84%E6%96%B9%E6%B3%95"><span class="toc-text">从 java.lang.Object类继承的方法</span></a></li></ol>
+    </div>
+  </div>
+
   
-  <nav class="post-navigation">
+<script src="/js/catalog.js"></script>
+
+
+
+
     
-    <span class="page-num">1 / 1</span>
+      <div class="comments-container">
+        
+
+
+
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+  <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+  <div id="gitalk-container"></div>
+
+  <script>
+    const gitalk = new Gitalk({
+      clientID: 'f37acf2820e6916417f9',
+      clientSecret: '8f88395732dc1e4b8c0ea2ef0ff3c7678473c637',
+      repo: 'c77544s.github.io',
+      owner: 'c77544s',
+      admin: ['c77544s'],
+      id: location.pathname,
+      distractionFreeMode: false
+    })
+
+    gitalk.render('gitalk-container')
+  </script>
+
+
+      </div>
     
-  </nav>
-</div>
+  </div>
+
 
         <div class="footer">
   <div class="social">
@@ -402,6 +598,24 @@
 
 
         
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + Optional%E7%B1%BB + '&url=' + http%3A%2F%2Fexample.com%2F2021%2F09%2F24%2FOptional%25E7%25B1%25BB%2F + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=http://example.com/2021/09/24/Optional%E7%B1%BB/" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
   
   
 <script src="/js/shares.js"></script>
