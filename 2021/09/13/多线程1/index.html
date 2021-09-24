@@ -145,6 +145,28 @@ MathJax = {
           2021-09-13 14:49:22
         </span>
         
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="Categories"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" title="多线程">
+                    <b>#</b> 多线程
+                  </a>
+                </span>
+                
+              </span>
+          
+              <span class="post-tags">
+                <i class="iconfont icon-tags" title="Tags"></i>
+                
+                <span class="span--tag">
+                  <a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" title="多线程">
+                    <b>#</b> 多线程
+                  </a>
+                </span>
+                
+              </span>
+          
       </div>
       <div class="markdown-body">
         <h2 id="停止线程："><a href="#停止线程：" class="headerlink" title="停止线程："></a>停止线程：</h2><ul>
@@ -154,7 +176,7 @@ MathJax = {
 </ul>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CreateThreadRunnable</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Boolean flag = <span class="keyword">true</span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">while</span> (flag) &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;thread...run&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">stop</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.flag = <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        CreateThreadRunnable p = <span class="keyword">new</span> CreateThreadRunnable();</span><br><span class="line">        <span class="keyword">new</span> Thread(p).start();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">100</span>; i++) &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;i=&quot;</span> + i);</span><br><span class="line">            <span class="keyword">if</span> (i == <span class="number">99</span>) &#123;</span><br><span class="line">                p.stop();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>sleep()</p>
+<h2 id="Thread常用方法"><a href="#Thread常用方法" class="headerlink" title="Thread常用方法"></a>Thread常用方法</h2><p>sleep()，一半不用sleep，而是用JUC下的 <strong><code>TimeUnit.DAY.sleep(1);</code></strong> 方法</p>
 <p>yield()</p>
 <ul>
 <li>线程礼让，让当前线程暂停，但是不阻塞</li>
@@ -167,9 +189,21 @@ MathJax = {
 <li>可以想象成插队</li>
 </ul>
 <p>Thread.state 查看线程状态 </p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">enum</span> <span class="title">State</span> </span>&#123;</span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 尚未启动的线程的线程状态</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        NEW,</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 可运行线程的线程状态。 处于可运行状态的线程正在 Java 虚拟机中执行，</span></span><br><span class="line"><span class="comment">         * 但它可能正在等待来自操作系统的其他资源，例如处理器。</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        RUNNABLE,</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 线程阻塞等待监视器锁的线程状态。 处于阻塞状态的线程正在等待监视器锁进入同步块/方法</span></span><br><span class="line"><span class="comment">         * 或在调用Object.wait后重新进入同步块/方法。</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        BLOCKED,</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 等待线程的线程状态。 由于调用以下方法之一，线程处于等待状态：</span></span><br><span class="line"><span class="comment">         * Object.wait没有超时</span></span><br><span class="line"><span class="comment">         * Thread.join没有超时</span></span><br><span class="line"><span class="comment">         * LockSupport.park</span></span><br><span class="line"><span class="comment">         * 处于等待状态的线程正在等待另一个线程执行特定操作。 </span></span><br><span class="line"><span class="comment">         * 例如，在对象上调用Object.wait()的线程正在等待另一个线程在该对象上</span></span><br><span class="line"><span class="comment">         * 调用Object.notify()或Object.notifyAll() 。 调用Thread.join() 的线程正在等待指定的线程终止。</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        WAITING,</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 具有指定等待时间的等待线程的线程状态。 由于使用指定的正等待时间调用以下方法之一，线程处于定时等待状态：</span></span><br><span class="line"><span class="comment">         * Thread.sleep</span></span><br><span class="line"><span class="comment">         * Object.wait超时</span></span><br><span class="line"><span class="comment">         * Thread.join超时</span></span><br><span class="line"><span class="comment">         * LockSupport.parkNanos</span></span><br><span class="line"><span class="comment">         * LockSupport.parkUntil</span></span><br><span class="line"><span class="comment">         * /</span></span><br><span class="line"><span class="comment">        TIMED_WAITING,</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">        /**</span></span><br><span class="line"><span class="comment">         * 终止线程的线程状态。 线程已完成执行。</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        TERMINATED;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">enum</span> <span class="title">State</span> </span>&#123;</span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 尚未启动的线程的线程状态</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        NEW,</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 可运行线程的线程状态。 处于可运行状态的线程正在 Java 虚拟机中执行，</span></span><br><span class="line"><span class="comment">         * 但它可能正在等待来自操作系统的其他资源，例如处理器。</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        RUNNABLE,</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 线程阻塞等待监视器锁的线程状态。 处于阻塞状态的线程正在等待监视器锁进入同步块/方法</span></span><br><span class="line"><span class="comment">         * 或在调用Object.wait后重新进入同步块/方法。</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        BLOCKED,</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 等待线程的线程状态。 由于调用以下方法之一，线程处于等待状态：</span></span><br><span class="line"><span class="comment">         * Object.wait没有超时</span></span><br><span class="line"><span class="comment">         * Thread.join没有超时</span></span><br><span class="line"><span class="comment">         * LockSupport.park</span></span><br><span class="line"><span class="comment">         * 处于等待状态的线程正在等待另一个线程执行特定操作。 </span></span><br><span class="line"><span class="comment">         * 例如，在对象上调用Object.wait()的线程正在等待另一个线程在该对象上</span></span><br><span class="line"><span class="comment">         * 调用Object.notify()或Object.notifyAll() 。 调用Thread.join() 的线程正在等待指定的线程终止。</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        WAITING,</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 具有指定等待时间的等待线程的线程状态。 由于使用指定的正等待时间调用以下方法之一，线程处于定时等待状态：</span></span><br><span class="line"><span class="comment">         * Thread.sleep</span></span><br><span class="line"><span class="comment">         * Object.wait超时</span></span><br><span class="line"><span class="comment">         * Thread.join超时</span></span><br><span class="line"><span class="comment">         * LockSupport.parkNanos</span></span><br><span class="line"><span class="comment">         * LockSupport.parkUntil</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        TIMED_WAITING,</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 终止线程的线程状态。 线程已完成执行。</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        TERMINATED;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 
-<p><img src="/.com//caopeisheng/Hexo-Blog/source/_posts/%E5%A4%9A%E7%BA%BF%E7%A8%8B1/image-20210913151519171.png" alt="image-20210913151519171"></p>
+<p><img src="/2021/09/13/%E5%A4%9A%E7%BA%BF%E7%A8%8B1/image-20210913151519171.png" alt="image-20210913151519171"></p>
+<p><strong>thread.setDaemon(true) 设置线程为守护线程</strong></p>
+<h2 id="同步"><a href="#同步" class="headerlink" title="同步"></a>同步</h2><h3 id="synchronized锁"><a href="#synchronized锁" class="headerlink" title="synchronized锁"></a>synchronized锁</h3><p>synchronized 方法、代码块，锁的对象需要是变化的量</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CopyOnWriteArrayList 线程安全的集合</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="lock锁"><a href="#lock锁" class="headerlink" title="lock锁"></a>lock锁</h3><p><img src="/2021/09/13/%E5%A4%9A%E7%BA%BF%E7%A8%8B1/image-20210913154745133.png" alt="image-20210913154745133"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> ReentrantLock lock = <span class="keyword">new</span> ReentrantLock();<span class="comment">//可重用锁</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">func</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  lock.lock();</span><br><span class="line">  <span class="keyword">try</span> &#123; </span><br><span class="line">    <span class="comment">// access the resource protected by this lock</span></span><br><span class="line">  &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">    lock.unlock();<span class="comment">//释放锁</span></span><br><span class="line">  &#125;</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><img src="/2021/09/13/%E5%A4%9A%E7%BA%BF%E7%A8%8B1/image-20210913155517504.png" alt="image-20210913155517504"></p>
+<p><img src="/2021/09/13/%E5%A4%9A%E7%BA%BF%E7%A8%8B1/image-20210914100541540.png" alt="image-20210914100541540"></p>
+<h2 id="线程通信"><a href="#线程通信" class="headerlink" title="线程通信"></a>线程通信</h2><p><img src="/2021/09/13/%E5%A4%9A%E7%BA%BF%E7%A8%8B1/image-20210913160126353.png" alt="image-20210913160126353"></p>
 
       </div>
       
@@ -188,6 +222,28 @@ MathJax = {
               2021-09-13 14:49:22
             </span>
             
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="Categories"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" title="多线程">
+                        <b>#</b> 多线程
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+                  <span class="post-tags">
+                    <i class="iconfont icon-tags" title="Tags"></i>
+                    
+                    <span class="span--tag">
+                      <a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" title="多线程">
+                        <b>#</b> 多线程
+                      </a>
+                    </span>
+                    
+                  </span>
+              
           </div>
           <div class="post-foot-prev">
             
@@ -207,7 +263,7 @@ MathJax = {
   <div class="post-catalog hidden" id="catalog">
     <div class="title">Contents</div>
     <div class="catalog-content">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%81%9C%E6%AD%A2%E7%BA%BF%E7%A8%8B%EF%BC%9A"><span class="toc-text">停止线程：</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%81%9C%E6%AD%A2%E7%BA%BF%E7%A8%8B%EF%BC%9A"><span class="toc-text">停止线程：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Thread%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95"><span class="toc-text">Thread常用方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%8C%E6%AD%A5"><span class="toc-text">同步</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#synchronized%E9%94%81"><span class="toc-text">synchronized锁</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#lock%E9%94%81"><span class="toc-text">lock锁</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B%E9%80%9A%E4%BF%A1"><span class="toc-text">线程通信</span></a></li></ol>
     </div>
   </div>
 

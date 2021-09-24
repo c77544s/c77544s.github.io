@@ -11,9 +11,9 @@
   
   <title>
     
-      SpringSecurity笔记 
+      Category 
       
-      
+       : 面试题
       |
     
      超能虾米的博客
@@ -110,157 +110,30 @@
 
 
       <div class="flex-container">
-        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
-<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+        <!-- 标签详情页，展示某个标签下的文章列表，url形式：https://yoursite/tags/某个标签/ -->
 
-<!-- LaTex Display -->
-<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-<script type="text/javascript" id="MathJax-script" async
-  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
-</script>
-<script>
-MathJax = {
-  tex: {
-    inlineMath: [['$', '$'], ['\\(', '\\)']]
-  }
-};
-</script>
-
-
-
-  
-
-  
-
-  
-
-  
-  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
-  <div class="container post-details" id="post-details">
-    <div class="post-content">
-      <div class="post-title">SpringSecurity笔记</div>
-      <div class="post-attach">
-        <span class="post-pubtime">
-          <i class="iconfont icon-updatetime" title="Update time"></i>
-          2021-09-18 11:06:47
-        </span>
-        
-              <span class="post-categories">
-                <i class="iconfont icon-bookmark" title="Categories"></i>
-                
-                <span class="span--category">
-                  <a href="/categories/Spring/" title="Spring">
-                    <b>#</b> Spring
-                  </a>
-                </span>
-                
-              </span>
-          
-              <span class="post-tags">
-                <i class="iconfont icon-tags" title="Tags"></i>
-                
-                <span class="span--tag">
-                  <a href="/tags/SpringSecurity/" title="SpringSecurity">
-                    <b>#</b> SpringSecurity
-                  </a>
-                </span>
-                
-              </span>
-          
-      </div>
-      <div class="markdown-body">
-        <p><strong>几个重要的类</strong></p>
-<ul>
-<li><code>webSecurityConfiguration</code> : 自定义 security 策略</li>
-<li><code>AuthenticationManagerBuilder</code> ： 自定义认证策略</li>
-<li><code>@EnableWebSecurity</code> ： 开启 WebSecurity 模式</li>
-</ul>
-<p>Spring Security的两个主要的目标：“认证” 和 ”授权“</p>
-
-      </div>
-      
-        <div class="prev-or-next">
-          <div class="post-foot-next">
-            
-              <a href="/2021/09/17/Mybatis%E7%AC%94%E8%AE%B0/" target="_self">
-                <i class="iconfont icon-chevronleft"></i>
-                <span>Prev</span>
-              </a>
-            
-          </div>
-          <div class="post-attach">
-            <span class="post-pubtime">
-              <i class="iconfont icon-updatetime" title="Update time"></i>
-              2021-09-18 11:06:47
-            </span>
-            
-                  <span class="post-categories">
-                    <i class="iconfont icon-bookmark" title="Categories"></i>
-                    
-                    <span class="span--category">
-                      <a href="/categories/Spring/" title="Spring">
-                        <b>#</b> Spring
-                      </a>
-                    </span>
-                    
-                  </span>
-              
-                  <span class="post-tags">
-                    <i class="iconfont icon-tags" title="Tags"></i>
-                    
-                    <span class="span--tag">
-                      <a href="/tags/SpringSecurity/" title="SpringSecurity">
-                        <b>#</b> SpringSecurity
-                      </a>
-                    </span>
-                    
-                  </span>
-              
-          </div>
-          <div class="post-foot-prev">
-            
-              <a href="/2021/09/23/Java8-Stream/" target="_self">
-                <span>Next</span>
-                <i class="iconfont icon-chevronright"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-    </div>
-    
-
-    
-      <div class="comments-container">
-        
-
-
-
-
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
-  <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
-
-  <div id="gitalk-container"></div>
-
-  <script>
-    const gitalk = new Gitalk({
-      clientID: 'f37acf2820e6916417f9',
-      clientSecret: '8f88395732dc1e4b8c0ea2ef0ff3c7678473c637',
-      repo: 'c77544s.github.io',
-      owner: 'c77544s',
-      admin: ['c77544s'],
-      id: location.pathname,
-      distractionFreeMode: false
-    })
-
-    gitalk.render('gitalk-container')
-  </script>
-
-
-      </div>
-    
+<div class="container category-details">
+  <div class="content-title">
+    <h2>
+      <span>面试题</span>
+    </h2>
   </div>
-
+  
+    <div class="post-list">
+      <div class="post-item" title="java基础面试题">
+        <span class="time-m-d">2021-08-24</span>
+        <a href="/2021/08/24/java%E5%9F%BA%E7%A1%80%E9%9D%A2%E8%AF%95%E9%A2%98/">
+          <span>java基础面试题</span>
+        </a>
+      </div>
+    </div>
+  
+  <nav class="post-navigation">
+    
+    <span class="page-num">1 / 1</span>
+    
+  </nav>
+</div>
 
         <div class="footer">
   <div class="social">
@@ -529,24 +402,6 @@ MathJax = {
 
 
         
-  
-    <div class="share-icon tools-bar-item">
-      <a href="javascript: void(0)" id="share-icon">
-        <i class="iconfont iconshare"></i>
-      </a>
-      <div class="share-content hidden">
-        
-          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + SpringSecurity%E7%AC%94%E8%AE%B0 + '&url=' + http%3A%2F%2Fexample.com%2F2021%2F09%2F18%2FSpringSecurity%25E7%25AC%2594%25E8%25AE%25B0%2F + '" target="_blank" title="Twitter">
-            <i class="iconfont icon-twitter"></i>
-          </a>
-        
-        
-          <a class="share-item" href="https://www.facebook.com/sharer.php?u=http://example.com/2021/09/18/SpringSecurity%E7%AC%94%E8%AE%B0/" target="_blank" title="Facebook">
-            <i class="iconfont icon-facebooksquare"></i>
-          </a>
-        
-      </div>
-    </div>
   
   
 <script src="/js/shares.js"></script>
