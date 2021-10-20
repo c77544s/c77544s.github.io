@@ -180,6 +180,17 @@ MathJax = {
 
 <p>JVM调优99%都是在调 <strong>方法区</strong> 和 <strong>堆</strong> ，且大部分是堆， 垃圾回收也回收这两个区域</p>
 <p><img src="/2021/08/25/JVM%E7%9F%A5%E8%AF%86%E7%82%B9/image-20210825215354387.png" alt="image-20210825215354387"></p>
+<h2 id="Java-类加载机制"><a href="#Java-类加载机制" class="headerlink" title="Java 类加载机制"></a>Java 类加载机制</h2><p><img src="https://img-blog.csdnimg.cn/20200904160557387.png" alt="image.png"></p>
+<ul>
+<li>加载 加载字节码文件。</li>
+<li>链接<ul>
+<li>验证 验证字节码文件的正确性。</li>
+<li>准备 为静态变量分配内存。</li>
+<li>解析 将符号引用（如类的全限定名）解析为直接引用（类在实际内存中的地址）。</li>
+</ul>
+</li>
+<li>初始化 为静态变量赋初值。</li>
+</ul>
 <h2 id="双亲委派机制"><a href="#双亲委派机制" class="headerlink" title="双亲委派机制"></a>双亲委派机制</h2><p>java为了安全会有一个类的加载顺序</p>
 <p><strong>APP –&gt; EXT(ext文件夹下的jar) –&gt; ROOT（rt.jar）（最终执行）</strong></p>
 <p>所以，即使在项目中定义了一个String类，且和rt.jar（rt就是root的缩写） 中的String包明相同，也只会加载 rt.jar中的String</p>
@@ -213,6 +224,60 @@ MathJax = {
 <p><strong>新生代使用：复制算法</strong> （from survivor、to survivor）</p>
 <p><strong>老年代使用：标记清除法+标记压缩法</strong></p>
 <p>一般不使用引用计数器法的实现</p>
+<ul>
+<li><p>Mark-Sweep（标记-清除）算法 标记需要回收的对象，然后清除，会造成许多内存碎片。</p>
+</li>
+<li><p>Copying（复制）算法 将内存分为两块，只使用一块，进行垃圾回收时，先将存活的对象复制到另一块区域，然后清空之前的区域。</p>
+</li>
+<li><p>Mark-Compact（标记-整理）算法（压缩法） 与标记清除算法类似，但是在标记之后，将存活对象向一端移动，然后清除边界外的垃圾对象。</p>
+</li>
+<li><p>Generational Collection（分代收集）算法 分为年轻代和老年代，年轻代时比较活跃的对象，使用复制算法做垃圾回收。老年代每次回收只回收少量对象，使用标记整理法。</p>
+</li>
+</ul>
+<h2 id="典型垃圾回收器"><a href="#典型垃圾回收器" class="headerlink" title="典型垃圾回收器"></a>典型垃圾回收器</h2><h3 id="CMS"><a href="#CMS" class="headerlink" title="CMS"></a>CMS</h3><ul>
+<li>简介 以获取最短回收停顿时间为目标的收集器，它是一种并发收集器，采用的是 Mark-Sweep 算法。</li>
+<li>场景 如果你的应用需要更快的响应，不希望有长时间的停顿，同时你的 CPU 资源也比较丰富，就适合适用 CMS 收集器。</li>
+<li>垃圾回收步骤</li>
+</ul>
+<blockquote>
+<ol>
+<li><p>初始标记 (Stop the World 事件 CPU 停顿， 很短) 初始标记仅标记一下 GC Roots 能直接关联到的对象，速度很快；</p>
+</li>
+<li><p>并发标记 (收集垃圾跟用户线程一起执行) 并发标记过程就是进行 GC Roots 查找的过程；</p>
+</li>
+<li><p>重新标记 (Stop the World 事件 CPU 停顿，比初始标记稍微长，远比并发标记短) 修正由于并发标记时应用运行产生变化的标记。</p>
+</li>
+<li><p>并发清理，标记清除算法；</p>
+</li>
+</ol>
+</blockquote>
+<ul>
+<li>缺点</li>
+</ul>
+<blockquote>
+<ol>
+<li>并发标记时和应用程序同时进行，占用一部分线程，所以吞吐量有所下降。</li>
+<li>并发清除时和应用程序同时进行，这段时间产生的垃圾就要等下一次 GC 再清除。</li>
+<li>采用的标记清除算法，产生内存碎片，如果要新建大对象，会提前触发 Full GC 。</li>
+</ol>
+</blockquote>
+<h3 id="G1"><a href="#G1" class="headerlink" title="G1"></a>G1</h3><ul>
+<li>简介 是一款面向服务端应用的收集器，它能充分利用多 CPU、多核环境。因此它是一款并行与并发收集器，并且它能建立可预测的停顿时间模型，即可以设置 STW 的时间。</li>
+<li>垃圾回收步骤 1、初始标记(stop the world 事件 CPU 停顿只处理垃圾)； 2、并发标记(与用户线程并发执行)； 3、最终标记(stop the world 事件 ,CPU 停顿处理垃圾)； 4、筛选回收(stop the world 事件 根据用户期望的 GC 停顿时间回收)</li>
+<li>特点<ul>
+<li>并发与并行 充分利用多核 CPU ，使用多核来缩短 STW 时间，部分需要停顿应用线程的操作，仍然可以通过并发保证应用程序的执行。</li>
+<li>分代回收 新生代，幸存带，老年代</li>
+<li>空间整合 总体看是采用标记整理算法回收，每个 Region 大小相等，通过复制来回收。</li>
+<li>可预测的停顿时间 使用 -XX:MaxGCPauseMillis=200 设置最长目标暂停值。</li>
+</ul>
+</li>
+</ul>
+<h3 id="可作为-GC-Roots-的对象包括-4-种情况："><a href="#可作为-GC-Roots-的对象包括-4-种情况：" class="headerlink" title="可作为 GC Roots 的对象包括 4 种情况："></a>可作为 GC Roots 的对象包括 4 种情况：</h3><blockquote>
+<p>a) 虚拟机栈中引用的对象（栈帧中的本地变量表）；</p>
+<p> b) 方法区中类静态属性引用的对象；</p>
+<p> c) 方法区中常量引用的对象；</p>
+<p> d) 本地方法栈中 Native 方法引用的对象。</p>
+</blockquote>
 
       </div>
       
@@ -278,7 +343,7 @@ MathJax = {
   <div class="post-catalog hidden" id="catalog">
     <div class="title">Contents</div>
     <div class="catalog-content">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%8C%E4%BA%B2%E5%A7%94%E6%B4%BE%E6%9C%BA%E5%88%B6"><span class="toc-text">双亲委派机制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B2%99%E7%AE%B1%E5%AE%89%E5%85%A8%E6%9C%BA%E5%88%B6"><span class="toc-text">沙箱安全机制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%84%E6%88%90%E6%B2%99%E7%AE%B1%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%BB%84%E4%BB%B6"><span class="toc-text">组成沙箱的基本组件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JVM%E5%A0%86%E5%86%85%E5%AD%98"><span class="toc-text">JVM堆内存</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JVM%E5%8F%82%E6%95%B0%E8%B0%83%E4%BC%98"><span class="toc-text">JVM参数调优</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GC%E7%AE%97%E6%B3%95"><span class="toc-text">GC算法</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Java-%E7%B1%BB%E5%8A%A0%E8%BD%BD%E6%9C%BA%E5%88%B6"><span class="toc-text">Java 类加载机制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%8C%E4%BA%B2%E5%A7%94%E6%B4%BE%E6%9C%BA%E5%88%B6"><span class="toc-text">双亲委派机制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B2%99%E7%AE%B1%E5%AE%89%E5%85%A8%E6%9C%BA%E5%88%B6"><span class="toc-text">沙箱安全机制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%84%E6%88%90%E6%B2%99%E7%AE%B1%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%BB%84%E4%BB%B6"><span class="toc-text">组成沙箱的基本组件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JVM%E5%A0%86%E5%86%85%E5%AD%98"><span class="toc-text">JVM堆内存</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JVM%E5%8F%82%E6%95%B0%E8%B0%83%E4%BC%98"><span class="toc-text">JVM参数调优</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GC%E7%AE%97%E6%B3%95"><span class="toc-text">GC算法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B8%E5%9E%8B%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8"><span class="toc-text">典型垃圾回收器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#CMS"><span class="toc-text">CMS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#G1"><span class="toc-text">G1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%AF%E4%BD%9C%E4%B8%BA-GC-Roots-%E7%9A%84%E5%AF%B9%E8%B1%A1%E5%8C%85%E6%8B%AC-4-%E7%A7%8D%E6%83%85%E5%86%B5%EF%BC%9A"><span class="toc-text">可作为 GC Roots 的对象包括 4 种情况：</span></a></li></ol></li></ol>
     </div>
   </div>
 
