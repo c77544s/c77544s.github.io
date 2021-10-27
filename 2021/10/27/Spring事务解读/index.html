@@ -238,6 +238,24 @@ MathJax = {
 <blockquote>
 <p><strong>Mysql 默认采用的 REPEATABLE_READ隔离级别, Oracle 默认采用的 READ_COMMITTED隔离级别</strong></p>
 </blockquote>
+<h2 id="Transactional失效的场景"><a href="#Transactional失效的场景" class="headerlink" title="@Transactional失效的场景"></a><strong>@Transactional失效的场景</strong></h2><ol>
+<li><p>@Transactional注解应用到非public方法（除非特殊配置，例如使用AspectJ 静态织入实现 AOP）</p>
+</li>
+<li><p>自调用，因为@Transactional是基于动态代理实现的</p>
+</li>
+<li><p>异常在代码中被你自己try catch了</p>
+</li>
+<li><p>异常类型不正确，默认只支持RuntimeException和Error，不支持检查异常</p>
+</li>
+<li><p>事务传播配置不符合业务逻辑</p>
+</li>
+<li><p>业务和spring事务代码必须不一个线程中</p>
+</li>
+<li><p>方法用final修饰</p>
+</li>
+<li><p>等，见下图</p>
+<img src="https://pic1.zhimg.com/v2-63fcc7e79ed92ee604f1786e246f1afc_r.jpg" alt="preview" style="zoom:50%;"></li>
+</ol>
 
       </div>
       
@@ -298,7 +316,7 @@ MathJax = {
   <div class="post-catalog hidden" id="catalog">
     <div class="title">Contents</div>
     <div class="catalog-content">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Transactional-%E6%B3%A8%E8%A7%A3%E8%A7%A3%E8%AF%BB"><span class="toc-text">@Transactional 注解解读</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Transactional-%E6%B3%A8%E8%A7%A3%E8%A7%A3%E8%AF%BB"><span class="toc-text">@Transactional 注解解读</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Transactional%E5%A4%B1%E6%95%88%E7%9A%84%E5%9C%BA%E6%99%AF"><span class="toc-text">@Transactional失效的场景</span></a></li></ol>
     </div>
   </div>
 
