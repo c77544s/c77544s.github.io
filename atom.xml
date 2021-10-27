@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2021-10-11T02:36:59.472Z</updated>
+  <updated>2021-10-27T03:16:42.351Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Spring事务解读</title>
+    <link href="http://example.com/2021/10/27/Spring%E4%BA%8B%E5%8A%A1%E8%A7%A3%E8%AF%BB/"/>
+    <id>http://example.com/2021/10/27/Spring%E4%BA%8B%E5%8A%A1%E8%A7%A3%E8%AF%BB/</id>
+    <published>2021-10-27T02:16:02.000Z</published>
+    <updated>2021-10-27T03:16:42.351Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;事务是处理逻辑原子性的保证，作为单个逻辑单元执行一系列操作，要么执行完成要么全部不执行。事务遵循</summary>
+        
+      
+    
+    
+    
+    <category term="Spring" scheme="http://example.com/categories/Spring/"/>
+    
+    
+    <category term="事务" scheme="http://example.com/tags/%E4%BA%8B%E5%8A%A1/"/>
+    
+    <category term="Spring" scheme="http://example.com/tags/Spring/"/>
+    
+  </entry>
   
   <entry>
     <title>Mybatis四大对象和生命周期</title>
@@ -468,11 +495,11 @@
   </entry>
   
   <entry>
-    <title>Spring Cloud学习笔记1</title>
-    <link href="http://example.com/2021/08/04/Spring-Cloud%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B01/"/>
-    <id>http://example.com/2021/08/04/Spring-Cloud%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B01/</id>
+    <title>Spring Cloud笔记</title>
+    <link href="http://example.com/2021/08/04/Spring-Cloud%E7%AC%94%E8%AE%B0/"/>
+    <id>http://example.com/2021/08/04/Spring-Cloud%E7%AC%94%E8%AE%B0/</id>
     <published>2021-08-04T11:35:00.000Z</published>
-    <updated>2021-09-24T07:26:22.596Z</updated>
+    <updated>2021-10-25T11:58:50.812Z</updated>
     
     
       
@@ -515,35 +542,6 @@
     
     
     <category term="Spring Boot" scheme="http://example.com/tags/Spring-Boot/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>frp实现内网穿透</title>
-    <link href="http://example.com/2021/07/27/frp%E5%AE%9E%E7%8E%B0%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/"/>
-    <id>http://example.com/2021/07/27/frp%E5%AE%9E%E7%8E%B0%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/</id>
-    <published>2021-07-27T11:45:48.000Z</published>
-    <updated>2021-09-24T07:24:48.825Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot;</summary>
-        
-      
-    
-    
-    
-    <category term="工具" scheme="http://example.com/categories/%E5%B7%A5%E5%85%B7/"/>
-    
-    
-    <category term="frp" scheme="http://example.com/tags/frp/"/>
-    
-    <category term="工具" scheme="http://example.com/tags/%E5%B7%A5%E5%85%B7/"/>
-    
-    <category term="内网穿透" scheme="http://example.com/tags/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/"/>
     
   </entry>
   

@@ -11,7 +11,7 @@
   
   <title>
     
-      面试题笔记-mysql篇 
+      Spring事务解读 
       
       
       |
@@ -138,19 +138,19 @@ MathJax = {
   <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
   <div class="container post-details" id="post-details">
     <div class="post-content">
-      <div class="post-title">面试题笔记-mysql篇</div>
+      <div class="post-title">Spring事务解读</div>
       <div class="post-attach">
         <span class="post-pubtime">
           <i class="iconfont icon-updatetime" title="Update time"></i>
-          2021-08-22 19:57:28
+          2021-10-27 10:16:02
         </span>
         
               <span class="post-categories">
                 <i class="iconfont icon-bookmark" title="Categories"></i>
                 
                 <span class="span--category">
-                  <a href="/categories/Mysql/" title="Mysql">
-                    <b>#</b> Mysql
+                  <a href="/categories/Spring/" title="Spring">
+                    <b>#</b> Spring
                   </a>
                 </span>
                 
@@ -160,8 +160,14 @@ MathJax = {
                 <i class="iconfont icon-tags" title="Tags"></i>
                 
                 <span class="span--tag">
-                  <a href="/tags/Mysql/" title="Mysql">
-                    <b>#</b> Mysql
+                  <a href="/tags/%E4%BA%8B%E5%8A%A1/" title="事务">
+                    <b>#</b> 事务
+                  </a>
+                </span>
+                
+                <span class="span--tag">
+                  <a href="/tags/Spring/" title="Spring">
+                    <b>#</b> Spring
                   </a>
                 </span>
                 
@@ -169,65 +175,76 @@ MathJax = {
           
       </div>
       <div class="markdown-body">
-        <h2 id="数据库三大范式是什么"><a href="#数据库三大范式是什么" class="headerlink" title="数据库三大范式是什么"></a>数据库三大范式是什么</h2><p>第一范式：每个列都不可以再拆分。</p>
-<p>第二范式：在第一范式的基础上，非主键列完全依赖于主键，而不能是依赖于主键的一部分。</p>
-<p>第三范式：在第二范式的基础上，非主键列只依赖于主键，不依赖于其他非主键。</p>
-<p>在设计数据库结构的时候，要尽量遵守三范式，如果不遵守，必须有足够的理由。比如性能。事实上我们经常会为了性能而妥协数据库的设计。</p>
-<h2 id="mysql有关权限的表都有哪几个"><a href="#mysql有关权限的表都有哪几个" class="headerlink" title="mysql有关权限的表都有哪几个"></a>mysql有关权限的表都有哪几个</h2><p>MySQL服务器通过权限表来控制用户对数据库的访问，权限表存放在mysql数据库里，由mysql_install_db脚本初始化。这些权限表分别user，db，table_priv，columns_priv和host。下面分别介绍一下这些表的结构和内容：</p>
-<p><strong>user权限表</strong>：记录允许连接到服务器的用户帐号信息，里面的权限是全局级的。<br><strong>db权限表</strong>：记录各个帐号在各个数据库上的操作权限。<br><strong>table_priv权限表</strong>：记录数据表级的操作权限。<br><strong>columns_priv权限表</strong>：记录数据列级的操作权限。<br><strong>host权限表</strong>：配合db权限表对给定主机上数据库级操作权限作更细致的控制。这个权限表不受GRANT和REVOKE语句的影响。</p>
-<h2 id="MySQL-复制表"><a href="#MySQL-复制表" class="headerlink" title="MySQL 复制表"></a>MySQL 复制表</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SHOW</span> <span class="keyword">CREATE</span> <span class="keyword">TABLE</span> 表名</span><br></pre></td></tr></table></figure>
+        <p>事务是处理逻辑原子性的保证，作为单个逻辑单元执行一系列操作，要么执行完成要么全部不执行。事务遵循 <strong>ACID四个特性</strong>。</p>
+<ul>
+<li><p>原子性：事务作为一个原子整体，要么执行要么完全不执行</p>
+</li>
+<li><p>一致性：事务保证数据库状态从一个一致性变为另一个一致性</p>
+</li>
+<li><p>隔离性：一个事务的执行不影响其他事务的执行</p>
+</li>
+<li><p>持久性：已经提交事务对数据的修改，应该永久保存在数据库</p>
+</li>
+</ul>
+<p>事务的两个重要特性是，事务的传播特性和事务的隔离级别特性。传播级别决定了事务的控制范围，事务隔离级别决定了事务在数据库读写方面的控制范围。</p>
+<h2 id="Transactional-注解解读"><a href="#Transactional-注解解读" class="headerlink" title="@Transactional 注解解读"></a>@Transactional 注解解读</h2><p>Transactional注解的源码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target(&#123;ElementType.METHOD, ElementType.TYPE&#125;)</span></span><br><span class="line"><span class="meta">@Retention(RetentionPolicy.RUNTIME)</span></span><br><span class="line"><span class="meta">@Inherited</span></span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Transactional &#123;</span><br><span class="line">    <span class="meta">@AliasFor(&quot;transactionManager&quot;)</span></span><br><span class="line">    <span class="function">String <span class="title">value</span><span class="params">()</span> <span class="keyword">default</span> &quot;&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@AliasFor(&quot;value&quot;)</span></span><br><span class="line">    <span class="function">String <span class="title">transactionManager</span><span class="params">()</span> <span class="keyword">default</span> &quot;&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">Propagation <span class="title">propagation</span><span class="params">()</span> <span class="keyword">default</span> Propagation.REQUIRED</span>;<span class="comment">//传播类型</span></span><br><span class="line"></span><br><span class="line">    <span class="function">Isolation <span class="title">isolation</span><span class="params">()</span> <span class="keyword">default</span> Isolation.DEFAULT</span>;<span class="comment">//隔离级别</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">timeout</span><span class="params">()</span> <span class="keyword">default</span> -1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">readOnly</span><span class="params">()</span> <span class="keyword">default</span> <span class="keyword">false</span></span>;</span><br><span class="line"></span><br><span class="line">    Class&lt;? extends Throwable&gt;[] rollbackFor() <span class="keyword">default</span> &#123;&#125;;</span><br><span class="line"></span><br><span class="line">    String[] rollbackForClassName() <span class="keyword">default</span> &#123;&#125;;</span><br><span class="line"></span><br><span class="line">    Class&lt;? extends Throwable&gt;[] noRollbackFor() <span class="keyword">default</span> &#123;&#125;;</span><br><span class="line"></span><br><span class="line">    String[] noRollbackForClassName() <span class="keyword">default</span> &#123;&#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>Example:</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">show</span> <span class="keyword">create</span> <span class="keyword">table</span> <span class="keyword">user</span></span><br></pre></td></tr></table></figure>
+<p>其中传播类型有7种，每个传播类型的解读可查看《[带你读懂Spring 事务——事务的传播机制 - 知乎 (zhihu.com)](<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/148504094#:~:text=%E5%9C%A8Spring%E4%B8%AD%E5%AF%B9%E4%BA%8E%E4%BA%8B%E5%8A%A1%E7%9A%84%E4%BC%A0%E6%92%AD%E8%A1%8C%E4%B8%BA%E5%AE%9A%E4%B9%89%E4%BA%86%E4%B8%83%E7%A7%8D%E7%B1%BB%E5%9E%8B%E5%88%86%E5%88%AB%E6%98%AF%EF%BC%9A,REQUIRED%E3%80%81SUPPORTS%E3%80%81MANDATORY%E3%80%81REQUIRES_NEW%E3%80%81NOT_SUPPORTED%E3%80%81NEVER%E3%80%81NESTED">https://zhuanlan.zhihu.com/p/148504094#:~:text=在Spring中对于事务的传播行为定义了七种类型分别是：,REQUIRED、SUPPORTS、MANDATORY、REQUIRES_NEW、NOT_SUPPORTED、NEVER、NESTED</a> 。)》</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">enum</span> <span class="title">Propagation</span> </span>&#123;</span><br><span class="line">    REQUIRED(<span class="number">0</span>),<span class="comment">//如果当前没有事务，就新建一个事务，如果已经存在一个事务，则加入到这个事务中。这是事务注释的默认设置。</span></span><br><span class="line">    SUPPORTS(<span class="number">1</span>),<span class="comment">//当前存在事务，则加入当前事务，如果当前没有事务，就以非事务方法执行</span></span><br><span class="line">    MANDATORY(<span class="number">2</span>),<span class="comment">//当前存在事务，则加入当前事务，如果当前事务不存在，则抛出异常。</span></span><br><span class="line">    REQUIRES_NEW(<span class="number">3</span>),<span class="comment">//创建一个新事务，如果存在当前事务，则挂起该事务。</span></span><br><span class="line">    NOT_SUPPORTED(<span class="number">4</span>),<span class="comment">//始终以非事务方式执行,如果当前存在事务，则挂起当前事务</span></span><br><span class="line">    NEVER(<span class="number">5</span>),<span class="comment">//不使用事务，如果当前事务存在，则抛出异常</span></span><br><span class="line">    NESTED(<span class="number">6</span>);<span class="comment">//如果当前存在事务，则在嵌套事务内执行。如果当前没有事务，则执行与REQUIRED类似的操作。</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> value;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Propagation</span><span class="params">(<span class="keyword">int</span> value)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.value = value;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">value</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.value;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<p>隔离级别有5种</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">enum</span> <span class="title">Isolation</span> </span>&#123;</span><br><span class="line">    DEFAULT(-<span class="number">1</span>), 					<span class="comment">//Spring建议的是使用DEFAULT，就是数据库本身的隔离级别，配置好数据库本身的隔离级别</span></span><br><span class="line">    READ_UNCOMMITTED(<span class="number">1</span>),	<span class="comment">//读未提交</span></span><br><span class="line">    READ_COMMITTED(<span class="number">2</span>),		<span class="comment">//读已提交</span></span><br><span class="line">    REPEATABLE_READ(<span class="number">4</span>),		<span class="comment">//可重复读</span></span><br><span class="line">    SERIALIZABLE(<span class="number">8</span>);			<span class="comment">//可串行化</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> value;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Isolation</span><span class="params">(<span class="keyword">int</span> value)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.value = value;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">value</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.value;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>**脏读(Drity Read)**：某个事务已更新一份数据，另一个事务在此时读取了同一份数据，由于某些原因，前一个RollBack了操作，则后一个事务所读取的数据就会是不正确的。</li>
+<li><strong>不可重复读(Non-repeatable read)</strong>:在一个事务的两次查询之中数据不一致，这可能是两次查询过程中间插入了一个事务更新的原有的数据。</li>
+<li><strong>幻读(Phantom Read)</strong>:在一个事务的两次查询中数据笔数不一致，例如有一个事务查询了几列(Row)数据，而另一个事务却在此时插入了新的几列数据，先前的事务在接下来的查询中，就会发现有几列数据是它先前所没有的。</li>
+</ul>
 <table>
 <thead>
 <tr>
-<th>Table</th>
-<th>Create Table</th>
+<th align="center">隔离级别</th>
+<th align="center">脏读</th>
+<th align="center">不可重复读</th>
+<th align="center">幻读</th>
 </tr>
 </thead>
 <tbody><tr>
-<td>User</td>
-<td>CREATE TABLE <code>user</code> (                         <code>id</code> int NOT NULL AUTO_INCREMENT,                         <code>name</code> varchar(20) DEFAULT NULL,                         <code>age</code> int DEFAULT NULL,                         <code>sex</code> char(1) DEFAULT NULL,                         <code>phone</code> varchar(16) DEFAULT NULL,                         PRIMARY KEY (<code>id</code>) ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT=’用户表’</td>
+<td align="center">READ-UNCOMMITTED</td>
+<td align="center">√</td>
+<td align="center">√</td>
+<td align="center">√</td>
+</tr>
+<tr>
+<td align="center">READ-COMMITTED</td>
+<td align="center">×</td>
+<td align="center">√</td>
+<td align="center">√</td>
+</tr>
+<tr>
+<td align="center">REPEATABLE-READ</td>
+<td align="center">×</td>
+<td align="center">×</td>
+<td align="center">√</td>
+</tr>
+<tr>
+<td align="center">SERIALIZABLE</td>
+<td align="center">×</td>
+<td align="center">×</td>
+<td align="center">×</td>
 </tr>
 </tbody></table>
-<p>修改表名为新的表名再执行一遍即可</p>
-<h2 id="获取服务器元数据"><a href="#获取服务器元数据" class="headerlink" title="获取服务器元数据"></a>获取服务器元数据</h2><table>
-<thead>
-<tr>
-<th align="left">命令</th>
-<th align="left">描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">SELECT VERSION( )</td>
-<td align="left">服务器版本信息</td>
-</tr>
-<tr>
-<td align="left">SELECT DATABASE( )</td>
-<td align="left">当前数据库名 (或者返回空)</td>
-</tr>
-<tr>
-<td align="left">SELECT USER( )</td>
-<td align="left">当前用户名</td>
-</tr>
-<tr>
-<td align="left">SHOW STATUS</td>
-<td align="left">服务器状态</td>
-</tr>
-<tr>
-<td align="left">SHOW VARIABLES</td>
-<td align="left">服务器配置变量</td>
-</tr>
-</tbody></table>
+<blockquote>
+<p><strong>Mysql 默认采用的 REPEATABLE_READ隔离级别, Oracle 默认采用的 READ_COMMITTED隔离级别</strong></p>
+</blockquote>
 
       </div>
       
         <div class="prev-or-next">
           <div class="post-foot-next">
             
-              <a href="/2021/08/04/Spring-Cloud%E7%AC%94%E8%AE%B0/" target="_self">
+              <a href="/2021/10/11/Mybatis%E5%9B%9B%E5%A4%A7%E5%AF%B9%E8%B1%A1%E5%92%8C%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/" target="_self">
                 <i class="iconfont icon-chevronleft"></i>
                 <span>Prev</span>
               </a>
@@ -236,15 +253,15 @@ MathJax = {
           <div class="post-attach">
             <span class="post-pubtime">
               <i class="iconfont icon-updatetime" title="Update time"></i>
-              2021-08-22 19:57:28
+              2021-10-27 10:16:02
             </span>
             
                   <span class="post-categories">
                     <i class="iconfont icon-bookmark" title="Categories"></i>
                     
                     <span class="span--category">
-                      <a href="/categories/Mysql/" title="Mysql">
-                        <b>#</b> Mysql
+                      <a href="/categories/Spring/" title="Spring">
+                        <b>#</b> Spring
                       </a>
                     </span>
                     
@@ -254,8 +271,14 @@ MathJax = {
                     <i class="iconfont icon-tags" title="Tags"></i>
                     
                     <span class="span--tag">
-                      <a href="/tags/Mysql/" title="Mysql">
-                        <b>#</b> Mysql
+                      <a href="/tags/%E4%BA%8B%E5%8A%A1/" title="事务">
+                        <b>#</b> 事务
+                      </a>
+                    </span>
+                    
+                    <span class="span--tag">
+                      <a href="/tags/Spring/" title="Spring">
+                        <b>#</b> Spring
                       </a>
                     </span>
                     
@@ -263,11 +286,6 @@ MathJax = {
               
           </div>
           <div class="post-foot-prev">
-            
-              <a href="/2021/08/23/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B/" target="_self">
-                <span>Next</span>
-                <i class="iconfont icon-chevronright"></i>
-              </a>
             
           </div>
         </div>
@@ -280,7 +298,7 @@ MathJax = {
   <div class="post-catalog hidden" id="catalog">
     <div class="title">Contents</div>
     <div class="catalog-content">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%89%E5%A4%A7%E8%8C%83%E5%BC%8F%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-text">数据库三大范式是什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#mysql%E6%9C%89%E5%85%B3%E6%9D%83%E9%99%90%E7%9A%84%E8%A1%A8%E9%83%BD%E6%9C%89%E5%93%AA%E5%87%A0%E4%B8%AA"><span class="toc-text">mysql有关权限的表都有哪几个</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MySQL-%E5%A4%8D%E5%88%B6%E8%A1%A8"><span class="toc-text">MySQL 复制表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%85%83%E6%95%B0%E6%8D%AE"><span class="toc-text">获取服务器元数据</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Transactional-%E6%B3%A8%E8%A7%A3%E8%A7%A3%E8%AF%BB"><span class="toc-text">@Transactional 注解解读</span></a></li></ol>
     </div>
   </div>
 
@@ -596,12 +614,12 @@ MathJax = {
       </a>
       <div class="share-content hidden">
         
-          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + %E9%9D%A2%E8%AF%95%E9%A2%98%E7%AC%94%E8%AE%B0-mysql%E7%AF%87 + '&url=' + http%3A%2F%2Fexample.com%2F2021%2F08%2F22%2F%25E9%259D%25A2%25E8%25AF%2595%25E9%25A2%2598%25E7%25AC%2594%25E8%25AE%25B0-mysql%25E7%25AF%2587%2F + '" target="_blank" title="Twitter">
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + Spring%E4%BA%8B%E5%8A%A1%E8%A7%A3%E8%AF%BB + '&url=' + http%3A%2F%2Fexample.com%2F2021%2F10%2F27%2FSpring%25E4%25BA%258B%25E5%258A%25A1%25E8%25A7%25A3%25E8%25AF%25BB%2F + '" target="_blank" title="Twitter">
             <i class="iconfont icon-twitter"></i>
           </a>
         
         
-          <a class="share-item" href="https://www.facebook.com/sharer.php?u=http://example.com/2021/08/22/%E9%9D%A2%E8%AF%95%E9%A2%98%E7%AC%94%E8%AE%B0-mysql%E7%AF%87/" target="_blank" title="Facebook">
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=http://example.com/2021/10/27/Spring%E4%BA%8B%E5%8A%A1%E8%A7%A3%E8%AF%BB/" target="_blank" title="Facebook">
             <i class="iconfont icon-facebooksquare"></i>
           </a>
         
