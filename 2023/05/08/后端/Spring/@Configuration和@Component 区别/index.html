@@ -11,7 +11,7 @@
   
   <title>
     
-      Archives 
+      @Configuration和@Component 区别 
       
       
       |
@@ -111,59 +111,195 @@
 
 
       <div class="flex-container">
-        <!-- 归档页，展示本站所有文章，按照年份降序归类，url形式：https://yoursite/archives/ -->
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
 
-<!-- last: 按年份把文章分组，当前遍历到的年份 -->
-<!-- now: 当前遍历到的文章的发布年份 -->
 
-<div class="container archives">
-  <div class="post-list">
-    
-        <!-- 后续文章的发布年份呈现 -->
-        <div class="content-title">
-          <h2>
-            <span>2023</span>
-          </h2>
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">@Configuration和@Component 区别</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+          2023-05-08 15:47:58
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="Categories"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/%E5%90%8E%E7%AB%AF/" title="后端">
+                    <b>#</b> 后端
+                  </a>
+                </span>
+                
+                <span class="span--category">
+                  <a href="/categories/%E5%90%8E%E7%AB%AF/Spring/" title="Spring">
+                    <b>#</b> Spring
+                  </a>
+                </span>
+                
+              </span>
+          
+              <span class="post-tags">
+                <i class="iconfont icon-tags mr-10" title="Tags"></i>
+                
+                <span class="span--tag mr-8">
+                  <a href="/tags/Java/" title="Java">
+                    #Java
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <blockquote>
+<p>在@Component 类中使用方法或字段时不会使用 CGLIB 增强 (及不使用代理类：调用任何方法，使用任何变量，拿到的是原始对象，后面会有例子解释)。在@Component 中调用@Bean 注解的方法和字段则是普通的 Java 语义，不经过 CGLIB 处理。<br>而在@Configuration 类中使用方法或字段时则使用 CGLIB 创造协作对象（及使用代理：拿到的是代理对象）; 当调用@Bean 注解的方法时它不是普通的 Java 语义，而是从容器中拿到由 Spring 生命周期管理、被 Spring 代理甚至依赖于其他 Bean 的对象引用。</p>
+</blockquote>
+<p>@Configuration 本质上还是个@Component，</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target(ElementType.TYPE)</span>  </span><br><span class="line"><span class="meta">@Retention(RetentionPolicy.RUNTIME)</span>  </span><br><span class="line"><span class="meta">@Documented</span>  </span><br><span class="line"><span class="meta">@Component</span>  </span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Configuration &#123;</span><br><span class="line">	<span class="meta">@AliasFor(annotation = Component.class)</span>  </span><br><span class="line">	String <span class="title function_">value</span><span class="params">()</span> <span class="keyword">default</span> <span class="string">&quot;&quot;</span>;</span><br><span class="line">	</span><br><span class="line">	<span class="type">boolean</span> <span class="title function_">proxyBeanMethods</span><span class="params">()</span> <span class="keyword">default</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在 Spring 中，对于配置类来讲是有分类的，大体可以分为两类，<strong>一类称为 LITE 模式，另一类称为 FULL 模式</strong>，那么对应上面的注解，@Component 就是 LITE 类型，@Configuration 就是 FULL 类型。</p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/607801167">Spring注解配置：@Configuration 和 @Component 区别及原理详解 - 知乎 (zhihu.com)</a></p>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2023/04/28/%E5%90%8E%E7%AB%AF/Java/NIO%E7%AC%94%E8%AE%B0/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+              2023-05-08 15:47:58
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="Categories"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/%E5%90%8E%E7%AB%AF/" title="后端">
+                        <b>#</b> 后端
+                      </a>
+                    </span>
+                    
+                    <span class="span--category">
+                      <a href="/categories/%E5%90%8E%E7%AB%AF/Spring/" title="Spring">
+                        <b>#</b> Spring
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+                  <span class="post-tags">
+                    <i class="iconfont icon-tags mr-10" title="Tags"></i>
+                    
+                    <span class="span--tag mr-8">
+                      <a href="/tags/Java/" title="Java">
+                        #Java
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2023/05/08/%E5%90%8E%E7%AB%AF/%E4%B8%AD%E9%97%B4%E4%BB%B6/MongoDB%E6%95%B4%E5%90%88%E5%88%B0Spring%20Boot/" target="_self">
+                <span>Next</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
         </div>
       
-      <div class="post-item" title="MongoDB整合到Spring Boot">
-        <div class="time-m-d">05-08</div>
-        <div class="title">
-          <a href="/2023/05/08/%E5%90%8E%E7%AB%AF/%E4%B8%AD%E9%97%B4%E4%BB%B6/MongoDB%E6%95%B4%E5%90%88%E5%88%B0Spring%20Boot/">
-            <span>MongoDB整合到Spring Boot</span>
-          </a>
-        </div>
-      </div>
+    </div>
     
-      <div class="post-item" title="@Configuration和@Component 区别">
-        <div class="time-m-d">05-08</div>
-        <div class="title">
-          <a href="/2023/05/08/%E5%90%8E%E7%AB%AF/Spring/@Configuration%E5%92%8C@Component%20%E5%8C%BA%E5%88%AB/">
-            <span>@Configuration和@Component 区别</span>
-          </a>
-        </div>
-      </div>
+
     
-      <div class="post-item" title="NIO笔记">
-        <div class="time-m-d">04-28</div>
-        <div class="title">
-          <a href="/2023/04/28/%E5%90%8E%E7%AB%AF/Java/NIO%E7%AC%94%E8%AE%B0/">
-            <span>NIO笔记</span>
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="hexo搭建博客">
-        <div class="time-m-d">04-26</div>
-        <div class="title">
-          <a href="/2023/04/26/%E5%90%8E%E7%AB%AF/Java/hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/">
-            <span>hexo搭建博客</span>
-          </a>
-        </div>
+      <div class="comments-container">
+        
+
+
+
+
+  
+    <script async type="text/javascript" src="/plugins/valine.min.js" onload="loadValineSuc(this)"></script>
+  
+
+  <div id="vcomments"></div>
+
+  <script>
+    function loadValineSuc() {
+      new Valine({
+        el: '#vcomments',
+        appId: 'H2QqshKF8elT2Si5bfKynT9h-9Nh9j0Va',
+        appKey: 'WgtVppOWkTZ8fWNReNI1Ymf7',
+        placeholder: '有问题请留言吧!',
+        avatar: 'retro',
+        lang: 'en'
+      })
+    }
+  </script>
+
+    <style>
+      .comments-container .v .vempty {
+        display: none!important;
+      }
+    </style>
+
+
+
+
       </div>
     
   </div>
-</div>
+
 
         
 <div class="footer">
@@ -436,6 +572,24 @@
 
 
         
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + %40Configuration%E5%92%8C%40Component%20%E5%8C%BA%E5%88%AB + '&url=' + http%3A%2F%2Fc77544s.gitee.io%2F2023%2F05%2F08%2F%25E5%2590%258E%25E7%25AB%25AF%2FSpring%2F%40Configuration%25E5%2592%258C%40Component%2520%25E5%258C%25BA%25E5%2588%25AB%2F + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=http://c77544s.gitee.io/2023/05/08/%E5%90%8E%E7%AB%AF/Spring/@Configuration%E5%92%8C@Component%20%E5%8C%BA%E5%88%AB/" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
   
   
 <script src="/js/shares.js"></script>

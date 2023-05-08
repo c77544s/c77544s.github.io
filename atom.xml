@@ -6,7 +6,7 @@
   <link href="http://c77544s.gitee.io/atom.xml" rel="self"/>
   
   <link href="http://c77544s.gitee.io/"/>
-  <updated>2023-05-06T04:50:09.053Z</updated>
+  <updated>2023-05-08T09:53:36.408Z</updated>
   <id>http://c77544s.gitee.io/</id>
   
   <author>
@@ -17,18 +17,18 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>test</title>
-    <link href="http://c77544s.gitee.io/2023/05/06/%E5%90%8E%E7%AB%AF/Java/test/"/>
-    <id>http://c77544s.gitee.io/2023/05/06/%E5%90%8E%E7%AB%AF/Java/test/</id>
-    <published>2023-05-06T04:50:09.053Z</published>
-    <updated>2023-05-06T04:50:09.053Z</updated>
+    <title>MongoDB整合到Spring Boot</title>
+    <link href="http://c77544s.gitee.io/2023/05/08/%E5%90%8E%E7%AB%AF/%E4%B8%AD%E9%97%B4%E4%BB%B6/MongoDB%E6%95%B4%E5%90%88%E5%88%B0Spring%20Boot/"/>
+    <id>http://c77544s.gitee.io/2023/05/08/%E5%90%8E%E7%AB%AF/%E4%B8%AD%E9%97%B4%E4%BB%B6/MongoDB%E6%95%B4%E5%90%88%E5%88%B0Spring%20Boot/</id>
+    <published>2023-05-08T09:00:14.935Z</published>
+    <updated>2023-05-08T09:53:36.408Z</updated>
     
     
       
       
         
         
-    <summary type="html">&lt;p&gt;&lt;img</summary>
+    <summary type="html">&lt;h3 id=&quot;1-本机测试，使用-Docker-快速搭建-MongoDB：&quot;&gt;&lt;a href=&quot;#1-本机测试，使用-Docker-快速搭建-MongoDB：&quot; class=&quot;headerlink&quot; title=&quot;1. 本机测试，使用 Docker 快速搭建</summary>
         
       
     
@@ -36,17 +36,47 @@
     
     <category term="后端" scheme="http://c77544s.gitee.io/categories/%E5%90%8E%E7%AB%AF/"/>
     
-    <category term="Java" scheme="http://c77544s.gitee.io/categories/%E5%90%8E%E7%AB%AF/Java/"/>
+    <category term="中间件" scheme="http://c77544s.gitee.io/categories/%E5%90%8E%E7%AB%AF/%E4%B8%AD%E9%97%B4%E4%BB%B6/"/>
     
+    
+    <category term="Java" scheme="http://c77544s.gitee.io/tags/Java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>@Configuration和@Component 区别</title>
+    <link href="http://c77544s.gitee.io/2023/05/08/%E5%90%8E%E7%AB%AF/Spring/@Configuration%E5%92%8C@Component%20%E5%8C%BA%E5%88%AB/"/>
+    <id>http://c77544s.gitee.io/2023/05/08/%E5%90%8E%E7%AB%AF/Spring/@Configuration%E5%92%8C@Component%20%E5%8C%BA%E5%88%AB/</id>
+    <published>2023-05-08T07:47:58.833Z</published>
+    <updated>2023-05-08T07:57:35.339Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;在@Component 类中使用方法或字段时不会使用 CGLIB 增强 (及不使用代理类：调用任何方法，使用任何变量，拿到的是原始对象，后面会有例子解释)。在@Component 中调用@Bean 注解的方法和字段则是普通的 Java</summary>
+        
+      
+    
+    
+    
+    <category term="后端" scheme="http://c77544s.gitee.io/categories/%E5%90%8E%E7%AB%AF/"/>
+    
+    <category term="Spring" scheme="http://c77544s.gitee.io/categories/%E5%90%8E%E7%AB%AF/Spring/"/>
+    
+    
+    <category term="Java" scheme="http://c77544s.gitee.io/tags/Java/"/>
     
   </entry>
   
   <entry>
     <title>NIO笔记</title>
-    <link href="http://c77544s.gitee.io/2023/04/28/%E5%90%8E%E7%AB%AF/Java/20230428-NIO%E7%AC%94%E8%AE%B0/"/>
-    <id>http://c77544s.gitee.io/2023/04/28/%E5%90%8E%E7%AB%AF/Java/20230428-NIO%E7%AC%94%E8%AE%B0/</id>
-    <published>2023-04-27T16:00:00.000Z</published>
-    <updated>2023-04-28T07:58:51.041Z</updated>
+    <link href="http://c77544s.gitee.io/2023/04/28/%E5%90%8E%E7%AB%AF/Java/NIO%E7%AC%94%E8%AE%B0/"/>
+    <id>http://c77544s.gitee.io/2023/04/28/%E5%90%8E%E7%AB%AF/Java/NIO%E7%AC%94%E8%AE%B0/</id>
+    <published>2023-04-28T07:46:22.597Z</published>
+    <updated>2023-05-08T08:01:45.537Z</updated>
     
     
       
@@ -77,10 +107,10 @@
   
   <entry>
     <title>hexo搭建博客</title>
-    <link href="http://c77544s.gitee.io/2023/04/26/%E5%90%8E%E7%AB%AF/Java/20230426-hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/"/>
-    <id>http://c77544s.gitee.io/2023/04/26/%E5%90%8E%E7%AB%AF/Java/20230426-hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/</id>
-    <published>2023-04-25T16:00:00.000Z</published>
-    <updated>2023-04-26T16:19:22.006Z</updated>
+    <link href="http://c77544s.gitee.io/2023/04/26/%E5%90%8E%E7%AB%AF/Java/hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/"/>
+    <id>http://c77544s.gitee.io/2023/04/26/%E5%90%8E%E7%AB%AF/Java/hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/</id>
+    <published>2023-04-26T15:28:22.668Z</published>
+    <updated>2023-05-08T08:01:40.391Z</updated>
     
     
       
