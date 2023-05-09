@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="keywords" content="JavaScript,Hexo" />
+  <meta name="author" content="超能虾米" />
+  <meta name="description" content="" />
+  
+  
+  <title>
+    
+      Spring Boot 如何提高接口数据安全性 
+      
+      
+      |
+    
+     超能虾米的博客
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="/images/favicon.png">
+    <link rel="icon" href="/images/favicon.png">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1886449_67xjft27j1l.css" />
+  <!-- 代码块风格 -->
+  
+
+  <!-- jquery3.3.1 -->
+  
+    <script defer type="text/javascript" src="/plugins/jquery.min.js"></script>
+  
+
+  <!-- fancybox -->
+  
+    <link href="/plugins/jquery.fancybox.min.css" rel="stylesheet">
+    <script defer type="text/javascript" src="/plugins/jquery.fancybox.min.js"></script>
+  
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+<meta name="generator" content="Hexo 5.4.2"><link rel="alternate" href="/atom.xml" title="超能虾米的博客" type="application/atom+xml">
+</head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="/images/头像.JPEG" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">超能虾米</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">主页</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">归档</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">分类</a>
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          <a href="/tags/">标签</a>
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          <a href="/friends/">朋友</a>
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          <a href="/about/">关于我</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">Spring Boot 如何提高接口数据安全性</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+          2023-05-08 18:23:29
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="Categories"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/%E5%90%8E%E7%AB%AF/" title="后端">
+                    <b>#</b> 后端
+                  </a>
+                </span>
+                
+                <span class="span--category">
+                  <a href="/categories/%E5%90%8E%E7%AB%AF/Spring/" title="Spring">
+                    <b>#</b> Spring
+                  </a>
+                </span>
+                
+              </span>
+          
+              <span class="post-tags">
+                <i class="iconfont icon-tags mr-10" title="Tags"></i>
+                
+                <span class="span--tag mr-8">
+                  <a href="/tags/Java/" title="Java">
+                    #Java
+                  </a>
+                </span>
+                
+                <span class="span--tag mr-8">
+                  <a href="/tags/%E5%B7%A5%E5%85%B7/" title="工具">
+                    #工具
+                  </a>
+                </span>
+                
+                <span class="span--tag mr-8">
+                  <a href="/tags/%E7%AE%97%E6%B3%95/" title="算法">
+                    #算法
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <p>在 Spring Boot 项目中提高接口安全的核心所在：<strong>加密和加签</strong>，加固接口参数、验证复杂度。</p>
+<p><strong>加密：</strong> 对参数进行加密传输，拒绝接口参数直接暴露，这样就可以有效做到防止别人轻易准确地获取到接口参数定义和传参格式要求了。</p>
+<p><strong>加签：</strong> 对接口参数进行加签，可以有效防止接口参数被篡改和接口参数被重放恶刷。</p>
+<h2 id="1-加密"><a href="#1-加密" class="headerlink" title="1. 加密"></a>1. 加密</h2><p>采用<strong>非对称加密算法 RSA 和对称加密算法 AES</strong>来完成接口加密</p>
+<blockquote>
+<p><strong>AES 是对称加密算法</strong>，优点：加密速度快；缺点：如果秘钥丢失，就容易解密密文，安全性相对比较差<br><strong>RSA 是非对称加密算法</strong> ，优点：安全；缺点：加密速度慢</p>
+</blockquote>
+<p>接口参数加解密的流程大致如图所示：<br><img src="http://qiniu.c77544s.top/picgo/202305091014736.png" alt="接口参数加解密流程.png"></p>
+<h2 id="2-验签"><a href="#2-验签" class="headerlink" title="2. 验签"></a>2. 验签</h2><p>签名验证也是当下提高接口安全性主要措施之一，核心就是客户端在调用接口时按照一定规则生成签名 <code>sign</code>，服务端拿到签名 <code>sign</code> 之后进行验证操作，大致流程如下：<br><img src="http://qiniu.c77544s.top/picgo/202305091016734.png" alt="image.png"></p>
+<h2 id="3-优雅实现接口加密、加签"><a href="#3-优雅实现接口加密、加签" class="headerlink" title="3. 优雅实现接口加密、加签"></a>3. 优雅实现接口加密、加签</h2><p>对加密、加签操作进行了公共的抽取封装，同时通过一个注解 <code>@ApiSecurity</code> 来标识接口是否需要进行加密、加签操作</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Retention(RetentionPolicy.RUNTIME)</span></span><br><span class="line"><span class="meta">@Target(&#123;ElementType.TYPE, ElementType.METHOD&#125;)</span></span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> ApiSecurity &#123;​</span><br><span class="line">    <span class="meta">@Alias(&quot;isSign&quot;)</span></span><br><span class="line">    <span class="type">boolean</span> <span class="title function_">value</span><span class="params">()</span> <span class="keyword">default</span> <span class="literal">true</span>;​</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 是否加签验证，默认开启</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Alias(&quot;value&quot;)</span></span><br><span class="line">    <span class="type">boolean</span> <span class="title function_">isSign</span><span class="params">()</span> <span class="keyword">default</span> <span class="literal">true</span>;​</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 接口请求参数是否需要解密</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="type">boolean</span> <span class="title function_">decryptRequest</span><span class="params">()</span> <span class="keyword">default</span> <span class="literal">false</span>;​</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 接口响应参数是否需要加密</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="type">boolean</span> <span class="title function_">encryptResponse</span><span class="params">()</span> <span class="keyword">default</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里注解属性可以看到签名验证默认是开启的，因为我们认为接口安全性加签是必须的，至于参数加解密可以视情况而定。<br>使用案例：下面就是一个需要加密加签的接口</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@PostMapping(&quot;/security&quot;)</span></span><br><span class="line"><span class="meta">@ApiSecurity(encryptResponse = true, decryptRequest = true)</span></span><br><span class="line"><span class="keyword">public</span> User <span class="title function_">testApiSecurity</span><span class="params">(<span class="meta">@RequestBody</span> User user)</span> &#123;</span><br><span class="line">	System.out.println(user);</span><br><span class="line">	<span class="keyword">return</span> user;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>为了对接口加密、加签功能实现统一和规范，这里将实现抽取，封装集成在自定义的 <code>web starter</code> 中，这样只要项目服务引入这个 starter 依赖就可以使用该功能了</p>
+<p>首先对加密传输的参数 bean 进行规定封装如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ApiSecurityParam</span> &#123;​</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 应用id</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> String appId;​</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * RSA加密后的aes秘钥，需解密</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> String key;​</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * AES加密的json参数</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> String data;​</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 签名</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> String sign;​</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 时间戳</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> String timestamp;​</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 请求唯一标识</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> String nonce;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>等于说加密、加签的参数格式，调用方需按照上面的对象传参，当然为了提高拓展性，签名的相关信息 <code>sign、timestamp、nonce</code> 可以放到请求的 <code>header</code> 里面，也能获取到。拿到 <code>apiSecurityParam</code> 我们就可以进行请求参数解密、验签了，需要通过判断是否使用了注解 <code>@ApiSecuriy</code> 来决定是否执行请求参数解密、验签逻辑，这就正好可以使用基于注解的切面实现啦，在说切面之前，先说说一次接口请求 <code>requestBody</code> 的输入流 InputStream 只能读取一次，就是说 <code>request.getInputStream()</code> 只能使用一次，原因如下：</p>
+<p><strong>因为流对应的是数据，数据放在内存中，有的是部分放在内存中。read 一次标记一次当前位置（mark position），第二次read就从标记位置继续读（从内存中copy）数据。 所以这就是为什么读了一次第二次是空了。 怎么让它不为空呢？只要inputstream 中的pos 变成0就可以重写读取当前内存中的数据。javaAPI中有一个方法public void reset() 这个方法就是可以重置pos为起始位置，但是不是所有的IO读取流都可以调用该方法！ServletInputStream是不能调用reset方法，这就导致了只能调用一次getInputStream()。</strong></p>
+<p>而我们需要先读取出<code>requestBody</code>进行解密，然后拿到解密之前的参数映射到真正的接口方法参数对象里，所以必须解决这个问题。</p>
+<p>解决方法就是原始的<code>HttpServletRequest</code>的InputStream只能读取一下，那么我们就重新自定义封装一个<code>HttpServletRequest</code>可以实现多次读取。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">RequestBodyWrapper</span> <span class="keyword">extends</span> <span class="title class_">HttpServletRequestWrapper</span> &#123;</span><br><span class="line">​</span><br><span class="line">    <span class="comment">//用于将流保存下来</span></span><br><span class="line">    <span class="keyword">private</span> String body;</span><br><span class="line">​</span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">RequestBodyWrapper</span><span class="params">(HttpServletRequest request)</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">        <span class="built_in">super</span>(request);</span><br><span class="line">        body = <span class="keyword">new</span> <span class="title class_">String</span>(StreamUtils.copyToByteArray(request.getInputStream()), StandardCharsets.UTF_8);</span><br><span class="line">    &#125;</span><br><span class="line">​</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 重写getInputStream， 从body中获取请求参数</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> IOException</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> ServletInputStream <span class="title function_">getInputStream</span><span class="params">()</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">        <span class="keyword">final</span> <span class="type">ByteArrayInputStream</span> <span class="variable">byteArrayInputStream</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ByteArrayInputStream</span>(body.getBytes(<span class="string">&quot;UTF-8&quot;</span>));</span><br><span class="line">        <span class="type">ServletInputStream</span> <span class="variable">servletInputStream</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ServletInputStream</span>() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">isFinished</span><span class="params">()</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">​</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">isReady</span><span class="params">()</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">​</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setReadListener</span><span class="params">(ReadListener readListener)</span> &#123;</span><br><span class="line">​</span><br><span class="line">            &#125;</span><br><span class="line">​</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">read</span><span class="params">()</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">                <span class="keyword">return</span> byteArrayInputStream.read();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="keyword">return</span> servletInputStream;</span><br><span class="line">    &#125;</span><br><span class="line">​</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> BufferedReader <span class="title function_">getReader</span><span class="params">()</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">BufferedReader</span>(<span class="keyword">new</span> <span class="title class_">InputStreamReader</span>(getInputStream()));</span><br><span class="line">    &#125;</span><br><span class="line">​</span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getBody</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>.body;</span><br><span class="line">    &#125;</span><br><span class="line">​</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setBody</span><span class="params">(String body)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.body = body;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">​</span><br></pre></td></tr></table></figure>
+
+<p>接下来就可以来看看切面了：这里是解析请求参数和验签和逻辑所在：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Aspect</span></span><br><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="meta">@Order(value = OrderConstant.AOP_API_DECRYPT)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ApiSecurityAspect</span> &#123;</span><br><span class="line">    <span class="meta">@Resource</span></span><br><span class="line">    <span class="keyword">private</span> ApiSecurityProperties apiSecurityProperties;</span><br><span class="line">    <span class="meta">@Resource</span></span><br><span class="line">    <span class="keyword">private</span> StringRedisTemplate stringRedisTemplate;</span><br><span class="line">​</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">String</span> <span class="variable">NONCE_KEY</span> <span class="operator">=</span> <span class="string">&quot;x-nonce-&quot;</span>;</span><br><span class="line">​</span><br><span class="line">    <span class="meta">@Pointcut(&quot;execution(* com.plasticene..controller..*(..)) &amp;&amp; &quot; +</span></span><br><span class="line"><span class="meta">            &quot;(@annotation(com.plasticene.boot.web.core.anno.ApiSecurity) ||&quot; +</span></span><br><span class="line"><span class="meta">            &quot; @target(com.plasticene.boot.web.core.anno.ApiSecurity))&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">securityPointcut</span><span class="params">()</span>&#123;&#125;</span><br><span class="line">​</span><br><span class="line">    <span class="meta">@Around(&quot;securityPointcut()&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> Object <span class="title function_">aroundApiSecurity</span><span class="params">(ProceedingJoinPoint joinPoint)</span> <span class="keyword">throws</span> Throwable &#123;</span><br><span class="line">        <span class="comment">//=======AOP解密切面通知=======</span></span><br><span class="line">        <span class="type">ApiSecurity</span> <span class="variable">apiSecurity</span> <span class="operator">=</span> getApiSecurity(joinPoint);</span><br><span class="line">        <span class="type">boolean</span> <span class="variable">isSign</span> <span class="operator">=</span> apiSecurity.isSign();</span><br><span class="line">        <span class="type">boolean</span> <span class="variable">decryptRequest</span> <span class="operator">=</span> apiSecurity.decryptRequest();</span><br><span class="line">        <span class="comment">// 获取request加密传递的参数</span></span><br><span class="line">        <span class="type">HttpServletRequest</span> <span class="variable">request</span> <span class="operator">=</span> getRequest();</span><br><span class="line">        <span class="comment">// 只能针对post接口的请求参数requestBody进行统一加解密和加签，这是规定</span></span><br><span class="line">        <span class="keyword">if</span> (!Objects.equals(<span class="string">&quot;POST&quot;</span>, request.getMethod())) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">BizException</span>(<span class="string">&quot;只能POST接口才能加密加签操作&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 获取controller接口方法定义的参数</span></span><br><span class="line">        Object[] args = joinPoint.getArgs();</span><br><span class="line">        Object[] newArgs = args;</span><br><span class="line">        <span class="type">ApiSecurityParam</span> <span class="variable">apiSecurityParam</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ApiSecurityParam</span>();</span><br><span class="line">        <span class="comment">// 请求参数解密</span></span><br><span class="line">        <span class="keyword">if</span> (decryptRequest) &#123;</span><br><span class="line">            <span class="comment">// 不支持多个请求，因为解密请求参数之后会json字符串，再根据请求参数的类型映射过去，如果有多个参数就不知道映射关系了</span></span><br><span class="line">            <span class="keyword">if</span> (args.length &gt; <span class="number">1</span>) &#123;</span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">BizException</span>(<span class="string">&quot;加密接口方法只支持一个参数，请修改&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// args.length=0没有请求参数，就说明没必要解密，因为接口压根不接收参数，即使使用者无脑开启的该接口的参数加密，这里不做任何逻辑即可</span></span><br><span class="line">            <span class="keyword">if</span> (args.length == <span class="number">1</span>) &#123;</span><br><span class="line">                RequestBodyWrapper requestBodyWrapper;</span><br><span class="line">                <span class="keyword">if</span> (request <span class="keyword">instanceof</span> RequestBodyWrapper) &#123;</span><br><span class="line">                    requestBodyWrapper = (RequestBodyWrapper) request;</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    requestBodyWrapper = <span class="keyword">new</span> <span class="title class_">RequestBodyWrapper</span>(request);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="type">String</span> <span class="variable">body</span> <span class="operator">=</span> requestBodyWrapper.getBody();</span><br><span class="line">                apiSecurityParam = JSONObject.parseObject(body, ApiSecurityParam.class);</span><br><span class="line">                <span class="comment">// 通过RSA私钥解密获取到aes秘钥</span></span><br><span class="line">                <span class="type">String</span> <span class="variable">aesKey</span> <span class="operator">=</span> RSAUtil.decryptByPrivateKey(apiSecurityParam.getKey(), apiSecurityProperties.getRsaPrivateKey());</span><br><span class="line">                <span class="comment">// 通过aes秘钥解密data参数数据</span></span><br><span class="line">                <span class="type">String</span> <span class="variable">data</span> <span class="operator">=</span> AESUtil.decrypt(apiSecurityParam.getData(), aesKey);</span><br><span class="line">                <span class="comment">//获取接口入参的类</span></span><br><span class="line">                Class&lt;?&gt; c = args[<span class="number">0</span>].getClass();</span><br><span class="line">                <span class="comment">//将获取解密后的真实参数，封装到接口入参的类中</span></span><br><span class="line">                <span class="type">Object</span> <span class="variable">o</span> <span class="operator">=</span> JSONObject.parseObject(data, c);</span><br><span class="line">                newArgs = <span class="keyword">new</span> <span class="title class_">Object</span>[]&#123;o&#125;;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 验签</span></span><br><span class="line">        <span class="keyword">if</span> (isSign) &#123;</span><br><span class="line">            verifySign(request, newArgs.length == <span class="number">0</span> ? <span class="literal">null</span> : newArgs[<span class="number">0</span>], apiSecurityParam);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> joinPoint.proceed(newArgs);</span><br><span class="line">    &#125;</span><br><span class="line">​</span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">verifySign</span><span class="params">(HttpServletRequest request, Object o, ApiSecurityParam apiSecurityParam)</span> &#123;</span><br><span class="line">        <span class="comment">// 如果请求参数是加密传输的，那就先从ApiSecurityParam获取签名和时间戳等等。</span></span><br><span class="line">        <span class="comment">// 如果请求参数不是加密传输的，那么ApiSecurityParam的字段取值都为null，这时候在请求的header里面获取参数信息</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">sign</span> <span class="operator">=</span> apiSecurityParam.getSign();</span><br><span class="line">        <span class="keyword">if</span> (StringUtils.isBlank(sign)) &#123;</span><br><span class="line">            sign = request.getHeader(<span class="string">&quot;X-Sign&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (StringUtils.isBlank(sign)) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">BizException</span>(<span class="string">&quot;签名不能为空&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">​</span><br><span class="line">        <span class="type">String</span> <span class="variable">nonce</span> <span class="operator">=</span> apiSecurityParam.getNonce();</span><br><span class="line">        <span class="keyword">if</span> (StringUtils.isBlank(nonce)) &#123;</span><br><span class="line">            nonce = request.getHeader(<span class="string">&quot;X-Nonce&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (StringUtils.isBlank(nonce)) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">BizException</span>(<span class="string">&quot;唯一标识不能为空&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">​</span><br><span class="line">        <span class="type">String</span> <span class="variable">timestamp</span> <span class="operator">=</span> apiSecurityParam.getTimestamp();</span><br><span class="line">        Long t;</span><br><span class="line">        <span class="keyword">if</span> (StringUtils.isBlank(timestamp)) &#123;</span><br><span class="line">            timestamp = request.getHeader(<span class="string">&quot;X-Timestamp&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (StringUtils.isBlank(timestamp)) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">BizException</span>(<span class="string">&quot;时间戳不能为空&quot;</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                t = Long.valueOf(timestamp);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">BizException</span>(<span class="string">&quot;非法的时间戳&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">​</span><br><span class="line">        <span class="comment">// 判断timestamp时间戳与当前时间是否超过签名有效时长（过期时间根据业务情况进行配置）,如果超过了就提示签名过期</span></span><br><span class="line">        <span class="type">long</span> <span class="variable">now</span> <span class="operator">=</span> System.currentTimeMillis() / <span class="number">1000</span>;</span><br><span class="line">        <span class="keyword">if</span> (now - t &gt; apiSecurityProperties.getValidTime()) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">BizException</span>(<span class="string">&quot;签名已过期&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">​</span><br><span class="line">        <span class="comment">// 判断nonce</span></span><br><span class="line">        <span class="type">boolean</span> <span class="variable">nonceExists</span> <span class="operator">=</span> stringRedisTemplate.hasKey(NONCE_KEY + nonce);</span><br><span class="line">        <span class="keyword">if</span> (nonceExists) &#123;</span><br><span class="line">            <span class="comment">//请求重复</span></span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">BizException</span>(<span class="string">&quot;唯一标识nonce已存在&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">​</span><br><span class="line">        <span class="comment">// 验签</span></span><br><span class="line">        <span class="type">SortedMap</span> <span class="variable">sortedMap</span> <span class="operator">=</span> SignUtil.beanToMap(o);</span><br><span class="line">        <span class="type">String</span> <span class="variable">content</span> <span class="operator">=</span> SignUtil.getContent(sortedMap, nonce, timestamp);</span><br><span class="line">        <span class="type">boolean</span> <span class="variable">flag</span> <span class="operator">=</span> RSAUtil.verifySignByPublicKey(content, sign, apiSecurityProperties.getRsaPublicKey());</span><br><span class="line">        <span class="keyword">if</span> (!flag) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">BizException</span>(<span class="string">&quot;签名验证不通过&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">​</span><br><span class="line">        stringRedisTemplate.opsForValue().set(NONCE_KEY+ nonce, <span class="string">&quot;1&quot;</span>, apiSecurityProperties.getValidTime(),</span><br><span class="line">                TimeUnit.SECONDS);</span><br><span class="line">    &#125;</span><br><span class="line">​</span><br><span class="line">​</span><br><span class="line">    <span class="keyword">private</span> HttpServletRequest <span class="title function_">getRequest</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="type">ServletRequestAttributes</span> <span class="variable">requestAttributes</span> <span class="operator">=</span> (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();</span><br><span class="line">        <span class="type">HttpServletRequest</span> <span class="variable">request</span> <span class="operator">=</span> requestAttributes.getRequest();</span><br><span class="line">        <span class="keyword">return</span> request;</span><br><span class="line">    &#125;</span><br><span class="line">​</span><br><span class="line">​</span><br><span class="line">    <span class="keyword">private</span> ApiSecurity <span class="title function_">getApiSecurity</span><span class="params">(JoinPoint joinPoint)</span> &#123;</span><br><span class="line">        <span class="type">MethodSignature</span> <span class="variable">methodSignature</span> <span class="operator">=</span> (MethodSignature) joinPoint.getSignature();</span><br><span class="line">        <span class="type">Method</span> <span class="variable">method</span> <span class="operator">=</span> methodSignature.getMethod();</span><br><span class="line">        <span class="type">ApiSecurity</span> <span class="variable">apiSecurity</span> <span class="operator">=</span> method.getAnnotation(ApiSecurity.class);</span><br><span class="line">        <span class="keyword">if</span> (Objects.isNull(apiSecurity)) &#123;</span><br><span class="line">            apiSecurity = method.getDeclaringClass().getAnnotation(ApiSecurity.class);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> apiSecurity;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这代码没什么好讲的了，就按照上面的加密、加签流程图逻辑实现的，而且注释也很清楚，可以自己慢慢消化，这里面涉及的工具类如 <code>RSAUtil、AESUtil、SignUtil</code> 等，碍于文章代码篇幅，我就这里就在一一展示，我会在文章后面放上全部代码的项目 github 地址以供下载的。</p>
+<p>上面的切面只完成了接口参数的解密和验签，至于对响应参数的加密返回放到了<code>ResponseBodyAdvice</code>中实现。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RestControllerAdvice</span></span><br><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ResponseResultBodyAdvice</span> <span class="keyword">implements</span> <span class="title class_">ResponseBodyAdvice</span>&lt;Object&gt; &#123;</span><br><span class="line">    <span class="meta">@Resource</span></span><br><span class="line">    <span class="keyword">private</span> ObjectMapper objectMapper;</span><br><span class="line">    <span class="meta">@Resource</span></span><br><span class="line">    <span class="keyword">private</span> ApiSecurityProperties apiSecurityProperties;</span><br><span class="line">​</span><br><span class="line">​</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 判断类或者方法是否使用了 <span class="doctag">@ResponseResultBody</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">supports</span><span class="params">(MethodParameter returnType, Class&lt;? extends HttpMessageConverter&lt;?&gt;&gt; converterType)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> AnnotatedElementUtils.hasAnnotation(returnType.getContainingClass(), ResponseResultBody.class)</span><br><span class="line">                || returnType.hasMethodAnnotation(ResponseResultBody.class)</span><br><span class="line">                || AnnotatedElementUtils.hasAnnotation(returnType.getContainingClass(), ApiSecurity.class)</span><br><span class="line">                || returnType.hasMethodAnnotation(ApiSecurity.class);</span><br><span class="line">    &#125;</span><br><span class="line">​</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 当类或者方法使用了 <span class="doctag">@ResponseResultBody</span> 就会调用这个方法</span></span><br><span class="line"><span class="comment">     * 如果返回类型是string，那么springmvc是直接返回的，此时需要手动转化为json</span></span><br><span class="line"><span class="comment">     * 因为当body都为null时，下面的非加密下的if判断参数类型的条件都不满足，如果接口返回类似为String，</span></span><br><span class="line"><span class="comment">     * 会报错com.shepherd.fast.global.ResponseVO cannot be cast to java.lang.String</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@SneakyThrows</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> Object <span class="title function_">beforeBodyWrite</span><span class="params">(Object body, MethodParameter returnType, MediaType selectedContentType, Class&lt;? extends HttpMessageConverter&lt;?&gt;&gt; selectedConverterType, ServerHttpRequest request, ServerHttpResponse response)</span> &#123;</span><br><span class="line">        <span class="type">Method</span> <span class="variable">method</span> <span class="operator">=</span> returnType.getMethod();</span><br><span class="line">        Class&lt;?&gt; returnClass = method.getReturnType();</span><br><span class="line">        <span class="type">Boolean</span> <span class="variable">enable</span> <span class="operator">=</span> apiSecurityProperties.getEnable();</span><br><span class="line">        <span class="type">ApiSecurity</span> <span class="variable">apiSecurity</span> <span class="operator">=</span> method.getAnnotation(ApiSecurity.class);</span><br><span class="line">        <span class="keyword">if</span> (Objects.isNull(apiSecurity)) &#123;</span><br><span class="line">            apiSecurity = method.getDeclaringClass().getAnnotation(ApiSecurity.class);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (enable &amp;&amp; Objects.nonNull(apiSecurity) &amp;&amp; apiSecurity.encryptResponse() &amp;&amp; Objects.nonNull(body)) &#123;</span><br><span class="line">            <span class="comment">// 只需要加密返回data数据内容</span></span><br><span class="line">            <span class="keyword">if</span> (body <span class="keyword">instanceof</span> ResponseVO) &#123;</span><br><span class="line">                body = ((ResponseVO) body).getData();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="type">JSONObject</span> <span class="variable">jsonObject</span> <span class="operator">=</span> encryptResponse(body);</span><br><span class="line">            body = jsonObject;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (body <span class="keyword">instanceof</span> String || Objects.equals(returnClass, String.class)) &#123;</span><br><span class="line">                <span class="type">String</span> <span class="variable">value</span> <span class="operator">=</span> objectMapper.writeValueAsString(ResponseVO.success(body));</span><br><span class="line">                <span class="keyword">return</span> value;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 防止重复包裹的问题出现</span></span><br><span class="line">            <span class="keyword">if</span> (body <span class="keyword">instanceof</span> ResponseVO) &#123;</span><br><span class="line">                <span class="keyword">return</span> body;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ResponseVO.success(body);</span><br><span class="line">    &#125;</span><br><span class="line">​</span><br><span class="line">    JSONObject <span class="title function_">encryptResponse</span><span class="params">(Object result)</span> &#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">aseKey</span> <span class="operator">=</span> AESUtil.generateAESKey();</span><br><span class="line">        <span class="type">String</span> <span class="variable">content</span> <span class="operator">=</span> JSONObject.toJSONString(result);</span><br><span class="line">        <span class="type">String</span> <span class="variable">data</span> <span class="operator">=</span> AESUtil.encrypt(content, aseKey);</span><br><span class="line">        <span class="type">String</span> <span class="variable">key</span> <span class="operator">=</span> RSAUtil.encryptByPublicKey(aseKey, apiSecurityProperties.getRsaPublicKey());</span><br><span class="line">        <span class="type">JSONObject</span> <span class="variable">jsonObject</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">JSONObject</span>();</span><br><span class="line">        jsonObject.put(<span class="string">&quot;key&quot;</span>, key);</span><br><span class="line">        jsonObject.put(<span class="string">&quot;data&quot;</span>, data);</span><br><span class="line">        <span class="keyword">return</span> jsonObject;</span><br><span class="line">    &#125;</span><br><span class="line">​</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>作者：shepherd111<br>链接：<a target="_blank" rel="noopener" href="https://juejin.cn/post/7230656455806976058">https://juejin.cn/post/7230656455806976058</a><br>来源：稀土掘金<br><strong>Github 地址</strong>：<a target="_blank" rel="noopener" href="https://github.com/plasticene/plasticene-boot-starter-parent">plasticene-boot-starter-parent(github.com)</a><br><strong>Gitee地址</strong>：<a target="_blank" rel="noopener" href="https://gitee.com/plasticene3/plasticene-boot-starter-parent">plasticene-boot-starter-parent(gitee.com)</a></p>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2023/05/08/%E5%90%8E%E7%AB%AF/%E4%B8%AD%E9%97%B4%E4%BB%B6/MongoDB%E6%95%B4%E5%90%88%E5%88%B0Spring%20Boot/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+              2023-05-08 18:23:29
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="Categories"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/%E5%90%8E%E7%AB%AF/" title="后端">
+                        <b>#</b> 后端
+                      </a>
+                    </span>
+                    
+                    <span class="span--category">
+                      <a href="/categories/%E5%90%8E%E7%AB%AF/Spring/" title="Spring">
+                        <b>#</b> Spring
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+                  <span class="post-tags">
+                    <i class="iconfont icon-tags mr-10" title="Tags"></i>
+                    
+                    <span class="span--tag mr-8">
+                      <a href="/tags/Java/" title="Java">
+                        #Java
+                      </a>
+                    </span>
+                    
+                    <span class="span--tag mr-8">
+                      <a href="/tags/%E5%B7%A5%E5%85%B7/" title="工具">
+                        #工具
+                      </a>
+                    </span>
+                    
+                    <span class="span--tag mr-8">
+                      <a href="/tags/%E7%AE%97%E6%B3%95/" title="算法">
+                        #算法
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%8A%A0%E5%AF%86"><span class="toc-text">1. 加密</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E9%AA%8C%E7%AD%BE"><span class="toc-text">2. 验签</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E4%BC%98%E9%9B%85%E5%AE%9E%E7%8E%B0%E6%8E%A5%E5%8F%A3%E5%8A%A0%E5%AF%86%E3%80%81%E5%8A%A0%E7%AD%BE"><span class="toc-text">3. 优雅实现接口加密、加签</span></a></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+      <div class="comments-container">
+        
+
+
+
+
+  
+    <script async type="text/javascript" src="/plugins/valine.min.js" onload="loadValineSuc(this)"></script>
+  
+
+  <div id="vcomments"></div>
+
+  <script>
+    function loadValineSuc() {
+      new Valine({
+        el: '#vcomments',
+        appId: 'H2QqshKF8elT2Si5bfKynT9h-9Nh9j0Va',
+        appKey: 'WgtVppOWkTZ8fWNReNI1Ymf7',
+        placeholder: '有问题请留言吧!',
+        avatar: 'retro',
+        lang: 'en'
+      })
+    }
+  </script>
+
+    <style>
+      .comments-container .v .vempty {
+        display: none!important;
+      }
+    </style>
+
+
+
+
+      </div>
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          <a title="github" target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">
+            <i class="iconfont icon-github"></i>
+          </a>
+        </li>
+      
+        <li>
+          <a title="email" target="_blank" rel="noopener" href="https://c77544s.github.io/about/">
+            <i class="iconfont icon-envelope"></i>
+          </a>
+        </li>
+      
+        <li>
+          <a title="wechat" target="_blank" rel="noopener" href="https://c77544s.github.io/about/">
+            <i class="iconfont icon-wechat"></i>
+          </a>
+        </li>
+      
+        <li>
+          <a title="rss" href="/atom.xml">
+            <i class="iconfont icon-rss"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Copyright © 2023 Oranges</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+  <div class="search-icon tools-bar-item" id="search-icon">
+    <a href="javascript: void(0)">
+      <i class="iconfont icon-search"></i>
+    </a>
+  </div>
+
+  <div class="search-overlay hidden">
+    <div class="search-content" tabindex="0">
+      <div class="search-title">
+        <span class="search-icon-input">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-search"></i>
+          </a>
+        </span>
+        
+          <input type="text" class="search-input" id="search-input" placeholder="搜索...">
+        
+        <span class="search-close-icon" id="search-close-icon">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-close"></i>
+          </a>
+        </span>
+      </div>
+      <div class="search-result" id="search-result"></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var inputArea = document.querySelector("#search-input")
+    var searchOverlayArea = document.querySelector(".search-overlay")
+
+    inputArea.onclick = function() {
+      getSearchFile()
+      this.onclick = null
+    }
+
+    inputArea.onkeydown = function() {
+      if(event.keyCode == 13)
+        return false
+    }
+
+    function openOrHideSearchContent() {
+      let isHidden = searchOverlayArea.classList.contains('hidden')
+      if (isHidden) {
+        searchOverlayArea.classList.remove('hidden')
+        document.body.classList.add('hidden')
+        // inputArea.focus()
+      } else {
+        searchOverlayArea.classList.add('hidden')
+        document.body.classList.remove('hidden')
+      }
+    }
+
+    function blurSearchContent(e) {
+      if (e.target === searchOverlayArea) {
+        openOrHideSearchContent()
+      }
+    }
+
+    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
+    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
+    searchOverlayArea.addEventListener("click", blurSearchContent, false)
+
+    var searchFunc = function (path, search_id, content_id) {
+      'use strict';
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      $resultContent.innerHTML = "<ul><span class='local-search-empty'>First search, index file loading, please wait...<span></ul>";
+      $.ajax({
+        // 0x01. load xml file
+        url: path,
+        dataType: "xml",
+        success: function (xmlResponse) {
+          // 0x02. parse xml file
+          var datas = $("entry", xmlResponse).map(function () {
+            return {
+              title: $("title", this).text(),
+              content: $("content", this).text(),
+              url: $("url", this).text()
+            };
+          }).get();
+          $resultContent.innerHTML = "";
+
+          $input.addEventListener('input', function () {
+            // 0x03. parse query to keywords list
+            var str = '<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length <= 0) {
+              return;
+            }
+            // 0x04. perform local searching
+            datas.forEach(function (data) {
+              var isMatch = true;
+              var content_index = [];
+              if (!data.title || data.title.trim() === '') {
+                data.title = "Untitled";
+              }
+              var orig_data_title = data.title.trim();
+              var data_title = orig_data_title.toLowerCase();
+              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+              var data_content = orig_data_content.toLowerCase();
+              var data_url = data.url;
+              var index_title = -1;
+              var index_content = -1;
+              var first_occur = -1;
+              // only match artiles with not empty contents
+              if (data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                  index_title = data_title.indexOf(keyword);
+                  index_content = data_content.indexOf(keyword);
+
+                  if (index_title < 0 && index_content < 0) {
+                    isMatch = false;
+                  } else {
+                    if (index_content < 0) {
+                      index_content = 0;
+                    }
+                    if (i == 0) {
+                      first_occur = index_content;
+                    }
+                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                  }
+                });
+              } else {
+                isMatch = false;
+              }
+              // 0x05. show search results
+              if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
+                var content = orig_data_content;
+                if (first_occur >= 0) {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  var match_content = content.substr(start, end);
+
+                  // highlight all keywords
+                  keywords.forEach(function (keyword) {
+                    var regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
+                  });
+
+                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+              }
+            });
+            str += "</ul>";
+            if (str.indexOf('<li>') === -1) {
+              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>No result<span></ul>";
+            }
+            $resultContent.innerHTML = str;
+          });
+        },
+        error: function(xhr, status, error) {
+          $resultContent.innerHTML = ""
+          if (xhr.status === 404) {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The search.xml file was not found, please refer to：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
+          } else {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The request failed, Try to refresh the page or try again later.<span></ul>";
+          }
+        }
+      });
+      $(document).on('click', '#search-close-icon', function() {
+        $('#search-input').val('');
+        $('#search-result').html('');
+      });
+    }
+
+    var getSearchFile = function() {
+        var path = "/search.xml";
+        searchFunc(path, 'search-input', 'search-result');
+    }
+  </script>
+
+
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + Spring%20Boot%20%E5%A6%82%E4%BD%95%E6%8F%90%E9%AB%98%E6%8E%A5%E5%8F%A3%E6%95%B0%E6%8D%AE%E5%AE%89%E5%85%A8%E6%80%A7 + '&url=' + http%3A%2F%2Fc77544s.gitee.io%2F2023%2F05%2F08%2F%25E5%2590%258E%25E7%25AB%25AF%2FSpring%2FSpring%2520Boot%2520%25E5%25A6%2582%25E4%25BD%2595%25E6%258F%2590%25E9%25AB%2598%25E6%258E%25A5%25E5%258F%25A3%25E6%2595%25B0%25E6%258D%25AE%25E5%25AE%2589%25E5%2585%25A8%25E6%2580%25A7%2F + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=http://c77544s.gitee.io/2023/05/08/%E5%90%8E%E7%AB%AF/Spring/Spring%20Boot%20%E5%A6%82%E4%BD%95%E6%8F%90%E9%AB%98%E6%8E%A5%E5%8F%A3%E6%95%B0%E6%8D%AE%E5%AE%89%E5%85%A8%E6%80%A7/" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
+  
+  
+<script src="/js/shares.js"></script>
+
+
+
+      </div>
+    </div>
+  </body>
+</html>

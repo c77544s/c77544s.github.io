@@ -6,7 +6,7 @@
   <link href="http://c77544s.gitee.io/atom.xml" rel="self"/>
   
   <link href="http://c77544s.gitee.io/"/>
-  <updated>2023-05-08T09:53:36.408Z</updated>
+  <updated>2023-05-09T02:25:10.496Z</updated>
   <id>http://c77544s.gitee.io/</id>
   
   <author>
@@ -17,11 +17,43 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Spring Boot 如何提高接口数据安全性</title>
+    <link href="http://c77544s.gitee.io/2023/05/08/%E5%90%8E%E7%AB%AF/Spring/Spring%20Boot%20%E5%A6%82%E4%BD%95%E6%8F%90%E9%AB%98%E6%8E%A5%E5%8F%A3%E6%95%B0%E6%8D%AE%E5%AE%89%E5%85%A8%E6%80%A7/"/>
+    <id>http://c77544s.gitee.io/2023/05/08/%E5%90%8E%E7%AB%AF/Spring/Spring%20Boot%20%E5%A6%82%E4%BD%95%E6%8F%90%E9%AB%98%E6%8E%A5%E5%8F%A3%E6%95%B0%E6%8D%AE%E5%AE%89%E5%85%A8%E6%80%A7/</id>
+    <published>2023-05-08T10:23:29.831Z</published>
+    <updated>2023-05-09T02:25:10.496Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;在 Spring Boot 项目中提高接口安全的核心所在：&lt;strong&gt;加密和加签&lt;/strong&gt;，加固接口参数、验证复杂度。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;加密：&lt;/strong&gt;</summary>
+        
+      
+    
+    
+    
+    <category term="后端" scheme="http://c77544s.gitee.io/categories/%E5%90%8E%E7%AB%AF/"/>
+    
+    <category term="Spring" scheme="http://c77544s.gitee.io/categories/%E5%90%8E%E7%AB%AF/Spring/"/>
+    
+    
+    <category term="Java" scheme="http://c77544s.gitee.io/tags/Java/"/>
+    
+    <category term="工具" scheme="http://c77544s.gitee.io/tags/%E5%B7%A5%E5%85%B7/"/>
+    
+    <category term="算法" scheme="http://c77544s.gitee.io/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
     <title>MongoDB整合到Spring Boot</title>
     <link href="http://c77544s.gitee.io/2023/05/08/%E5%90%8E%E7%AB%AF/%E4%B8%AD%E9%97%B4%E4%BB%B6/MongoDB%E6%95%B4%E5%90%88%E5%88%B0Spring%20Boot/"/>
     <id>http://c77544s.gitee.io/2023/05/08/%E5%90%8E%E7%AB%AF/%E4%B8%AD%E9%97%B4%E4%BB%B6/MongoDB%E6%95%B4%E5%90%88%E5%88%B0Spring%20Boot/</id>
     <published>2023-05-08T09:00:14.935Z</published>
-    <updated>2023-05-08T09:53:36.408Z</updated>
+    <updated>2023-05-08T10:20:49.794Z</updated>
     
     
       
@@ -107,8 +139,8 @@
   
   <entry>
     <title>hexo搭建博客</title>
-    <link href="http://c77544s.gitee.io/2023/04/26/%E5%90%8E%E7%AB%AF/Java/hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/"/>
-    <id>http://c77544s.gitee.io/2023/04/26/%E5%90%8E%E7%AB%AF/Java/hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/</id>
+    <link href="http://c77544s.gitee.io/2023/04/26/%E6%9D%82%E9%A1%B9/hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/"/>
+    <id>http://c77544s.gitee.io/2023/04/26/%E6%9D%82%E9%A1%B9/hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/</id>
     <published>2023-04-26T15:28:22.668Z</published>
     <updated>2023-05-08T08:01:40.391Z</updated>
     
@@ -123,9 +155,7 @@
     
     
     
-    <category term="后端" scheme="http://c77544s.gitee.io/categories/%E5%90%8E%E7%AB%AF/"/>
-    
-    <category term="Java" scheme="http://c77544s.gitee.io/categories/%E5%90%8E%E7%AB%AF/Java/"/>
+    <category term="杂项" scheme="http://c77544s.gitee.io/categories/%E6%9D%82%E9%A1%B9/"/>
     
     
   </entry>
