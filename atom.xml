@@ -6,7 +6,7 @@
   <link href="http://c77544s.gitee.io/atom.xml" rel="self"/>
   
   <link href="http://c77544s.gitee.io/"/>
-  <updated>2023-05-09T02:25:10.496Z</updated>
+  <updated>2023-05-11T09:03:22.415Z</updated>
   <id>http://c77544s.gitee.io/</id>
   
   <author>
@@ -17,9 +17,206 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>接口幂等</title>
+    <link href="http://c77544s.gitee.io/2023/05/11/%E5%90%8E%E7%AB%AF/Spring%20Cloud/%E6%8E%A5%E5%8F%A3%E5%B9%82%E7%AD%89/"/>
+    <id>http://c77544s.gitee.io/2023/05/11/%E5%90%8E%E7%AB%AF/Spring%20Cloud/%E6%8E%A5%E5%8F%A3%E5%B9%82%E7%AD%89/</id>
+    <published>2023-05-11T08:15:53.468Z</published>
+    <updated>2023-05-11T09:03:22.415Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;幂等是一个数学与计算机科学概念。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;在数学中，幂等用函数表达式就是：&lt;code&gt;f(x)=f(f(x))&lt;/code&gt;。比如求绝对值的函数，就是幂等&lt;br&gt;的，&lt;code&gt;abs(x)=abs(abs(x))&lt;/code&gt;。&lt;/li&gt;
+&lt;li&gt;计算机</summary>
+        
+      
+    
+    
+    
+    <category term="后端" scheme="http://c77544s.gitee.io/categories/%E5%90%8E%E7%AB%AF/"/>
+    
+    <category term="Spring Cloud" scheme="http://c77544s.gitee.io/categories/%E5%90%8E%E7%AB%AF/Spring-Cloud/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>MVCC原理</title>
+    <link href="http://c77544s.gitee.io/2023/05/11/%E5%90%8E%E7%AB%AF/%E6%95%B0%E6%8D%AE%E5%BA%93/MVCC%E5%8E%9F%E7%90%86/"/>
+    <id>http://c77544s.gitee.io/2023/05/11/%E5%90%8E%E7%AB%AF/%E6%95%B0%E6%8D%AE%E5%BA%93/MVCC%E5%8E%9F%E7%90%86/</id>
+    <published>2023-05-11T06:41:28.637Z</published>
+    <updated>2023-05-11T08:09:45.671Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;事务的四大特性—ACID&quot;&gt;&lt;a href=&quot;#事务的四大特性—ACID&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="后端" scheme="http://c77544s.gitee.io/categories/%E5%90%8E%E7%AB%AF/"/>
+    
+    <category term="数据库" scheme="http://c77544s.gitee.io/categories/%E5%90%8E%E7%AB%AF/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    
+    
+    <category term="数据结构" scheme="http://c77544s.gitee.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Redis中的跳表</title>
+    <link href="http://c77544s.gitee.io/2023/05/11/%E5%90%8E%E7%AB%AF/%E4%B8%AD%E9%97%B4%E4%BB%B6/Redis%E4%B8%AD%E7%9A%84%E8%B7%B3%E8%A1%A8/"/>
+    <id>http://c77544s.gitee.io/2023/05/11/%E5%90%8E%E7%AB%AF/%E4%B8%AD%E9%97%B4%E4%BB%B6/Redis%E4%B8%AD%E7%9A%84%E8%B7%B3%E8%A1%A8/</id>
+    <published>2023-05-11T03:45:02.662Z</published>
+    <updated>2023-05-11T06:38:17.461Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;&lt;code&gt;Redis&lt;/code&gt; 只在两个地方用到了跳跃表，一个是实现有序集合键（sorted set），另一个是在集群节点中用作内部数据结构，除此之外，跳跃表在 &lt;code&gt;Redis&lt;/code&gt; 里面没有其他用途。&lt;/p&gt;
+&lt;p&gt;&lt;img</summary>
+        
+      
+    
+    
+    
+    <category term="后端" scheme="http://c77544s.gitee.io/categories/%E5%90%8E%E7%AB%AF/"/>
+    
+    <category term="中间件" scheme="http://c77544s.gitee.io/categories/%E5%90%8E%E7%AB%AF/%E4%B8%AD%E9%97%B4%E4%BB%B6/"/>
+    
+    
+    <category term="数据结构" scheme="http://c77544s.gitee.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>并行流</title>
+    <link href="http://c77544s.gitee.io/2023/05/10/%E5%90%8E%E7%AB%AF/Java/%E5%B9%B6%E8%A1%8C%E6%B5%81/"/>
+    <id>http://c77544s.gitee.io/2023/05/10/%E5%90%8E%E7%AB%AF/Java/%E5%B9%B6%E8%A1%8C%E6%B5%81/</id>
+    <published>2023-05-10T08:44:29.003Z</published>
+    <updated>2023-05-10T09:04:43.034Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;并行流通过 &lt;code&gt;list.parallelStream()&lt;/code&gt; 方法。当然也可以通过 &lt;code&gt;list.stream().parallel()&lt;/code&gt; 将普通流转换成并行流。并行流也能通过 &lt;code&gt;sequential()&lt;/code&gt;</summary>
+        
+      
+    
+    
+    
+    <category term="后端" scheme="http://c77544s.gitee.io/categories/%E5%90%8E%E7%AB%AF/"/>
+    
+    <category term="Java" scheme="http://c77544s.gitee.io/categories/%E5%90%8E%E7%AB%AF/Java/"/>
+    
+    
+    <category term="Java" scheme="http://c77544s.gitee.io/tags/Java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>分布式事务</title>
+    <link href="http://c77544s.gitee.io/2023/05/10/%E5%90%8E%E7%AB%AF/Spring%20Cloud/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/"/>
+    <id>http://c77544s.gitee.io/2023/05/10/%E5%90%8E%E7%AB%AF/Spring%20Cloud/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/</id>
+    <published>2023-05-10T07:01:55.141Z</published>
+    <updated>2023-05-11T06:39:09.112Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;分布式事务产生的场景&quot;&gt;&lt;a href=&quot;#分布式事务产生的场景&quot; class=&quot;headerlink&quot; title=&quot;分布式事务产生的场景&quot;&gt;&lt;/a&gt;分布式事务产生的场景&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;跨 JVM</summary>
+        
+      
+    
+    
+    
+    <category term="后端" scheme="http://c77544s.gitee.io/categories/%E5%90%8E%E7%AB%AF/"/>
+    
+    <category term="Spring Cloud" scheme="http://c77544s.gitee.io/categories/%E5%90%8E%E7%AB%AF/Spring-Cloud/"/>
+    
+    
+    <category term="中间件" scheme="http://c77544s.gitee.io/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>分布式锁的实现</title>
+    <link href="http://c77544s.gitee.io/2023/05/10/%E5%90%8E%E7%AB%AF/Spring%20Cloud/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%E7%9A%84%E5%AE%9E%E7%8E%B0/"/>
+    <id>http://c77544s.gitee.io/2023/05/10/%E5%90%8E%E7%AB%AF/Spring%20Cloud/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%E7%9A%84%E5%AE%9E%E7%8E%B0/</id>
+    <published>2023-05-10T05:52:08.172Z</published>
+    <updated>2023-05-11T01:25:04.511Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;基于-Redis-实现&quot;&gt;&lt;a href=&quot;#基于-Redis-实现&quot; class=&quot;headerlink&quot; title=&quot;基于 Redis 实现&quot;&gt;&lt;/a&gt;基于 Redis</summary>
+        
+      
+    
+    
+    
+    <category term="后端" scheme="http://c77544s.gitee.io/categories/%E5%90%8E%E7%AB%AF/"/>
+    
+    <category term="Spring Cloud" scheme="http://c77544s.gitee.io/categories/%E5%90%8E%E7%AB%AF/Spring-Cloud/"/>
+    
+    
+    <category term="算法" scheme="http://c77544s.gitee.io/tags/%E7%AE%97%E6%B3%95/"/>
+    
+    <category term="中间件" scheme="http://c77544s.gitee.io/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>面试笔记</title>
+    <link href="http://c77544s.gitee.io/2023/05/10/%E5%90%8E%E7%AB%AF/%E9%9D%A2%E8%AF%95%E7%AC%94%E8%AE%B0/"/>
+    <id>http://c77544s.gitee.io/2023/05/10/%E5%90%8E%E7%AB%AF/%E9%9D%A2%E8%AF%95%E7%AC%94%E8%AE%B0/</id>
+    <published>2023-05-10T04:44:34.681Z</published>
+    <updated>2023-05-11T08:10:55.772Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;极兔速递&quot;&gt;&lt;a href=&quot;#极兔速递&quot; class=&quot;headerlink&quot; title=&quot;极兔速递&quot;&gt;&lt;/a&gt;极兔速递&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;input checked=&quot;&quot; disabled=&quot;&quot; type=&quot;checkbox&quot;&gt;</summary>
+        
+      
+    
+    
+    
+    <category term="后端" scheme="http://c77544s.gitee.io/categories/%E5%90%8E%E7%AB%AF/"/>
+    
+    
+    <category term="Java" scheme="http://c77544s.gitee.io/tags/Java/"/>
+    
+    <category term="算法" scheme="http://c77544s.gitee.io/tags/%E7%AE%97%E6%B3%95/"/>
+    
+    <category term="数据结构" scheme="http://c77544s.gitee.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Spring Boot 如何提高接口数据安全性</title>
-    <link href="http://c77544s.gitee.io/2023/05/08/%E5%90%8E%E7%AB%AF/Spring/Spring%20Boot%20%E5%A6%82%E4%BD%95%E6%8F%90%E9%AB%98%E6%8E%A5%E5%8F%A3%E6%95%B0%E6%8D%AE%E5%AE%89%E5%85%A8%E6%80%A7/"/>
-    <id>http://c77544s.gitee.io/2023/05/08/%E5%90%8E%E7%AB%AF/Spring/Spring%20Boot%20%E5%A6%82%E4%BD%95%E6%8F%90%E9%AB%98%E6%8E%A5%E5%8F%A3%E6%95%B0%E6%8D%AE%E5%AE%89%E5%85%A8%E6%80%A7/</id>
+    <link href="http://c77544s.gitee.io/2023/05/08/%E5%90%8E%E7%AB%AF/Spring%20Boot/Spring%20Boot%20%E5%A6%82%E4%BD%95%E6%8F%90%E9%AB%98%E6%8E%A5%E5%8F%A3%E6%95%B0%E6%8D%AE%E5%AE%89%E5%85%A8%E6%80%A7/"/>
+    <id>http://c77544s.gitee.io/2023/05/08/%E5%90%8E%E7%AB%AF/Spring%20Boot/Spring%20Boot%20%E5%A6%82%E4%BD%95%E6%8F%90%E9%AB%98%E6%8E%A5%E5%8F%A3%E6%95%B0%E6%8D%AE%E5%AE%89%E5%85%A8%E6%80%A7/</id>
     <published>2023-05-08T10:23:29.831Z</published>
     <updated>2023-05-09T02:25:10.496Z</updated>
     
@@ -37,7 +234,7 @@
     
     <category term="后端" scheme="http://c77544s.gitee.io/categories/%E5%90%8E%E7%AB%AF/"/>
     
-    <category term="Spring" scheme="http://c77544s.gitee.io/categories/%E5%90%8E%E7%AB%AF/Spring/"/>
+    <category term="Spring Boot" scheme="http://c77544s.gitee.io/categories/%E5%90%8E%E7%AB%AF/Spring-Boot/"/>
     
     
     <category term="Java" scheme="http://c77544s.gitee.io/tags/Java/"/>
@@ -100,40 +297,6 @@
     
     
     <category term="Java" scheme="http://c77544s.gitee.io/tags/Java/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>NIO笔记</title>
-    <link href="http://c77544s.gitee.io/2023/04/28/%E5%90%8E%E7%AB%AF/Java/NIO%E7%AC%94%E8%AE%B0/"/>
-    <id>http://c77544s.gitee.io/2023/04/28/%E5%90%8E%E7%AB%AF/Java/NIO%E7%AC%94%E8%AE%B0/</id>
-    <published>2023-04-28T07:46:22.597Z</published>
-    <updated>2023-05-08T08:01:45.537Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th align=&quot;center&quot;&gt;IO&lt;/th&gt;
-&lt;th align=&quot;center&quot;&gt;NIO&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;&lt;tr&gt;
-&lt;td align=&quot;center&quot;&gt;面向流&lt;/td&gt;
-&lt;td</summary>
-        
-      
-    
-    
-    
-    <category term="后端" scheme="http://c77544s.gitee.io/categories/%E5%90%8E%E7%AB%AF/"/>
-    
-    <category term="Java" scheme="http://c77544s.gitee.io/categories/%E5%90%8E%E7%AB%AF/Java/"/>
-    
     
   </entry>
   

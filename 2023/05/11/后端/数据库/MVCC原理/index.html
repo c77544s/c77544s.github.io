@@ -11,7 +11,7 @@
   
   <title>
     
-      @Configuration和@Component 区别 
+      MVCC原理 
       
       
       |
@@ -156,11 +156,11 @@
   <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
   <div class="container post-details" id="post-details">
     <div class="post-content">
-      <div class="post-title">@Configuration和@Component 区别</div>
+      <div class="post-title">MVCC原理</div>
       <div class="post-attach">
         <span class="post-pubtime">
           <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-          2023-05-08 15:47:58
+          2023-05-11 14:41:28
         </span>
         
               <span class="post-categories">
@@ -173,8 +173,8 @@
                 </span>
                 
                 <span class="span--category">
-                  <a href="/categories/%E5%90%8E%E7%AB%AF/Spring/" title="Spring">
-                    <b>#</b> Spring
+                  <a href="/categories/%E5%90%8E%E7%AB%AF/%E6%95%B0%E6%8D%AE%E5%BA%93/" title="数据库">
+                    <b>#</b> 数据库
                   </a>
                 </span>
                 
@@ -184,8 +184,8 @@
                 <i class="iconfont icon-tags mr-10" title="Tags"></i>
                 
                 <span class="span--tag mr-8">
-                  <a href="/tags/Java/" title="Java">
-                    #Java
+                  <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" title="数据结构">
+                    #数据结构
                   </a>
                 </span>
                 
@@ -193,21 +193,140 @@
           
       </div>
       <div class="markdown-body">
-        <blockquote>
-<p>在@Component 类中使用方法或字段时不会使用 CGLIB 增强 (及不使用代理类：调用任何方法，使用任何变量，拿到的是原始对象，后面会有例子解释)。在@Component 中调用@Bean 注解的方法和字段则是普通的 Java 语义，不经过 CGLIB 处理。<br>而在@Configuration 类中使用方法或字段时则使用 CGLIB 创造协作对象（及使用代理：拿到的是代理对象）; 当调用@Bean 注解的方法时它不是普通的 Java 语义，而是从容器中拿到由 Spring 生命周期管理、被 Spring 代理甚至依赖于其他 Bean 的对象引用。</p>
+        <h2 id="事务的四大特性—ACID"><a href="#事务的四大特性—ACID" class="headerlink" title="事务的四大特性—ACID"></a>事务的四大特性—ACID</h2><p>事务四个典型特性，即ACID，原子性（Atomicity）、一致性（Consistency）、隔离性（Isolation）、持久性（Durability）。</p>
+<ul>
+<li>原子性： 事务作为一个整体被执行，包含在其中的对数据库的操作要么全部都执行，要么都不执行。</li>
+<li>一致性： 指在事务开始之前和事务结束以后，数据不会被破坏，假如A账户给B账户转10块钱，不管成功与否，A和B的总金额是不变的。</li>
+<li>隔离性： 多个事务并发访问时，事务之间是相互隔离的，一个事务不应该被其他事务干扰，多个并发事务之间要相互隔离。。</li>
+<li>持久性： 表示事务完成提交后，该事务对数据库所作的操作更改，将持久地保存在数据库之中。</li>
+</ul>
+<h2 id="数据库的并发问题"><a href="#数据库的并发问题" class="headerlink" title="数据库的并发问题"></a>数据库的并发问题</h2><p><strong>脏读</strong></p>
+<blockquote>
+<p>一个事务读取到了另一个未提交事务修改过的数据</p>
 </blockquote>
-<p>@Configuration 本质上还是个@Component，</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target(ElementType.TYPE)</span>  </span><br><span class="line"><span class="meta">@Retention(RetentionPolicy.RUNTIME)</span>  </span><br><span class="line"><span class="meta">@Documented</span>  </span><br><span class="line"><span class="meta">@Component</span>  </span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Configuration &#123;</span><br><span class="line">	<span class="meta">@AliasFor(annotation = Component.class)</span>  </span><br><span class="line">	String <span class="title function_">value</span><span class="params">()</span> <span class="keyword">default</span> <span class="string">&quot;&quot;</span>;</span><br><span class="line">	</span><br><span class="line">	<span class="type">boolean</span> <span class="title function_">proxyBeanMethods</span><span class="params">()</span> <span class="keyword">default</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>不可重复读</strong></p>
+<blockquote>
+<p>同一个事务内，前后多次读取，读取到的数据内容不一致</p>
+</blockquote>
+<p><strong>幻读</strong></p>
+<blockquote>
+<p>一个事务根据某些搜索条件查询出一些记录，在该事务未提交时，另一个事务写入了一些符合那些搜索条件的记录，第一个事务再查时发现数据不一致，与不可重复读的区别在于这里的是插入。</p>
+</blockquote>
+<h2 id="四大隔离级别"><a href="#四大隔离级别" class="headerlink" title="四大隔离级别"></a>四大隔离级别</h2><table>
+<thead>
+<tr>
+<th>隔离级别</th>
+<th>脏读</th>
+<th>不可重复读</th>
+<th>幻读</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>读未提交</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td>读已提交（RC）</td>
+<td>×</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td>可重复读（RR）</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+</tr>
+<tr>
+<td>串行化</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+</tr>
+</tbody></table>
+<p>数据库隔离级别的 <strong>读已提交、可重复读</strong> 都是基于 MVCC 实现的</p>
+<h2 id="MVCC-的关键知识点"><a href="#MVCC-的关键知识点" class="headerlink" title="MVCC 的关键知识点"></a>MVCC 的关键知识点</h2><h3 id="事务版本号"><a href="#事务版本号" class="headerlink" title="事务版本号"></a>事务版本号</h3><blockquote>
+<p>事务每次开启前，都会从数据库获得一个<strong>自增</strong>长的事务ID，可以从事务ID判断事务的执行先后顺序。这就是事务版本号。</p>
+</blockquote>
+<h3 id="隐式字段"><a href="#隐式字段" class="headerlink" title="隐式字段"></a>隐式字段</h3><p>对于InnoDB存储引擎，每一行记录都有两个隐藏列<strong>trx_id</strong>、<strong>roll_pointer</strong>，如果表中没有主键和非NULL唯一键时，则还会有第三个隐藏的主键列<strong>row_id</strong>。</p>
+<table>
+<thead>
+<tr>
+<th>列名</th>
+<th>是否必须</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>row_id</td>
+<td>否</td>
+<td>单调递增的行ID，不是必需的，占用6个字节。</td>
+</tr>
+<tr>
+<td>trx_id</td>
+<td>是</td>
+<td>记录操作该数据事务的事务ID</td>
+</tr>
+<tr>
+<td>roll_pointer</td>
+<td>是</td>
+<td>这个隐藏列就相当于一个指针，指向回滚段的undo日志</td>
+</tr>
+</tbody></table>
+<h3 id="undo-log"><a href="#undo-log" class="headerlink" title="undo log"></a>undo log</h3><p><strong>回滚日志</strong>，用于记录数据被修改前的信息。在表记录修改之前，会先把数据拷贝到undo log里，如果事务回滚，即可以通过undo log来还原数据。</p>
+<p>undo log有什么<strong>用途</strong>呢？</p>
+<ol>
+<li>事务回滚时，保证原子性和一致性。</li>
+<li>用于MVCC<strong>快照读</strong></li>
+</ol>
+<h3 id="版本链"><a href="#版本链" class="headerlink" title="版本链"></a>版本链</h3><p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/69abb7c89d1e4d9f8e242d9e0a410e3e~tplv-k3u1fbpfcp-zoom-in-crop-mark:4536:0:0:0.awebp" alt="版本链"></p>
+<h3 id="快照读和当前读"><a href="#快照读和当前读" class="headerlink" title="快照读和当前读"></a>快照读和当前读</h3><p><strong>快照读：</strong> 读取的是记录数据的可见版本（有旧的版本）。不加锁,普通的select语句都是快照读。</p>
+<p><strong>当前读</strong>：读取的是记录数据的最新版本，显式加锁的都是当前</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> core_user <span class="keyword">where</span> id <span class="operator">&gt;</span> <span class="number">2</span> <span class="keyword">for</span> <span class="keyword">update</span>;</span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> account <span class="keyword">where</span> id<span class="operator">&gt;</span><span class="number">2</span> lock <span class="keyword">in</span> share mode;</span><br></pre></td></tr></table></figure>
 
-<p>在 Spring 中，对于配置类来讲是有分类的，大体可以分为两类，<strong>一类称为 LITE 模式，另一类称为 FULL 模式</strong>，那么对应上面的注解，@Component 就是 LITE 类型，@Configuration 就是 FULL 类型。</p>
-<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/607801167">Spring注解配置：@Configuration 和 @Component 区别及原理详解 - 知乎 (zhihu.com)</a></p>
+<h3 id="Read-View"><a href="#Read-View" class="headerlink" title="Read View"></a>Read View</h3><p>上在innodb中，每个SQL语句执行前都会得到一个Read View，用来做可见性判断的，即判断当前事务可见哪个版本的数据~</p>
+<p>Read View是如何保证可见性判断的呢？我们先看看Read view 的几个重要属性</p>
+<ul>
+<li>m_ids:当前系统中那些活跃(未提交)的读写事务ID, 它数据结构为一个List。</li>
+<li>min_limit_id:表示在生成ReadView时，当前系统中活跃的读写事务中最小的事务id，即m_ids中的最小值。</li>
+<li>max_limit_id:表示生成ReadView时，系统中应该分配给下一个事务的id值。</li>
+<li>creator_trx_id: 创建当前read view的事务ID</li>
+</ul>
+<p><strong>Read view 匹配条件规则</strong>如下：</p>
+<ol>
+<li>如果数据事务ID <code>trx_id &lt; min_limit_id</code>，表明生成该版本的事务在生成Read View前，已经提交(因为事务ID是递增的)，所以该版本可以被当前事务访问。</li>
+<li>如果<code>trx_id&gt;= max_limit_id</code>，表明生成该版本的事务在生成ReadView后才生成，所以该版本不可以被当前事务访问。</li>
+<li>如果 <code>min_limit_id =&lt;trx_id&lt; max_limit_id</code>,需腰分3种情况讨论</li>
+</ol>
+<blockquote>
+<ul>
+<li>（1）.如果<code>m_ids</code>包含<code>trx_id</code>,则代表Read View生成时刻，这个事务还未提交，但是如果数据的<code>trx_id</code>等于<code>creator_trx_id</code>的话，表明数据是自己生成的，因此是<strong>可见</strong>的。</li>
+<li>（2）如果<code>m_ids</code>包含<code>trx_id</code>，并且<code>trx_id</code>不等于<code>creator_trx_id</code>，则Read   View生成时，事务未提交，并且不是自己生产的，所以当前事务也是<strong>看不见</strong>的；</li>
+<li>（3）.如果<code>m_ids</code>不包含<code>trx_id</code>，则说明你这个事务在Read View生成之前就已经提交了，修改的结果，当前事务是能看见的。</li>
+</ul>
+</blockquote>
+<h2 id="MVCC实现原理"><a href="#MVCC实现原理" class="headerlink" title="MVCC实现原理"></a>MVCC实现原理</h2><ol>
+<li>获取事务自己的版本号，即事务ID</li>
+<li>获取Read View</li>
+<li>查询得到的数据，然后Read View中的事务版本号进行比较。</li>
+<li>如果不符合Read View的可见性规则， 即就需要Undo log中历史快照;</li>
+<li>最后返回符合规则的数据</li>
+</ol>
+<p>InnoDB 实现MVCC，是通过<code> Read View+ Undo Log</code> 实现的，Undo Log 保存了历史快照，Read View可见性规则帮助判断当前版本的数据是否可见。</p>
+<h3 id="不同隔离级别下，Read-view的工作方式不同"><a href="#不同隔离级别下，Read-view的工作方式不同" class="headerlink" title="不同隔离级别下，Read view的工作方式不同"></a>不同隔离级别下，Read view的工作方式不同</h3><ul>
+<li>在读已提交（RC）隔离级别下，同一个事务里面，<strong>每一次查询都会产生一个新的Read View副本</strong>，这样就可能造成同一个事务里前后读取数据可能不一致的问题（不可重复读并发问题）。</li>
+<li>在可重复读（RR）隔离级别下，<strong>一个事务里只会获取一次read view</strong>，都是副本共用的，从而保证每次查询的数据都是一样的。</li>
+</ul>
+<p>作者：捡田螺的小男孩<br>链接：<a target="_blank" rel="noopener" href="https://juejin.cn/post/7016165148020703246">https://juejin.cn/post/7016165148020703246</a><br>来源：稀土掘金</p>
 
       </div>
       
         <div class="prev-or-next">
           <div class="post-foot-next">
             
-              <a href="/2023/04/26/%E6%9D%82%E9%A1%B9/hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/" target="_self">
+              <a href="/2023/05/11/%E5%90%8E%E7%AB%AF/%E4%B8%AD%E9%97%B4%E4%BB%B6/Redis%E4%B8%AD%E7%9A%84%E8%B7%B3%E8%A1%A8/" target="_self">
                 <i class="iconfont icon-chevronleft"></i>
                 <span>Prev</span>
               </a>
@@ -216,7 +335,7 @@
           <div class="post-attach">
             <span class="post-pubtime">
               <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-              2023-05-08 15:47:58
+              2023-05-11 14:41:28
             </span>
             
                   <span class="post-categories">
@@ -229,8 +348,8 @@
                     </span>
                     
                     <span class="span--category">
-                      <a href="/categories/%E5%90%8E%E7%AB%AF/Spring/" title="Spring">
-                        <b>#</b> Spring
+                      <a href="/categories/%E5%90%8E%E7%AB%AF/%E6%95%B0%E6%8D%AE%E5%BA%93/" title="数据库">
+                        <b>#</b> 数据库
                       </a>
                     </span>
                     
@@ -240,8 +359,8 @@
                     <i class="iconfont icon-tags mr-10" title="Tags"></i>
                     
                     <span class="span--tag mr-8">
-                      <a href="/tags/Java/" title="Java">
-                        #Java
+                      <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" title="数据结构">
+                        #数据结构
                       </a>
                     </span>
                     
@@ -250,7 +369,7 @@
           </div>
           <div class="post-foot-prev">
             
-              <a href="/2023/05/08/%E5%90%8E%E7%AB%AF/%E4%B8%AD%E9%97%B4%E4%BB%B6/MongoDB%E6%95%B4%E5%90%88%E5%88%B0Spring%20Boot/" target="_self">
+              <a href="/2023/05/11/%E5%90%8E%E7%AB%AF/Spring%20Cloud/%E6%8E%A5%E5%8F%A3%E5%B9%82%E7%AD%89/" target="_self">
                 <span>Next</span>
                 <i class="iconfont icon-chevronright"></i>
               </a>
@@ -260,6 +379,23 @@
       
     </div>
     
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8B%E5%8A%A1%E7%9A%84%E5%9B%9B%E5%A4%A7%E7%89%B9%E6%80%A7%E2%80%94ACID"><span class="toc-text">事务的四大特性—ACID</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E5%B9%B6%E5%8F%91%E9%97%AE%E9%A2%98"><span class="toc-text">数据库的并发问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E5%A4%A7%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB"><span class="toc-text">四大隔离级别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MVCC-%E7%9A%84%E5%85%B3%E9%94%AE%E7%9F%A5%E8%AF%86%E7%82%B9"><span class="toc-text">MVCC 的关键知识点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8B%E5%8A%A1%E7%89%88%E6%9C%AC%E5%8F%B7"><span class="toc-text">事务版本号</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9A%90%E5%BC%8F%E5%AD%97%E6%AE%B5"><span class="toc-text">隐式字段</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undo-log"><span class="toc-text">undo log</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%88%E6%9C%AC%E9%93%BE"><span class="toc-text">版本链</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BF%AB%E7%85%A7%E8%AF%BB%E5%92%8C%E5%BD%93%E5%89%8D%E8%AF%BB"><span class="toc-text">快照读和当前读</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Read-View"><span class="toc-text">Read View</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MVCC%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86"><span class="toc-text">MVCC实现原理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8D%E5%90%8C%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB%E4%B8%8B%EF%BC%8CRead-view%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%96%B9%E5%BC%8F%E4%B8%8D%E5%90%8C"><span class="toc-text">不同隔离级别下，Read view的工作方式不同</span></a></li></ol></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
 
     
       <div class="comments-container">
@@ -579,12 +715,12 @@
       </a>
       <div class="share-content hidden">
         
-          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + %40Configuration%E5%92%8C%40Component%20%E5%8C%BA%E5%88%AB + '&url=' + http%3A%2F%2Fc77544s.gitee.io%2F2023%2F05%2F08%2F%25E5%2590%258E%25E7%25AB%25AF%2FSpring%2F%40Configuration%25E5%2592%258C%40Component%2520%25E5%258C%25BA%25E5%2588%25AB%2F + '" target="_blank" title="Twitter">
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + MVCC%E5%8E%9F%E7%90%86 + '&url=' + http%3A%2F%2Fc77544s.gitee.io%2F2023%2F05%2F11%2F%25E5%2590%258E%25E7%25AB%25AF%2F%25E6%2595%25B0%25E6%258D%25AE%25E5%25BA%2593%2FMVCC%25E5%258E%259F%25E7%2590%2586%2F + '" target="_blank" title="Twitter">
             <i class="iconfont icon-twitter"></i>
           </a>
         
         
-          <a class="share-item" href="https://www.facebook.com/sharer.php?u=http://c77544s.gitee.io/2023/05/08/%E5%90%8E%E7%AB%AF/Spring/@Configuration%E5%92%8C@Component%20%E5%8C%BA%E5%88%AB/" target="_blank" title="Facebook">
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=http://c77544s.gitee.io/2023/05/11/%E5%90%8E%E7%AB%AF/%E6%95%B0%E6%8D%AE%E5%BA%93/MVCC%E5%8E%9F%E7%90%86/" target="_blank" title="Facebook">
             <i class="iconfont icon-facebooksquare"></i>
           </a>
         

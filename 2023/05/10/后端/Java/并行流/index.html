@@ -11,9 +11,9 @@
   
   <title>
     
-      Category 
+      并行流 
       
-       : 中间件
+      
       |
     
      超能虾米的博客
@@ -111,39 +111,224 @@
 
 
       <div class="flex-container">
-        <!-- 标签详情页，展示某个标签下的文章列表，url形式：https://yoursite/tags/某个标签/ -->
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
 
-<div class="container category-details">
-  <div class="content-title">
-    <h2>
-      <span>中间件</span>
-    </h2>
+
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">并行流</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+          2023-05-10 16:44:29
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="Categories"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/%E5%90%8E%E7%AB%AF/" title="后端">
+                    <b>#</b> 后端
+                  </a>
+                </span>
+                
+                <span class="span--category">
+                  <a href="/categories/%E5%90%8E%E7%AB%AF/Java/" title="Java">
+                    <b>#</b> Java
+                  </a>
+                </span>
+                
+              </span>
+          
+              <span class="post-tags">
+                <i class="iconfont icon-tags mr-10" title="Tags"></i>
+                
+                <span class="span--tag mr-8">
+                  <a href="/tags/Java/" title="Java">
+                    #Java
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <p>并行流通过 <code>list.parallelStream()</code> 方法。当然也可以通过 <code>list.stream().parallel()</code> 将普通流转换成并行流。并行流也能通过 <code>sequential()</code> 方法转换为顺序流。但是：<strong>流的并行和顺序转换不会对流本身做任何实际的变化，仅仅是打了个标记而已。并且在一条流水线上对流进行多次并行 &#x2F; 顺序的转换，生效的是最后一次的方法调用</strong></p>
+<blockquote>
+<p>&#x3D;&#x3D;并行流内部使用了默认的 ForkJoinPool 线程池。<strong>默认的线程数量就是处理器的核心数</strong>&#x3D;&#x3D;，而配置系统核心属性：java.util.concurrent.ForkJoinPool.common.parallelism 可以改变线程池大小。不过该值是全局变量。改变他会影响所有并行流。目前还无法为每个流配置专属的线程数。一般来说采用处理器核心数是不错的选择</p>
+</blockquote>
+<h2 id="并行流并不可以随便用"><a href="#并行流并不可以随便用" class="headerlink" title="并行流并不可以随便用"></a>并行流并不可以随便用</h2><h3 id="可拆分性影响流的速度"><a href="#可拆分性影响流的速度" class="headerlink" title="可拆分性影响流的速度"></a>可拆分性影响流的速度</h3><ol>
+<li>iterate 方法处理前 n 个数，比如 <code>Stream.iterate(1L, i -&gt; i + 1).limit(n).parallel()</code><ol>
+<li>iterate 生成的是装箱的对象，必须拆箱成数字才能求和</li>
+<li>对于 iterate 来说，每次应用这个函数都要依赖于前一次应用的结果。不仅不能有效的将流划分成小块处理。反而还因为并行化再次增加了开支。</li>
+</ol>
+</li>
+<li>对于 <code>LongStream.rangeClosed()</code> 方法生成前 n 个数来说，就不存在 iterate 点问题，它生成的是基本类型的值，另外它可以直接将要生成的数字拆分成多个部分，并行状态下 <code>rangeClosed()</code> 是快于 for 循环外部迭代的。</li>
+</ol>
+<h3 id="共享变量修改的问题"><a href="#共享变量修改的问题" class="headerlink" title="共享变量修改的问题"></a>共享变量修改的问题</h3><p>因为是多线程，所以存在线程问题。</p>
+<h3 id="并行流的使用注意"><a href="#并行流的使用注意" class="headerlink" title="并行流的使用注意"></a><strong>并行流的使用注意</strong></h3><ul>
+<li>尽量使用 LongStream &#x2F; IntStream &#x2F; DoubleStream 等原始数据流代替 Stream 来处理数字，以避免频繁拆装箱带来的额外开销</li>
+<li>要考虑流的操作流水线的总计算成本，假设 N 是要操作的任务总数，Q 是每次操作的时间。N * Q 就是操作的总时间，Q 值越大就意味着使用并行流带来收益的可能性越大。</li>
+<li>对于较少的数据量，不建议使用并行流</li>
+<li>容易拆分成块的流数据，建议使用并行流</li>
+</ul>
+<p>以下是一些常见的集合框架对应流的可拆分性能表<br><img src="http://qiniu.c77544s.top/picgo/202305101704679.png" alt="image.png"></p>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2023/05/10/%E5%90%8E%E7%AB%AF/Spring%20Cloud/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+              2023-05-10 16:44:29
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="Categories"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/%E5%90%8E%E7%AB%AF/" title="后端">
+                        <b>#</b> 后端
+                      </a>
+                    </span>
+                    
+                    <span class="span--category">
+                      <a href="/categories/%E5%90%8E%E7%AB%AF/Java/" title="Java">
+                        <b>#</b> Java
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+                  <span class="post-tags">
+                    <i class="iconfont icon-tags mr-10" title="Tags"></i>
+                    
+                    <span class="span--tag mr-8">
+                      <a href="/tags/Java/" title="Java">
+                        #Java
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2023/05/11/%E5%90%8E%E7%AB%AF/%E4%B8%AD%E9%97%B4%E4%BB%B6/Redis%E4%B8%AD%E7%9A%84%E8%B7%B3%E8%A1%A8/" target="_self">
+                <span>Next</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
   </div>
-  
-    <div class="post-list">
-      <div class="post-item" title="Redis中的跳表">
-        <span class="time-m-d">2023-05-11</span>
-        <a href="/2023/05/11/%E5%90%8E%E7%AB%AF/%E4%B8%AD%E9%97%B4%E4%BB%B6/Redis%E4%B8%AD%E7%9A%84%E8%B7%B3%E8%A1%A8/">
-          <span>Redis中的跳表</span>
-        </a>
-      </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B9%B6%E8%A1%8C%E6%B5%81%E5%B9%B6%E4%B8%8D%E5%8F%AF%E4%BB%A5%E9%9A%8F%E4%BE%BF%E7%94%A8"><span class="toc-text">并行流并不可以随便用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%AF%E6%8B%86%E5%88%86%E6%80%A7%E5%BD%B1%E5%93%8D%E6%B5%81%E7%9A%84%E9%80%9F%E5%BA%A6"><span class="toc-text">可拆分性影响流的速度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B1%E4%BA%AB%E5%8F%98%E9%87%8F%E4%BF%AE%E6%94%B9%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-text">共享变量修改的问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B9%B6%E8%A1%8C%E6%B5%81%E7%9A%84%E4%BD%BF%E7%94%A8%E6%B3%A8%E6%84%8F"><span class="toc-text">并行流的使用注意</span></a></li></ol></li></ol>
+      
     </div>
+  </div>
+
   
-    <div class="post-list">
-      <div class="post-item" title="MongoDB整合到Spring Boot">
-        <span class="time-m-d">2023-05-08</span>
-        <a href="/2023/05/08/%E5%90%8E%E7%AB%AF/%E4%B8%AD%E9%97%B4%E4%BB%B6/MongoDB%E6%95%B4%E5%90%88%E5%88%B0Spring%20Boot/">
-          <span>MongoDB整合到Spring Boot</span>
-        </a>
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+      <div class="comments-container">
+        
+
+
+
+
+  
+    <script async type="text/javascript" src="/plugins/valine.min.js" onload="loadValineSuc(this)"></script>
+  
+
+  <div id="vcomments"></div>
+
+  <script>
+    function loadValineSuc() {
+      new Valine({
+        el: '#vcomments',
+        appId: 'H2QqshKF8elT2Si5bfKynT9h-9Nh9j0Va',
+        appKey: 'WgtVppOWkTZ8fWNReNI1Ymf7',
+        placeholder: '有问题请留言吧!',
+        avatar: 'retro',
+        lang: 'en'
+      })
+    }
+  </script>
+
+    <style>
+      .comments-container .v .vempty {
+        display: none!important;
+      }
+    </style>
+
+
+
+
       </div>
-    </div>
-  
-  <nav class="post-navigation">
     
-    <span class="page-num">1 / 1</span>
-    
-  </nav>
-</div>
+  </div>
+
 
         
 <div class="footer">
@@ -416,6 +601,24 @@
 
 
         
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + %E5%B9%B6%E8%A1%8C%E6%B5%81 + '&url=' + http%3A%2F%2Fc77544s.gitee.io%2F2023%2F05%2F10%2F%25E5%2590%258E%25E7%25AB%25AF%2FJava%2F%25E5%25B9%25B6%25E8%25A1%258C%25E6%25B5%2581%2F + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=http://c77544s.gitee.io/2023/05/10/%E5%90%8E%E7%AB%AF/Java/%E5%B9%B6%E8%A1%8C%E6%B5%81/" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
   
   
 <script src="/js/shares.js"></script>
