@@ -11,7 +11,7 @@
   
   <title>
     
-      分布式锁的实现 
+      SQL走了索引还是很慢？ 
       
       
       |
@@ -156,11 +156,11 @@
   <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
   <div class="container post-details" id="post-details">
     <div class="post-content">
-      <div class="post-title">分布式锁的实现</div>
+      <div class="post-title">SQL走了索引还是很慢？</div>
       <div class="post-attach">
         <span class="post-pubtime">
           <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-          2023-05-10 13:52:08
+          2023-05-11 17:40:03
         </span>
         
               <span class="post-categories">
@@ -173,25 +173,8 @@
                 </span>
                 
                 <span class="span--category">
-                  <a href="/categories/%E5%90%8E%E7%AB%AF/Spring-Cloud/" title="Spring Cloud">
-                    <b>#</b> Spring Cloud
-                  </a>
-                </span>
-                
-              </span>
-          
-              <span class="post-tags">
-                <i class="iconfont icon-tags mr-10" title="Tags"></i>
-                
-                <span class="span--tag mr-8">
-                  <a href="/tags/%E7%AE%97%E6%B3%95/" title="算法">
-                    #算法
-                  </a>
-                </span>
-                
-                <span class="span--tag mr-8">
-                  <a href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" title="中间件">
-                    #中间件
+                  <a href="/categories/%E5%90%8E%E7%AB%AF/%E6%95%B0%E6%8D%AE%E5%BA%93/" title="数据库">
+                    <b>#</b> 数据库
                   </a>
                 </span>
                 
@@ -199,78 +182,37 @@
           
       </div>
       <div class="markdown-body">
-        <h2 id="基于-Redis-实现"><a href="#基于-Redis-实现" class="headerlink" title="基于 Redis 实现"></a>基于 Redis 实现</h2><p>相关概念：</p>
+        <h2 id="查询速度影响因素"><a href="#查询速度影响因素" class="headerlink" title="查询速度影响因素"></a>查询速度影响因素</h2><p>MySQL 用到了索引和执行时间的长短没有必然关系，确定查询执行效率的是 “<strong>扫描行数</strong>”与“<strong>回表次数</strong>”。</p>
 <ul>
-<li>setnx</li>
-<li>lua</li>
-<li>redisson</li>
-<li>redlock</li>
+<li>扫描行数</li>
+<li>回表次数<br>在实际的 sql 优化过程中，也是尽量去优化这两块影响因素。</li>
 </ul>
-<h3 id="setnx"><a href="#setnx" class="headerlink" title="setnx"></a>setnx</h3><p>目前通常所说的 setnx ( <strong>SET</strong> if <strong>N</strong>ot e<strong>X</strong>ists ) 命令，并非单指 redis 的 setnx key value 这条命令（因为未来 redis 可能要废除 setnx 命令）。<br>一般代指redis中对<strong>set</strong>命令加上<strong>nx</strong>参数进行使用， <strong>set</strong>这个命令，目前已经支持这么多参数可选：<br><code>SET key value [EX seconds|PX milliseconds] [NX|XX] [KEEPTTL]</code><br>其中 <code>EX</code> 和 <code>PX</code> 参数设置过期时间<br><code>NX</code> ：只在键不存在时，才对键进行设置操作。执行 <code>SET key value NX</code> 的效果等同于执行 <code>SETNX key value</code><br><code>XX</code>：只在键已经存在时，才对键进行设置操作。</p>
+<h2 id="MySQL-选择-B-树索引结构的原因"><a href="#MySQL-选择-B-树索引结构的原因" class="headerlink" title="MySQL 选择 B+树索引结构的原因"></a>MySQL 选择 B+树索引结构的原因</h2><ol>
+<li>内存占用：B+树可以把所有数据都放在叶子节点上，内部节点只存储索引信息，因此可以减少内存的占用。</li>
+<li>顺序访问：B+树中的叶子节点之间通过链表相连，可以很方便地进行顺序访问和范围查询。</li>
+<li>磁盘访问：对于磁盘上每个数据块大小固定的情况，B+树可以使一个节点大小等于一个数据块大小，这样可以最大化地利用磁盘容量。</li>
+<li>多级索引：B+树支持多级索引，可以在数据量较大时不断分裂增加层数，提高查询效率。</li>
+</ol>
+<h2 id="聚集索引和非聚集索引（普通索引）"><a href="#聚集索引和非聚集索引（普通索引）" class="headerlink" title="聚集索引和非聚集索引（普通索引）"></a>聚集索引和非聚集索引（普通索引）</h2><ul>
+<li>聚簇索引：数据行的物理顺序与列值（一般是主键的那一列）的逻辑顺序相同，一个表中只能有一个聚簇索引。<strong>叶子节点存储索引和行记录，聚簇索引查询会很快，因为可以直接定位到行记录</strong></li>
+<li>非聚簇索引：该索引中索引的逻辑顺序与磁盘上行的物理存储顺序不同，一个表中可以拥有多个非聚集索引。<strong>叶子节点存储聚簇索引值（主键id），需要扫码两遍索引树，先通过普通索引定位到主键值id，再通过聚集索引定位到行记录</strong></li>
+</ul>
+<p>InnoDB 必须有一个主键索引，这里给 id 为主键，其次有 a、b 两个字段，再给 a 字段（姓名字段）一个普通索引，目前就有了主键索引和 a 索引树结构，如下图所示：<br><img src="http://qiniu.c77544s.top/picgo/202305111746033.png" alt="image.png"></p>
 <blockquote>
-<p>在设置分布式锁时，要保证 value 值唯一，通常是<strong>UUID + threadId</strong>，在删除缩时判断 value 是否是当前线程加的锁</p>
+<p>InnoDB 默认有主键索引，存储的是主键 id 1、2、3…，它是采用 B+ tree 的聚簇索引，所有的数据都存放在叶子结点中，而普通索引 a 采用非聚集索引，数据只包含对应的 id，没有整行数据，所以如果通过普通索引找到了某个 id，需要 select 别的字段，则还需要回表找主键索引中的整行数据取值！</p>
 </blockquote>
-<p>setnx 的方式虽然在加锁的时候可以保证原子性，但是在解锁时要先获取 value 再删除，无法保证原子性，可以用 lua 脚本实现原子性的解锁操作</p>
-<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- lua删除锁：</span></span><br><span class="line"><span class="comment">-- KEYS和ARGV分别是以集合方式传入的参数，对应上文的Test和uuid。</span></span><br><span class="line"><span class="comment">-- 如果对应的value等于传入的uuid。</span></span><br><span class="line"><span class="keyword">if</span> redis.call(<span class="string">&#x27;get&#x27;</span>, KEYS[<span class="number">1</span>]) == ARGV[<span class="number">1</span>] </span><br><span class="line">    <span class="keyword">then</span> </span><br><span class="line">	<span class="comment">-- 执行删除操作</span></span><br><span class="line">        <span class="keyword">return</span> redis.call(<span class="string">&#x27;del&#x27;</span>, KEYS[<span class="number">1</span>]) </span><br><span class="line">    <span class="keyword">else</span> </span><br><span class="line">	<span class="comment">-- 不成功，返回0</span></span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span> </span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-
-<p>使用 setnx 还存在锁续期等问题</p>
-<h3 id="redisson"><a href="#redisson" class="headerlink" title="redisson"></a>redisson</h3><p>redisson 中<strong>加锁&#x2F;释放锁</strong>操作都是用<strong>lua</strong>脚本完成的，封装的非常完善，开箱即用。<br>此外，redisson 中通过 <code>watch dog</code> 机制实现了锁续期的功能，锁的可靠性上更加完善。<br>同时，redisson 实现的锁是可重入的。</p>
-<h4 id="Watch-dog"><a href="#Watch-dog" class="headerlink" title="Watch dog"></a>Watch dog</h4><p><img src="http://qiniu.c77544s.top/picgo/202210121456281.png" alt="img"><br>redisson 在获取锁的时候，默认的 ttl 是30秒，Watch dog 会每隔10秒看一下，如果还持有锁，将 ttl 续期30s（可以通过修改 Config.lockWatchdogTimeout 来另行指定），从而实现分布式锁的续期。</p>
-<ol>
-<li>watch dog 在当前节点存活时每10s给分布式锁的key续期 30s；</li>
-<li>watch dog 机制启动，且代码中没有释放锁操作时，watch dog 会不断的给锁续期；</li>
-<li>从可2得出，如果程序释放锁操作时因为异常没有被执行，那么锁无法被释放，所以释放锁操作一定要放到 finally {} 中；</li>
-</ol>
-<p>&#x3D;&#x3D;redisson 方案存在的问题：**&#x3D;&#x3D;</p>
-<ol>
-<li><strong>长时间的 GC pause：</strong> 如果 watch dog 所在服务在续期之前，JVM 进行的 <code>STW</code>，而 <code>STW</code> 的时间又很长，长到超过了锁的过期时间，这样就会出现程序还没有释放锁，但是又会被其他线程锁上。</li>
-<li><strong>时钟发生跳跃：</strong> 对于 Redis 服务器如果其时间发生了向跳跃，那么肯定会影响我们锁的过期时间，那么我们的锁过期时间就不是我们预期的了，也会出现 client1和 client2获取到同一把锁，那么也会出现不安全，这个对于 Mysql 也会出现。但是 ZK 由于没有设置过期时间，那么发生跳跃也不会受影响。</li>
-<li><strong>长时间的网络 I&#x2F;O</strong>：这个问题和我们的 GC 的 STW 很像，也就是我们这个获取了锁之后我们进行网络调用，其调用时间由可能比我们锁的过期时间都还长，那么也会出现不安全的问题，这个 Mysql 也会有，ZK 也不会出现这个问题。</li>
-</ol>
-<h3 id="RedLock"><a href="#RedLock" class="headerlink" title="RedLock"></a>RedLock</h3><p>首先 RedLock 的实现需要有 N 个 Redis Master。这些节点<strong>完全互相独立，不存在主从复制或者其他集群协调机制</strong>（RedLock 依赖的环境不能是一个由 N 主 N 从组成的 Cluster 集群模式，因为 Cluster 模式下的各个 Master 并不完全独立，而是存在 Gossip 协调机制的）。之所以要用独立的，是避免了 redis 异步复制造成的锁丢失，比如：主节点没来的及把<strong>刚刚 set 进来这条数据</strong>给从节点，就挂了。<br><img src="http://qiniu.c77544s.top/picgo/202305101419734.png" alt="image.png"></p>
-<p>红锁算法认为，只要2N + 1个节点加锁成功，那么就认为获取了锁，解锁时将所有实例解锁。流程为：</p>
-<ol>
-<li>顺序向五个节点请求加锁</li>
-<li>根据一定的<strong>超时时间</strong>来推断是不是跳过该节点</li>
-<li>三个节点加锁成功并且花费时间小于锁的有效期</li>
-<li>认定加锁成功</li>
-</ol>
-<blockquote>
-<p>Redisson 中已经封装好了 RedLock 的开源实现。</p>
-</blockquote>
-<p>RedLock 方案相比普通的 Redis 分布式锁方案<strong>可靠性</strong>确实大大提升，但一般业务中只需要一个 Redis Cluster，或者一个 Sentinel，但是这两者都不能承载 RedLock 的落地。</p>
-<h2 id="基于数据库实现"><a href="#基于数据库实现" class="headerlink" title="基于数据库实现"></a>基于数据库实现</h2><p>基本原理和 Redis 的 SETNX 类似，其实就是创建一个分布式锁表，加锁后，在表增加一条记录，释放锁即把该数据删掉。<br><img src="http://qiniu.c77544s.top/picgo/202305101439972.png" alt="image.png"></p>
-<p><strong>它同样存在一些问题：</strong></p>
-<ol>
-<li>没有失效时间，容易导致死锁；</li>
-<li>依赖数据库的可用性，一旦数据库挂掉，锁就马上不可用；</li>
-<li>这把锁只能是非阻塞的，因为数据的 insert 操作，一旦插入失败就会直接报错。没有获得锁的线程并不会进入排队队列，要想再次获得锁就要再次触发获得锁操作；</li>
-<li>这把锁是非重入的，同一个线程在没有释放锁之前无法再次获得该锁。因为数据库中数据已经存在了。</li>
-</ol>
-<ul>
-<li>优点:理解起来简单，不需要维护额外的第三方中间件(比如 Redis,Zk)。</li>
-<li>缺点:虽然容易理解但是实现起来较为繁琐，需要自己考虑锁超时，加事务等等。性能局限于数据库，一般对比缓存来说性能较低。对于高并发的场景并不是很适合。</li>
-</ul>
-<h2 id="基于-Zookeeper-的分布式锁"><a href="#基于-Zookeeper-的分布式锁" class="headerlink" title="基于 Zookeeper 的分布式锁"></a>基于 Zookeeper 的分布式锁</h2><p>实现原理为：</p>
-<ol>
-<li>建立一个节点，假如名为 lock 。节点类型为持久节点（Persistent）</li>
-<li>每当进程需要访问共享资源时，会调用分布式锁的 lock() 或 tryLock() 方法获得锁，这个时候会在第一步创建的 lock 节点下建立相应的顺序子节点，节点类型为临时顺序节点（<code>EPHEMERAL_SEQUENTIAL</code>），通过组成特定的名字 name+lock+顺序号。</li>
-<li>在建立子节点后，对 lock 下面的所有以 name 开头的子节点进行排序，判断刚刚建立的子节点顺序号是否是最小的节点，假如是最小节点，则获得该锁对资源进行访问。</li>
-<li>假如不是该节点，就获得该节点的上一顺序节点，并监测该节点是否存在注册监听事件。同时在这里阻塞，等待监听事件的发生（watcher），获得锁控制权。(这里的watcher其实调用的是object.notifyAll(),用来解除阻塞)。</li>
-<li>当调用完共享资源后，调用 unlock() 方法，关闭 ZooKeeper，进而可以引发监听事件，释放该锁。</li>
-</ol>
-<p><img src="http://qiniu.c77544s.top/picgo/202305101443186.png" alt="image.png"></p>
-<ul>
-<li>优点: ZK 可以不需要关心锁超时时间，实现起来有现成的第三方包，比较方便，并且支持读写锁，ZK 获取锁会按照加锁的顺序，所以其是公平锁。对于高可用利用 ZK 集群进行保证。</li>
-<li>缺点:ZK需要额外维护，增加维护成本，性能和Mysql相差不大，依然比较差。并且需要开发人员了解ZK是什么。</li>
-</ul>
+<h2 id="几种调优方式"><a href="#几种调优方式" class="headerlink" title="几种调优方式"></a>几种调优方式</h2><h3 id="索引覆盖"><a href="#索引覆盖" class="headerlink" title="索引覆盖"></a>索引覆盖</h3><p>索引覆盖，即将查询 sql 中的字段添加到联合索引里面，只要保证查询语句里面的字段都在索引文件中，就无需进行回表查询；</p>
+<h3 id="索引下推（系统优化）"><a href="#索引下推（系统优化）" class="headerlink" title="索引下推（系统优化）"></a>索引下推（系统优化）</h3><p>在 MySQL5.6的版本中推出，用于优化查询。<strong>在索引遍历的过程中，对索引中包含的字段先做判断，直接过滤掉不满足条件的记录，减少回表次数</strong>。</p>
+<h3 id="自查询（优化分页）"><a href="#自查询（优化分页）" class="headerlink" title="自查询（优化分页）"></a>自查询（优化分页）</h3><p>优化<strong>超多分页的场景</strong>。查询条件放到子查询中，子查询只查主键，然后使用子查询中确认的主键关联其他属性字段。</p>
+<h3 id="数据压缩"><a href="#数据压缩" class="headerlink" title="数据压缩"></a>数据压缩</h3><p>比如要插入的很多连续的数据值都一样，则可以压缩成一条数据插入。</p>
+<h3 id="硬件调优"><a href="#硬件调优" class="headerlink" title="硬件调优"></a>硬件调优</h3><p>增大 innodb buffer pool 多利用内存,减少硬盘回表</p>
 
       </div>
       
         <div class="prev-or-next">
           <div class="post-foot-next">
             
-              <a href="/2023/05/08/%E5%90%8E%E7%AB%AF/Spring%20Boot/Spring%20Boot%20%E5%A6%82%E4%BD%95%E6%8F%90%E9%AB%98%E6%8E%A5%E5%8F%A3%E6%95%B0%E6%8D%AE%E5%AE%89%E5%85%A8%E6%80%A7/" target="_self">
+              <a href="/2023/05/11/%E5%90%8E%E7%AB%AF/Spring%20Cloud/%E6%8E%A5%E5%8F%A3%E5%B9%82%E7%AD%89/" target="_self">
                 <i class="iconfont icon-chevronleft"></i>
                 <span>Prev</span>
               </a>
@@ -279,7 +221,7 @@
           <div class="post-attach">
             <span class="post-pubtime">
               <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-              2023-05-10 13:52:08
+              2023-05-11 17:40:03
             </span>
             
                   <span class="post-categories">
@@ -292,25 +234,8 @@
                     </span>
                     
                     <span class="span--category">
-                      <a href="/categories/%E5%90%8E%E7%AB%AF/Spring-Cloud/" title="Spring Cloud">
-                        <b>#</b> Spring Cloud
-                      </a>
-                    </span>
-                    
-                  </span>
-              
-                  <span class="post-tags">
-                    <i class="iconfont icon-tags mr-10" title="Tags"></i>
-                    
-                    <span class="span--tag mr-8">
-                      <a href="/tags/%E7%AE%97%E6%B3%95/" title="算法">
-                        #算法
-                      </a>
-                    </span>
-                    
-                    <span class="span--tag mr-8">
-                      <a href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" title="中间件">
-                        #中间件
+                      <a href="/categories/%E5%90%8E%E7%AB%AF/%E6%95%B0%E6%8D%AE%E5%BA%93/" title="数据库">
+                        <b>#</b> 数据库
                       </a>
                     </span>
                     
@@ -319,7 +244,7 @@
           </div>
           <div class="post-foot-prev">
             
-              <a href="/2023/05/10/%E5%90%8E%E7%AB%AF/Spring%20Cloud/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/" target="_self">
+              <a href="/2023/05/11/%E5%90%8E%E7%AB%AF/%E4%B8%AD%E9%97%B4%E4%BB%B6/ES%E4%B8%AD%E7%9A%84%E5%80%92%E6%8E%92%E7%B4%A2%E5%BC%95/" target="_self">
                 <span>Next</span>
                 <i class="iconfont icon-chevronright"></i>
               </a>
@@ -336,7 +261,7 @@
     <div class="title">Contents</div>
     <div class="catalog-content">
       
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E-Redis-%E5%AE%9E%E7%8E%B0"><span class="toc-text">基于 Redis 实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#setnx"><span class="toc-text">setnx</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#redisson"><span class="toc-text">redisson</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Watch-dog"><span class="toc-text">Watch dog</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RedLock"><span class="toc-text">RedLock</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%9E%E7%8E%B0"><span class="toc-text">基于数据库实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E-Zookeeper-%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81"><span class="toc-text">基于 Zookeeper 的分布式锁</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%A5%E8%AF%A2%E9%80%9F%E5%BA%A6%E5%BD%B1%E5%93%8D%E5%9B%A0%E7%B4%A0"><span class="toc-text">查询速度影响因素</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MySQL-%E9%80%89%E6%8B%A9-B-%E6%A0%91%E7%B4%A2%E5%BC%95%E7%BB%93%E6%9E%84%E7%9A%84%E5%8E%9F%E5%9B%A0"><span class="toc-text">MySQL 选择 B+树索引结构的原因</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%81%9A%E9%9B%86%E7%B4%A2%E5%BC%95%E5%92%8C%E9%9D%9E%E8%81%9A%E9%9B%86%E7%B4%A2%E5%BC%95%EF%BC%88%E6%99%AE%E9%80%9A%E7%B4%A2%E5%BC%95%EF%BC%89"><span class="toc-text">聚集索引和非聚集索引（普通索引）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%A0%E7%A7%8D%E8%B0%83%E4%BC%98%E6%96%B9%E5%BC%8F"><span class="toc-text">几种调优方式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%E8%A6%86%E7%9B%96"><span class="toc-text">索引覆盖</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%E4%B8%8B%E6%8E%A8%EF%BC%88%E7%B3%BB%E7%BB%9F%E4%BC%98%E5%8C%96%EF%BC%89"><span class="toc-text">索引下推（系统优化）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E6%9F%A5%E8%AF%A2%EF%BC%88%E4%BC%98%E5%8C%96%E5%88%86%E9%A1%B5%EF%BC%89"><span class="toc-text">自查询（优化分页）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%8E%8B%E7%BC%A9"><span class="toc-text">数据压缩</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A1%AC%E4%BB%B6%E8%B0%83%E4%BC%98"><span class="toc-text">硬件调优</span></a></li></ol></li></ol>
       
     </div>
   </div>
@@ -665,12 +590,12 @@
       </a>
       <div class="share-content hidden">
         
-          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + %E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%E7%9A%84%E5%AE%9E%E7%8E%B0 + '&url=' + http%3A%2F%2Fc77544s.gitee.io%2F2023%2F05%2F10%2F%25E5%2590%258E%25E7%25AB%25AF%2FSpring%2520Cloud%2F%25E5%2588%2586%25E5%25B8%2583%25E5%25BC%258F%25E9%2594%2581%25E7%259A%2584%25E5%25AE%259E%25E7%258E%25B0%2F + '" target="_blank" title="Twitter">
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + SQL%E8%B5%B0%E4%BA%86%E7%B4%A2%E5%BC%95%E8%BF%98%E6%98%AF%E5%BE%88%E6%85%A2%EF%BC%9F + '&url=' + http%3A%2F%2Fc77544s.gitee.io%2F2023%2F05%2F11%2F%25E5%2590%258E%25E7%25AB%25AF%2F%25E6%2595%25B0%25E6%258D%25AE%25E5%25BA%2593%2FSQL%25E8%25B5%25B0%25E4%25BA%2586%25E7%25B4%25A2%25E5%25BC%2595%25E8%25BF%2598%25E6%2598%25AF%25E5%25BE%2588%25E6%2585%25A2%25EF%25BC%259F%2F + '" target="_blank" title="Twitter">
             <i class="iconfont icon-twitter"></i>
           </a>
         
         
-          <a class="share-item" href="https://www.facebook.com/sharer.php?u=http://c77544s.gitee.io/2023/05/10/%E5%90%8E%E7%AB%AF/Spring%20Cloud/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%E7%9A%84%E5%AE%9E%E7%8E%B0/" target="_blank" title="Facebook">
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=http://c77544s.gitee.io/2023/05/11/%E5%90%8E%E7%AB%AF/%E6%95%B0%E6%8D%AE%E5%BA%93/SQL%E8%B5%B0%E4%BA%86%E7%B4%A2%E5%BC%95%E8%BF%98%E6%98%AF%E5%BE%88%E6%85%A2%EF%BC%9F/" target="_blank" title="Facebook">
             <i class="iconfont icon-facebooksquare"></i>
           </a>
         

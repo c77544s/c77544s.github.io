@@ -8,10 +8,13 @@
   <meta name="author" content="超能虾米" />
   <meta name="description" content="" />
   
-    <meta name="robots" content="noindex" />
-  
   
   <title>
+    
+      面试笔记 
+      
+      
+      |
     
      超能虾米的博客
   </title>
@@ -108,97 +111,239 @@
 
 
       <div class="flex-container">
-        <div class="container index">
-  <div class="post-list">
-    <!-- 遍历渲染文章 -->
-    
-      <div class="post-item" title="分布式事务">
-        <div class="time-m-d">2023-05-10</div>
-        <div class="title">
-          <a href="/2023/05/10/%E5%90%8E%E7%AB%AF/Spring%20Cloud/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/">
-            
-              
-                <span>分布式事务</span>
-              
-            
-          </a>
-        </div>
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">面试笔记</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+          2023-05-13 15:50:29
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="Categories"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/%E5%90%8E%E7%AB%AF/" title="后端">
+                    <b>#</b> 后端
+                  </a>
+                </span>
+                
+              </span>
+          
+              <span class="post-tags">
+                <i class="iconfont icon-tags mr-10" title="Tags"></i>
+                
+                <span class="span--tag mr-8">
+                  <a href="/tags/Java/" title="Java">
+                    #Java
+                  </a>
+                </span>
+                
+                <span class="span--tag mr-8">
+                  <a href="/tags/%E7%AE%97%E6%B3%95/" title="算法">
+                    #算法
+                  </a>
+                </span>
+                
+                <span class="span--tag mr-8">
+                  <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" title="数据结构">
+                    #数据结构
+                  </a>
+                </span>
+                
+              </span>
+          
       </div>
-    
-      <div class="post-item" title="分布式锁的实现">
-        <div class="time-m-d">2023-05-10</div>
-        <div class="title">
-          <a href="/2023/05/10/%E5%90%8E%E7%AB%AF/Spring%20Cloud/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%E7%9A%84%E5%AE%9E%E7%8E%B0/">
-            
-              
-                <span>分布式锁的实现</span>
-              
-            
-          </a>
-        </div>
+      <div class="markdown-body">
+        <h2 id="极兔速递"><a href="#极兔速递" class="headerlink" title="极兔速递"></a>极兔速递</h2><ul>
+<li><input checked="" disabled="" type="checkbox"> configuration 和 component 区别</li>
+<li><input checked="" disabled="" type="checkbox"> 怎么保证接口参数安全？除了加密之外？</li>
+<li><input disabled="" type="checkbox"> rabbitmq 和 kafka 区别</li>
+<li><input checked="" disabled="" type="checkbox"> 多线程怎么保证并发问题，redis 锁存在哪些问题</li>
+<li><input disabled="" type="checkbox"> 项目中的数据库连接密码加密无用操作</li>
+<li><input checked="" disabled="" type="checkbox"> 分布式怎么保证事物的</li>
+<li><input disabled="" type="checkbox"> 下游服务出问题，上游服务怎么感知到</li>
+<li><input disabled="" type="checkbox"> 如何判断一个文件没有被篡改，文件前面 4 个字节判断文件格式，其他呢？</li>
+</ul>
+<h2 id="小牛互娱"><a href="#小牛互娱" class="headerlink" title="小牛互娱"></a>小牛互娱</h2><ul>
+<li><input disabled="" type="checkbox"> JVM gc 算法的底层原理，卡表？染色？</li>
+<li><input disabled="" type="checkbox"> 项目中做过哪些有技术含量的内容，怎么做的</li>
+<li><input disabled="" type="checkbox"> 项目之前的 qps 多少？</li>
+<li><input disabled="" type="checkbox"> 参加项目架构设计，怎么设计的？</li>
+<li><input checked="" disabled="" type="checkbox"> Mysql 索引很慢怎么处理？</li>
+<li><input disabled="" type="checkbox"> Mysql 索引怎么设计的？B+树存在什么问题，比如在插入的时候。</li>
+<li><input checked="" disabled="" type="checkbox"> Es 的倒排索引是怎么设计的</li>
+<li><input disabled="" type="checkbox"> Jvm 内存模型，线程栈？</li>
+<li><input checked="" disabled="" type="checkbox"> Mvcc 乐观锁，undolog readview</li>
+<li><input disabled="" type="checkbox"> Docker 启动时，有哪些方式设置 jvm 堆大小<ul>
+<li>docker run 方法 <code>-e</code> 参数设置</li>
+<li>dockerfile 中 <code>java -jar</code> 命令后设置</li>
+</ul>
+</li>
+<li><input checked="" disabled="" type="checkbox"> Redis 用过哪些数据结构</li>
+<li><input checked="" disabled="" type="checkbox"> Java 流里边，串行流和并行流区别，并行流是怎么实现的</li>
+</ul>
+
       </div>
-    
-      <div class="post-item" title="Spring Boot 如何提高接口数据安全性">
-        <div class="time-m-d">2023-05-08</div>
-        <div class="title">
-          <a href="/2023/05/08/%E5%90%8E%E7%AB%AF/Spring%20Boot/Spring%20Boot%20%E5%A6%82%E4%BD%95%E6%8F%90%E9%AB%98%E6%8E%A5%E5%8F%A3%E6%95%B0%E6%8D%AE%E5%AE%89%E5%85%A8%E6%80%A7/">
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
             
-              
-                <span>Spring Boot 如何提高接口数据安全性</span>
-              
+              <a href="/2023/05/13/%E5%90%8E%E7%AB%AF/Java/JVM/JVM/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
             
-          </a>
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+              2023-05-13 15:50:29
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="Categories"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/%E5%90%8E%E7%AB%AF/" title="后端">
+                        <b>#</b> 后端
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+                  <span class="post-tags">
+                    <i class="iconfont icon-tags mr-10" title="Tags"></i>
+                    
+                    <span class="span--tag mr-8">
+                      <a href="/tags/Java/" title="Java">
+                        #Java
+                      </a>
+                    </span>
+                    
+                    <span class="span--tag mr-8">
+                      <a href="/tags/%E7%AE%97%E6%B3%95/" title="算法">
+                        #算法
+                      </a>
+                    </span>
+                    
+                    <span class="span--tag mr-8">
+                      <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" title="数据结构">
+                        #数据结构
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+          </div>
         </div>
-      </div>
+      
+    </div>
     
-      <div class="post-item" title="MongoDB整合到Spring Boot">
-        <div class="time-m-d">2023-05-08</div>
-        <div class="title">
-          <a href="/2023/05/08/%E5%90%8E%E7%AB%AF/%E4%B8%AD%E9%97%B4%E4%BB%B6/MongoDB%E6%95%B4%E5%90%88%E5%88%B0Spring%20Boot/">
-            
-              
-                <span>MongoDB整合到Spring Boot</span>
-              
-            
-          </a>
-        </div>
-      </div>
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9E%81%E5%85%94%E9%80%9F%E9%80%92"><span class="toc-text">极兔速递</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%89%9B%E4%BA%92%E5%A8%B1"><span class="toc-text">小牛互娱</span></a></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
     
-      <div class="post-item" title="@Configuration和@Component 区别">
-        <div class="time-m-d">2023-05-08</div>
-        <div class="title">
-          <a href="/2023/05/08/%E5%90%8E%E7%AB%AF/Spring/@Configuration%E5%92%8C@Component%20%E5%8C%BA%E5%88%AB/">
-            
-              
-                <span>@Configuration和@Component 区别</span>
-              
-            
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="hexo搭建博客">
-        <div class="time-m-d">2023-04-26</div>
-        <div class="title">
-          <a href="/2023/04/26/%E6%9D%82%E9%A1%B9/hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/">
-            
-              
-                <span>hexo搭建博客</span>
-              
-            
-          </a>
-        </div>
+      <div class="comments-container">
+        
+
+
+
+
+  
+    <script async type="text/javascript" src="/plugins/valine.min.js" onload="loadValineSuc(this)"></script>
+  
+
+  <div id="vcomments"></div>
+
+  <script>
+    function loadValineSuc() {
+      new Valine({
+        el: '#vcomments',
+        appId: 'H2QqshKF8elT2Si5bfKynT9h-9Nh9j0Va',
+        appKey: 'WgtVppOWkTZ8fWNReNI1Ymf7',
+        placeholder: '有问题请留言吧!',
+        avatar: 'retro',
+        lang: 'en'
+      })
+    }
+  </script>
+
+    <style>
+      .comments-container .v .vempty {
+        display: none!important;
+      }
+    </style>
+
+
+
+
       </div>
     
   </div>
-  <nav class="post-navigation">
-    
-      <a href="/"><i class="iconfont icon-angleleft"></i></a>
-    
-    <span class="page-num">2 / 2</span>
-    
-  </nav>
-</div>
+
 
         
 <div class="footer">
@@ -471,6 +616,24 @@
 
 
         
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + %E9%9D%A2%E8%AF%95%E7%AC%94%E8%AE%B0 + '&url=' + http%3A%2F%2Fc77544s.gitee.io%2F2023%2F05%2F13%2F%25E5%2590%258E%25E7%25AB%25AF%2F%25E9%259D%25A2%25E8%25AF%2595%25E7%25AC%2594%25E8%25AE%25B0%2F + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=http://c77544s.gitee.io/2023/05/13/%E5%90%8E%E7%AB%AF/%E9%9D%A2%E8%AF%95%E7%AC%94%E8%AE%B0/" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
   
   
 <script src="/js/shares.js"></script>

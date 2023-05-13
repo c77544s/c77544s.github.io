@@ -6,7 +6,7 @@
   <link href="http://c77544s.gitee.io/atom.xml" rel="self"/>
   
   <link href="http://c77544s.gitee.io/"/>
-  <updated>2023-05-11T09:03:22.415Z</updated>
+  <updated>2023-05-13T07:50:29.447Z</updated>
   <id>http://c77544s.gitee.io/</id>
   
   <author>
@@ -15,6 +15,170 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>面试笔记</title>
+    <link href="http://c77544s.gitee.io/2023/05/13/%E5%90%8E%E7%AB%AF/%E9%9D%A2%E8%AF%95%E7%AC%94%E8%AE%B0/"/>
+    <id>http://c77544s.gitee.io/2023/05/13/%E5%90%8E%E7%AB%AF/%E9%9D%A2%E8%AF%95%E7%AC%94%E8%AE%B0/</id>
+    <published>2023-05-13T07:50:29.447Z</published>
+    <updated>2023-05-13T07:50:29.447Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;极兔速递&quot;&gt;&lt;a href=&quot;#极兔速递&quot; class=&quot;headerlink&quot; title=&quot;极兔速递&quot;&gt;&lt;/a&gt;极兔速递&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;input checked=&quot;&quot; disabled=&quot;&quot; type=&quot;checkbox&quot;&gt;</summary>
+        
+      
+    
+    
+    
+    <category term="后端" scheme="http://c77544s.gitee.io/categories/%E5%90%8E%E7%AB%AF/"/>
+    
+    
+    <category term="Java" scheme="http://c77544s.gitee.io/tags/Java/"/>
+    
+    <category term="算法" scheme="http://c77544s.gitee.io/tags/%E7%AE%97%E6%B3%95/"/>
+    
+    <category term="数据结构" scheme="http://c77544s.gitee.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>JVM</title>
+    <link href="http://c77544s.gitee.io/2023/05/13/%E5%90%8E%E7%AB%AF/Java/JVM/JVM/"/>
+    <id>http://c77544s.gitee.io/2023/05/13/%E5%90%8E%E7%AB%AF/Java/JVM/JVM/</id>
+    <published>2023-05-13T07:46:27.436Z</published>
+    <updated>2023-05-13T07:46:27.436Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;默认情况下，&lt;strong&gt;最大堆内存占用物理内存的1&amp;#x2F;4&lt;/strong&gt;，如果应用程序超过该上限，则会抛出 OutOfMemoryError</summary>
+        
+      
+    
+    
+    
+    <category term="后端" scheme="http://c77544s.gitee.io/categories/%E5%90%8E%E7%AB%AF/"/>
+    
+    <category term="Java" scheme="http://c77544s.gitee.io/categories/%E5%90%8E%E7%AB%AF/Java/"/>
+    
+    <category term="JVM" scheme="http://c77544s.gitee.io/categories/%E5%90%8E%E7%AB%AF/Java/JVM/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>九年级上册</title>
+    <link href="http://c77544s.gitee.io/2023/05/13/%E4%B9%9D%E5%B9%B4%E7%BA%A7%E4%B8%8A%E5%86%8C/"/>
+    <id>http://c77544s.gitee.io/2023/05/13/%E4%B9%9D%E5%B9%B4%E7%BA%A7%E4%B8%8A%E5%86%8C/</id>
+    <published>2023-05-13T07:36:47.523Z</published>
+    <updated>2023-05-13T07:46:28.343Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;第二十四章相似三角形&quot;&gt;&lt;a href=&quot;#第二十四章相似三角形&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Kafka笔记</title>
+    <link href="http://c77544s.gitee.io/2023/05/12/%E5%90%8E%E7%AB%AF/%E4%B8%AD%E9%97%B4%E4%BB%B6/Kafka%E7%AC%94%E8%AE%B0/"/>
+    <id>http://c77544s.gitee.io/2023/05/12/%E5%90%8E%E7%AB%AF/%E4%B8%AD%E9%97%B4%E4%BB%B6/Kafka%E7%AC%94%E8%AE%B0/</id>
+    <published>2023-05-12T03:27:55.137Z</published>
+    <updated>2023-05-12T05:54:02.055Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;Kafka 的优点：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;吞吐量高，性能好&lt;/li&gt;
+&lt;li&gt;伸缩性好，支持在线水平扩展&lt;/li&gt;
+&lt;li&gt;容错性和可靠性&lt;/li&gt;
+&lt;li&gt;与大数据生态紧密结合，可无缝对接 haddop、strom、spark 等&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2</summary>
+        
+      
+    
+    
+    
+    <category term="后端" scheme="http://c77544s.gitee.io/categories/%E5%90%8E%E7%AB%AF/"/>
+    
+    <category term="中间件" scheme="http://c77544s.gitee.io/categories/%E5%90%8E%E7%AB%AF/%E4%B8%AD%E9%97%B4%E4%BB%B6/"/>
+    
+    
+    <category term="Java" scheme="http://c77544s.gitee.io/tags/Java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>ES中的倒排索引</title>
+    <link href="http://c77544s.gitee.io/2023/05/11/%E5%90%8E%E7%AB%AF/%E4%B8%AD%E9%97%B4%E4%BB%B6/ES%E4%B8%AD%E7%9A%84%E5%80%92%E6%8E%92%E7%B4%A2%E5%BC%95/"/>
+    <id>http://c77544s.gitee.io/2023/05/11/%E5%90%8E%E7%AB%AF/%E4%B8%AD%E9%97%B4%E4%BB%B6/ES%E4%B8%AD%E7%9A%84%E5%80%92%E6%8E%92%E7%B4%A2%E5%BC%95/</id>
+    <published>2023-05-11T12:06:52.983Z</published>
+    <updated>2023-05-11T16:00:10.849Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;&lt;img src=&quot;http://qiniu.c77544s.top/picgo/202305112007982.png&quot; alt=&quot;image.png&quot;&gt;&lt;br&gt;Lucene 的倒排索，增加了最左边的一层「字典树」term</summary>
+        
+      
+    
+    
+    
+    <category term="后端" scheme="http://c77544s.gitee.io/categories/%E5%90%8E%E7%AB%AF/"/>
+    
+    <category term="中间件" scheme="http://c77544s.gitee.io/categories/%E5%90%8E%E7%AB%AF/%E4%B8%AD%E9%97%B4%E4%BB%B6/"/>
+    
+    
+    <category term="算法" scheme="http://c77544s.gitee.io/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>SQL走了索引还是很慢？</title>
+    <link href="http://c77544s.gitee.io/2023/05/11/%E5%90%8E%E7%AB%AF/%E6%95%B0%E6%8D%AE%E5%BA%93/SQL%E8%B5%B0%E4%BA%86%E7%B4%A2%E5%BC%95%E8%BF%98%E6%98%AF%E5%BE%88%E6%85%A2%EF%BC%9F/"/>
+    <id>http://c77544s.gitee.io/2023/05/11/%E5%90%8E%E7%AB%AF/%E6%95%B0%E6%8D%AE%E5%BA%93/SQL%E8%B5%B0%E4%BA%86%E7%B4%A2%E5%BC%95%E8%BF%98%E6%98%AF%E5%BE%88%E6%85%A2%EF%BC%9F/</id>
+    <published>2023-05-11T09:40:03.932Z</published>
+    <updated>2023-05-11T10:12:18.928Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;查询速度影响因素&quot;&gt;&lt;a href=&quot;#查询速度影响因素&quot; class=&quot;headerlink&quot; title=&quot;查询速度影响因素&quot;&gt;&lt;/a&gt;查询速度影响因素&lt;/h2&gt;&lt;p&gt;MySQL 用到了索引和执行时间的长短没有必然关系，确定查询执行效率的是</summary>
+        
+      
+    
+    
+    
+    <category term="后端" scheme="http://c77544s.gitee.io/categories/%E5%90%8E%E7%AB%AF/"/>
+    
+    <category term="数据库" scheme="http://c77544s.gitee.io/categories/%E5%90%8E%E7%AB%AF/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    
+    
+  </entry>
   
   <entry>
     <title>接口幂等</title>
@@ -180,36 +344,6 @@
     <category term="算法" scheme="http://c77544s.gitee.io/tags/%E7%AE%97%E6%B3%95/"/>
     
     <category term="中间件" scheme="http://c77544s.gitee.io/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>面试笔记</title>
-    <link href="http://c77544s.gitee.io/2023/05/10/%E5%90%8E%E7%AB%AF/%E9%9D%A2%E8%AF%95%E7%AC%94%E8%AE%B0/"/>
-    <id>http://c77544s.gitee.io/2023/05/10/%E5%90%8E%E7%AB%AF/%E9%9D%A2%E8%AF%95%E7%AC%94%E8%AE%B0/</id>
-    <published>2023-05-10T04:44:34.681Z</published>
-    <updated>2023-05-11T08:10:55.772Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h2 id=&quot;极兔速递&quot;&gt;&lt;a href=&quot;#极兔速递&quot; class=&quot;headerlink&quot; title=&quot;极兔速递&quot;&gt;&lt;/a&gt;极兔速递&lt;/h2&gt;&lt;ul&gt;
-&lt;li&gt;&lt;input checked=&quot;&quot; disabled=&quot;&quot; type=&quot;checkbox&quot;&gt;</summary>
-        
-      
-    
-    
-    
-    <category term="后端" scheme="http://c77544s.gitee.io/categories/%E5%90%8E%E7%AB%AF/"/>
-    
-    
-    <category term="Java" scheme="http://c77544s.gitee.io/tags/Java/"/>
-    
-    <category term="算法" scheme="http://c77544s.gitee.io/tags/%E7%AE%97%E6%B3%95/"/>
-    
-    <category term="数据结构" scheme="http://c77544s.gitee.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
     
   </entry>
   

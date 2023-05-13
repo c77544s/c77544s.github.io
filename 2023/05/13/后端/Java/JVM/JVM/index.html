@@ -8,10 +8,13 @@
   <meta name="author" content="超能虾米" />
   <meta name="description" content="" />
   
-    <meta name="robots" content="noindex" />
-  
   
   <title>
+    
+      JVM 
+      
+      
+      |
     
      超能虾米的博客
   </title>
@@ -108,97 +111,178 @@
 
 
       <div class="flex-container">
-        <div class="container index">
-  <div class="post-list">
-    <!-- 遍历渲染文章 -->
-    
-      <div class="post-item" title="分布式事务">
-        <div class="time-m-d">2023-05-10</div>
-        <div class="title">
-          <a href="/2023/05/10/%E5%90%8E%E7%AB%AF/Spring%20Cloud/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/">
-            
-              
-                <span>分布式事务</span>
-              
-            
-          </a>
-        </div>
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">JVM</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+          2023-05-13 15:46:27
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="Categories"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/%E5%90%8E%E7%AB%AF/" title="后端">
+                    <b>#</b> 后端
+                  </a>
+                </span>
+                
+                <span class="span--category">
+                  <a href="/categories/%E5%90%8E%E7%AB%AF/Java/" title="Java">
+                    <b>#</b> Java
+                  </a>
+                </span>
+                
+                <span class="span--category">
+                  <a href="/categories/%E5%90%8E%E7%AB%AF/Java/JVM/" title="JVM">
+                    <b>#</b> JVM
+                  </a>
+                </span>
+                
+              </span>
+          
       </div>
-    
-      <div class="post-item" title="分布式锁的实现">
-        <div class="time-m-d">2023-05-10</div>
-        <div class="title">
-          <a href="/2023/05/10/%E5%90%8E%E7%AB%AF/Spring%20Cloud/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%E7%9A%84%E5%AE%9E%E7%8E%B0/">
-            
-              
-                <span>分布式锁的实现</span>
-              
-            
-          </a>
-        </div>
+      <div class="markdown-body">
+        <p>默认情况下，<strong>最大堆内存占用物理内存的1&#x2F;4</strong>，如果应用程序超过该上限，则会抛出 OutOfMemoryError 异常。<strong>初始堆内存大小为物理内存的1&#x2F;64</strong>，但当初始堆内存最小为8MB，则为8MB。</p>
+
       </div>
-    
-      <div class="post-item" title="Spring Boot 如何提高接口数据安全性">
-        <div class="time-m-d">2023-05-08</div>
-        <div class="title">
-          <a href="/2023/05/08/%E5%90%8E%E7%AB%AF/Spring%20Boot/Spring%20Boot%20%E5%A6%82%E4%BD%95%E6%8F%90%E9%AB%98%E6%8E%A5%E5%8F%A3%E6%95%B0%E6%8D%AE%E5%AE%89%E5%85%A8%E6%80%A7/">
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
             
-              
-                <span>Spring Boot 如何提高接口数据安全性</span>
-              
+              <a href="/2023/05/13/%E4%B9%9D%E5%B9%B4%E7%BA%A7%E4%B8%8A%E5%86%8C/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
             
-          </a>
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+              2023-05-13 15:46:27
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="Categories"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/%E5%90%8E%E7%AB%AF/" title="后端">
+                        <b>#</b> 后端
+                      </a>
+                    </span>
+                    
+                    <span class="span--category">
+                      <a href="/categories/%E5%90%8E%E7%AB%AF/Java/" title="Java">
+                        <b>#</b> Java
+                      </a>
+                    </span>
+                    
+                    <span class="span--category">
+                      <a href="/categories/%E5%90%8E%E7%AB%AF/Java/JVM/" title="JVM">
+                        <b>#</b> JVM
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2023/05/13/%E5%90%8E%E7%AB%AF/%E9%9D%A2%E8%AF%95%E7%AC%94%E8%AE%B0/" target="_self">
+                <span>Next</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
         </div>
-      </div>
+      
+    </div>
     
-      <div class="post-item" title="MongoDB整合到Spring Boot">
-        <div class="time-m-d">2023-05-08</div>
-        <div class="title">
-          <a href="/2023/05/08/%E5%90%8E%E7%AB%AF/%E4%B8%AD%E9%97%B4%E4%BB%B6/MongoDB%E6%95%B4%E5%90%88%E5%88%B0Spring%20Boot/">
-            
-              
-                <span>MongoDB整合到Spring Boot</span>
-              
-            
-          </a>
-        </div>
-      </div>
+
     
-      <div class="post-item" title="@Configuration和@Component 区别">
-        <div class="time-m-d">2023-05-08</div>
-        <div class="title">
-          <a href="/2023/05/08/%E5%90%8E%E7%AB%AF/Spring/@Configuration%E5%92%8C@Component%20%E5%8C%BA%E5%88%AB/">
-            
-              
-                <span>@Configuration和@Component 区别</span>
-              
-            
-          </a>
-        </div>
-      </div>
-    
-      <div class="post-item" title="hexo搭建博客">
-        <div class="time-m-d">2023-04-26</div>
-        <div class="title">
-          <a href="/2023/04/26/%E6%9D%82%E9%A1%B9/hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/">
-            
-              
-                <span>hexo搭建博客</span>
-              
-            
-          </a>
-        </div>
+      <div class="comments-container">
+        
+
+
+
+
+  
+    <script async type="text/javascript" src="/plugins/valine.min.js" onload="loadValineSuc(this)"></script>
+  
+
+  <div id="vcomments"></div>
+
+  <script>
+    function loadValineSuc() {
+      new Valine({
+        el: '#vcomments',
+        appId: 'H2QqshKF8elT2Si5bfKynT9h-9Nh9j0Va',
+        appKey: 'WgtVppOWkTZ8fWNReNI1Ymf7',
+        placeholder: '有问题请留言吧!',
+        avatar: 'retro',
+        lang: 'en'
+      })
+    }
+  </script>
+
+    <style>
+      .comments-container .v .vempty {
+        display: none!important;
+      }
+    </style>
+
+
+
+
       </div>
     
   </div>
-  <nav class="post-navigation">
-    
-      <a href="/"><i class="iconfont icon-angleleft"></i></a>
-    
-    <span class="page-num">2 / 2</span>
-    
-  </nav>
-</div>
+
 
         
 <div class="footer">
@@ -471,6 +555,24 @@
 
 
         
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + JVM + '&url=' + http%3A%2F%2Fc77544s.gitee.io%2F2023%2F05%2F13%2F%25E5%2590%258E%25E7%25AB%25AF%2FJava%2FJVM%2FJVM%2F + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=http://c77544s.gitee.io/2023/05/13/%E5%90%8E%E7%AB%AF/Java/JVM/JVM/" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
   
   
 <script src="/js/shares.js"></script>

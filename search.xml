@@ -4,6 +4,146 @@
   
     
     <entry>
+      <title>面试笔记</title>
+      <link href="/2023/05/13/%E5%90%8E%E7%AB%AF/%E9%9D%A2%E8%AF%95%E7%AC%94%E8%AE%B0/"/>
+      <url>/2023/05/13/%E5%90%8E%E7%AB%AF/%E9%9D%A2%E8%AF%95%E7%AC%94%E8%AE%B0/</url>
+      
+        <content type="html"><![CDATA[<h2 id="极兔速递"><a href="#极兔速递" class="headerlink" title="极兔速递"></a>极兔速递</h2><ul><li><input checked="" disabled="" type="checkbox"> configuration 和 component 区别</li><li><input checked="" disabled="" type="checkbox"> 怎么保证接口参数安全？除了加密之外？</li><li><input disabled="" type="checkbox"> rabbitmq 和 kafka 区别</li><li><input checked="" disabled="" type="checkbox"> 多线程怎么保证并发问题，redis 锁存在哪些问题</li><li><input disabled="" type="checkbox"> 项目中的数据库连接密码加密无用操作</li><li><input checked="" disabled="" type="checkbox"> 分布式怎么保证事物的</li><li><input disabled="" type="checkbox"> 下游服务出问题，上游服务怎么感知到</li><li><input disabled="" type="checkbox"> 如何判断一个文件没有被篡改，文件前面 4 个字节判断文件格式，其他呢？</li></ul><h2 id="小牛互娱"><a href="#小牛互娱" class="headerlink" title="小牛互娱"></a>小牛互娱</h2><ul><li><input disabled="" type="checkbox"> JVM gc 算法的底层原理，卡表？染色？</li><li><input disabled="" type="checkbox"> 项目中做过哪些有技术含量的内容，怎么做的</li><li><input disabled="" type="checkbox"> 项目之前的 qps 多少？</li><li><input disabled="" type="checkbox"> 参加项目架构设计，怎么设计的？</li><li><input checked="" disabled="" type="checkbox"> Mysql 索引很慢怎么处理？</li><li><input disabled="" type="checkbox"> Mysql 索引怎么设计的？B+树存在什么问题，比如在插入的时候。</li><li><input checked="" disabled="" type="checkbox"> Es 的倒排索引是怎么设计的</li><li><input disabled="" type="checkbox"> Jvm 内存模型，线程栈？</li><li><input checked="" disabled="" type="checkbox"> Mvcc 乐观锁，undolog readview</li><li><input disabled="" type="checkbox"> Docker 启动时，有哪些方式设置 jvm 堆大小<ul><li>docker run 方法 <code>-e</code> 参数设置</li><li>dockerfile 中 <code>java -jar</code> 命令后设置</li></ul></li><li><input checked="" disabled="" type="checkbox"> Redis 用过哪些数据结构</li><li><input checked="" disabled="" type="checkbox"> Java 流里边，串行流和并行流区别，并行流是怎么实现的</li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> 后端 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Java </tag>
+            
+            <tag> 算法 </tag>
+            
+            <tag> 数据结构 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>JVM</title>
+      <link href="/2023/05/13/%E5%90%8E%E7%AB%AF/Java/JVM/JVM/"/>
+      <url>/2023/05/13/%E5%90%8E%E7%AB%AF/Java/JVM/JVM/</url>
+      
+        <content type="html"><![CDATA[<p>默认情况下，<strong>最大堆内存占用物理内存的1&#x2F;4</strong>，如果应用程序超过该上限，则会抛出 OutOfMemoryError 异常。<strong>初始堆内存大小为物理内存的1&#x2F;64</strong>，但当初始堆内存最小为8MB，则为8MB。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 后端 </category>
+          
+          <category> Java </category>
+          
+          <category> JVM </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>九年级上册</title>
+      <link href="/2023/05/13/%E4%B9%9D%E5%B9%B4%E7%BA%A7%E4%B8%8A%E5%86%8C/"/>
+      <url>/2023/05/13/%E4%B9%9D%E5%B9%B4%E7%BA%A7%E4%B8%8A%E5%86%8C/</url>
+      
+        <content type="html"><![CDATA[<h1 id="第二十四章相似三角形"><a href="#第二十四章相似三角形" class="headerlink" title="第二十四章相似三角形"></a>第二十四章相似三角形</h1>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Kafka笔记</title>
+      <link href="/2023/05/12/%E5%90%8E%E7%AB%AF/%E4%B8%AD%E9%97%B4%E4%BB%B6/Kafka%E7%AC%94%E8%AE%B0/"/>
+      <url>/2023/05/12/%E5%90%8E%E7%AB%AF/%E4%B8%AD%E9%97%B4%E4%BB%B6/Kafka%E7%AC%94%E8%AE%B0/</url>
+      
+        <content type="html"><![CDATA[<p>Kafka 的优点：</p><ol><li>吞吐量高，性能好</li><li>伸缩性好，支持在线水平扩展</li><li>容错性和可靠性</li><li>与大数据生态紧密结合，可无缝对接 haddop、strom、spark 等</li></ol><h2 id="现有的消息模型"><a href="#现有的消息模型" class="headerlink" title="现有的消息模型"></a>现有的消息模型</h2><h3 id="JMS-规范"><a href="#JMS-规范" class="headerlink" title="JMS 规范"></a>JMS 规范</h3><p>Java 中的规范，最常见的就是 Apache ActiveMQ</p><h3 id="AMQP-模型"><a href="#AMQP-模型" class="headerlink" title="AMQP 模型"></a>AMQP 模型</h3><ul><li>队列（queues）</li><li>信箱（exchanges）</li><li>绑定（bingdings）<br>特点：支持事务、数据一致性高，多用于银行、金融行业<br>常见的实现： RabbitMQ</li></ul><h3 id="MQTT-模型"><a href="#MQTT-模型" class="headerlink" title="MQTT 模型"></a>MQTT 模型</h3><p>MQTT（Message Queuing Telemetry Transport，消息队列遥测传输）<br>MQTT 是一种基于客户端服务端架构的发布&#x2F;订阅模式的消息传输协议。它的设计思想是轻巧、开放、简单、规范，易于实现。这些特点使得它对很多场景来说都是很好的选择，特别是对于受限的环境如机器与机器的通信（M2M）以及物联网环境（IoT）</p><h2 id="相关概念"><a href="#相关概念" class="headerlink" title="相关概念"></a>相关概念</h2><ul><li>Topic 主题<ul><li>类似于数据库中的表，属于半结构化</li></ul></li><li>Partition 分区<ul><li>topic 可拆分成多个分区，不同分区放在不同服务器上，使得 Kafka 扩展性很好 </li><li>分区是一个线性增长的不可变的提交日志，分区中的每个消息都有一个偏移量 offset，同一个分区的 offset 递增不可重复，不同分区之间可以重复</li><li>分区副本机制<ul><li>replication-factor&#x3D;xxx，设置副本数量</li><li><img src="http://qiniu.c77544s.top/picgo/202305121146082.png" alt="image.png"></li></ul></li></ul></li><li>Record 消息记录<ul><li>Key—Value</li><li>不指定 key，key 为空，key 为空的消息会轮训写入不同分区</li><li>key 不为空时，相同的 key 会写入相同分区，保证了相同 key 的消息顺序写入</li></ul></li><li>Broker 消息代理<ul><li>Kafka 集群由多个 Broker 组成，通常一个服务器为一个Broker</li><li><img src="http://qiniu.c77544s.top/picgo/202305121152474.png" alt="image.png"></li></ul></li></ul><h2 id="Kafka-消息模型"><a href="#Kafka-消息模型" class="headerlink" title="Kafka 消息模型"></a>Kafka 消息模型</h2><ul><li>分区是最小的并行单位</li><li>一个消费者可消费多个分区</li><li>一个分区可被多个消费者组里的消费者消费</li><li>但是，一个分区不能同时被同一个消费者组里的多个消费者消费<br><img src="http://qiniu.c77544s.top/picgo/202305121220804.png" alt="image.png"></li></ul><h3 id="发布-订阅模式"><a href="#发布-订阅模式" class="headerlink" title="发布-订阅模式"></a>发布-订阅模式</h3><ul><li>每个消费者都属于不同的消费者组<br><img src="http://qiniu.c77544s.top/picgo/202305121224553.png" alt="image.png"></li></ul><h3 id="点对点（一对一）"><a href="#点对点（一对一）" class="headerlink" title="点对点（一对一）"></a>点对点（一对一）</h3><ul><li>所有消费者都属于同一个消费者组</li><li>该模式也可以实现负载均衡，比如下图如果又加入了 <code>Consumer-4</code> 那么可将 <code>P3</code> 转交给 <code>Consumer-4</code> 处理<br><img src="http://qiniu.c77544s.top/picgo/202305121226271.png" alt="image.png"></li></ul><h3 id="分区与消息顺序"><a href="#分区与消息顺序" class="headerlink" title="分区与消息顺序"></a>分区与消息顺序</h3><ul><li><p>同一个生产者发送到同一分区的消息，先发送的 offset 比后发送的 offset 小</p></li><li><p>同一个生产者发送到不同分区的消息，消息顺序无法保证</p></li><li><p>消费者按照消息在分区里的存放顺序进行消费的</p></li><li><p>Kafka, 只保证分区内的消息顺序，不能保证分区间的消息顺序</p></li></ul><p><strong>如何保证消息全部有序？</strong></p><ol><li>设置一个分区，这样就可以保证所有消息的顺序，但是失去了拓展性和性能</li><li>通常是通过设置消息的 key, 相同 key 的消息会发送的同一个分区</li></ol><h3 id="消息传递语义"><a href="#消息传递语义" class="headerlink" title="消息传递语义"></a>消息传递语义</h3><p>需要生产者消费者共同来保证</p><h4 id="最多一次"><a href="#最多一次" class="headerlink" title="最多一次"></a>最多一次</h4><p>消息可能会丢失，永远不重复发送</p><h4 id="最少一次"><a href="#最少一次" class="headerlink" title="最少一次"></a>最少一次</h4><p>消息不会丢失，但是可能会重复</p><h4 id="精确一次"><a href="#精确一次" class="headerlink" title="精确一次"></a>精确一次</h4><p>保证消息被传递到服务端且在服务端不重复<br><strong>生产者实现精确一次</strong>需要实现幂等参数：<code>enable.idempotence=true  acts=all</code><br><strong>消费者实现精确一次</strong></p><ul><li>通过 offset 来防止重复消费不是一个好的办法</li><li>通常在消息中加入<strong>唯一 ID</strong> (例如流水 ID, 订单 ID)，在处理业务时，通过判断 ID 来防止重复处理</li></ul><h2 id="生产者-API"><a href="#生产者-API" class="headerlink" title="生产者 API"></a>生产者 API</h2><p>生产消息<br>同步与异步<br>消息确认<br>重试、批量、延迟<br>事务</p><h2 id="消费者-API"><a href="#消费者-API" class="headerlink" title="消费者 API"></a>消费者 API</h2><p>消费消息<br>自动提交与手动提交 offset<br>读取事务消息<br>Spring for Kafka</p><p>Kafka 中有一个主题 <code>__consumer_offsets</code> 用来保存消费者消费到哪个主题、哪个分区的哪个消费位置利于快速恢复</p><h2 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h2><p> 在 Kafka 中，生产者方即便事务执行中出现异常，异常前的消息也会被发送，只不过会有标记标识事务并未提交。<br> 在消费者方，可以设置 <code>isolation_level</code> 隔离级别，默认为 <code>read_uncommitted</code> 脏读，设置为 <code>read_committed</code> 只读取成功提交的数据，不会脏读</p><h2 id="序列化"><a href="#序列化" class="headerlink" title="序列化"></a>序列化</h2><p>默认存储的二进制的形式<br><img src="http://qiniu.c77544s.top/picgo/202305121354022.png" alt="image.png"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 后端 </category>
+          
+          <category> 中间件 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Java </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>ES中的倒排索引</title>
+      <link href="/2023/05/11/%E5%90%8E%E7%AB%AF/%E4%B8%AD%E9%97%B4%E4%BB%B6/ES%E4%B8%AD%E7%9A%84%E5%80%92%E6%8E%92%E7%B4%A2%E5%BC%95/"/>
+      <url>/2023/05/11/%E5%90%8E%E7%AB%AF/%E4%B8%AD%E9%97%B4%E4%BB%B6/ES%E4%B8%AD%E7%9A%84%E5%80%92%E6%8E%92%E7%B4%A2%E5%BC%95/</url>
+      
+        <content type="html"><![CDATA[<p><img src="http://qiniu.c77544s.top/picgo/202305112007982.png" alt="image.png"><br>Lucene 的倒排索，增加了最左边的一层「字典树」term index，它不存储所有的单词，只存储单词前缀，通过字典树找到单词所在的块，也就是单词的大概位置，再在块里二分查找，找到对应的单词，再找到单词对应的文档列表。</p><p>当然，内存寸土寸金，能省则省，所以 Lucene 还用了 FST（Finite State Transducers）对它进一步压缩。</p><p>FST 是什么？这里就不展开了，这次重点想聊的，是最右边的 Posting List 的，别看它只是存一个文档 ID 数组，但是它在设计时，遇到的问题可不少。</p><p>原生的 Posting List 有两个痛点：</p><ul><li><strong>如何压缩以节省磁盘空间</strong></li><li><strong>如何快速求交并集（intersections and unions）</strong></li></ul><h2 id="如何压缩节省磁盘空间"><a href="#如何压缩节省磁盘空间" class="headerlink" title="如何压缩节省磁盘空间"></a>如何压缩节省磁盘空间</h2><p><strong>Step 1：Delta-encode —— 增量编码</strong><br>我们只记录元素与元素之间的增量，于是数组变成了：<code>[73, 227, 2, 30, 11, 29]</code></p><p><strong>Step 2：Split into blocks —— 分割成块</strong><br>Lucene里每个块是 256 个文档 ID，这样可以保证每个块，增量编码后，每个元素都不会超过 256（1 byte）.<br>为了方便演示，我们假设每个块是 3 个文档 ID：<code>[73, 227, 2], [30, 11, 29]</code></p><p><strong>Step 3：Bit packing —— 按需分配空间</strong><br>对于第一个块，<code>[73, 227, 2]</code>，最大元素是227，需要 8 bits，好，那我给你这个块的每个元素，都分配 8 bits的空间。<br>但是对于第二个块，<code>[30, 11, 29]</code>，最大的元素才30，只需要 5 bits，那我就给你每个元素，只分配 5 bits 的空间，足矣。<br> <img src="http://qiniu.c77544s.top/picgo/202305112015943.png" alt="image.png"></p><h2 id="如何求交并集"><a href="#如何求交并集" class="headerlink" title="如何求交并集"></a>如何求交并集</h2><p><strong>Option 1: Bitmap</strong><br>假设有这样一个数组：<code>[3,6,7,10]</code><br>那么我们可以这样来表示：<code>[0,0,1,0,0,1,1,0,0,1]</code><br><strong>用 0 表示角标对应的数字不存在，用 1 表示存在。</strong></p><p>这样带来了两个好处：</p><ul><li>节省空间：既然我们只需要0和1，那每个文档 ID 就只需要 1 bit，还是假设有 100M 个文档，那只需要 100M bits &#x3D; 100M * 1&#x2F;8 bytes &#x3D; 12.5 MB，比之前用 Integer 数组 的 200 MB，优秀太多</li><li>运算更快：0 和 1，天然就适合进行位运算，求交集，「与」一下，求并集，「或」一下，一切都回归到计算机的起点</li></ul><p><strong>Option 2: Roaring Bitmaps</strong><br>bitmap 有个硬伤，就是不管有多少个文档，占用的空间都是一样的。<br>举一个极端的例子，有一个数组，里面只有两个文档 ID：<code>[0, 65535]</code><br>用 Bitmap，要怎么表示？<code>[1,0,0,0,…,(超级多个0),…,0,0,1]</code></p><p>可见在文档数量不多的时候，使用 Integer 数组更加节省内存。</p><p>我们来算一下临界值，很简单，无论文档数量多少，bitmap都需要 8192 bytes，而 Integer 数组则和文档数量成线性相关，每个文档 ID 占 2 bytes，所以：8192 &#x2F; 2 &#x3D; 4096</p><p>当文档数量少于 4096 时，用 Integer 数组，否则，用 bitmap.</p><blockquote><p>这里补充一下 Roaring bitmaps 和之前讲的 Frame Of Reference 的关系。  </p><p>Frame Of Reference 是压缩数据，减少磁盘占用空间，所以当我们从磁盘取数据时，也需要一个反向的过程，即解压，解压后才有我们上面看到的这样子的文档 ID 数组：<code>[73, 300, 302, 303, 343, 372]</code> ，接着我们需要对数据进行处理，求交集或者并集，这时候数据是需要放到内存进行处理的，我们有三个这样的数组，这些数组可能很大，而内存空间比磁盘还宝贵，于是需要更强有力的压缩算法，同时还要有利于快速的求交并集，于是有了 Roaring Bitmaps 算法。  </p><p>另外，Lucene 还会把从磁盘取出来的数据，通过 Roaring bitmaps 处理后，缓存到内存中，Lucene 称之为 filter cache. 这里补充一下 Roaring bitmaps 和之前讲的 Frame Of Reference 的关系。</p></blockquote>]]></content>
+      
+      
+      <categories>
+          
+          <category> 后端 </category>
+          
+          <category> 中间件 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 算法 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>SQL走了索引还是很慢？</title>
+      <link href="/2023/05/11/%E5%90%8E%E7%AB%AF/%E6%95%B0%E6%8D%AE%E5%BA%93/SQL%E8%B5%B0%E4%BA%86%E7%B4%A2%E5%BC%95%E8%BF%98%E6%98%AF%E5%BE%88%E6%85%A2%EF%BC%9F/"/>
+      <url>/2023/05/11/%E5%90%8E%E7%AB%AF/%E6%95%B0%E6%8D%AE%E5%BA%93/SQL%E8%B5%B0%E4%BA%86%E7%B4%A2%E5%BC%95%E8%BF%98%E6%98%AF%E5%BE%88%E6%85%A2%EF%BC%9F/</url>
+      
+        <content type="html"><![CDATA[<h2 id="查询速度影响因素"><a href="#查询速度影响因素" class="headerlink" title="查询速度影响因素"></a>查询速度影响因素</h2><p>MySQL 用到了索引和执行时间的长短没有必然关系，确定查询执行效率的是 “<strong>扫描行数</strong>”与“<strong>回表次数</strong>”。</p><ul><li>扫描行数</li><li>回表次数<br>在实际的 sql 优化过程中，也是尽量去优化这两块影响因素。</li></ul><h2 id="MySQL-选择-B-树索引结构的原因"><a href="#MySQL-选择-B-树索引结构的原因" class="headerlink" title="MySQL 选择 B+树索引结构的原因"></a>MySQL 选择 B+树索引结构的原因</h2><ol><li>内存占用：B+树可以把所有数据都放在叶子节点上，内部节点只存储索引信息，因此可以减少内存的占用。</li><li>顺序访问：B+树中的叶子节点之间通过链表相连，可以很方便地进行顺序访问和范围查询。</li><li>磁盘访问：对于磁盘上每个数据块大小固定的情况，B+树可以使一个节点大小等于一个数据块大小，这样可以最大化地利用磁盘容量。</li><li>多级索引：B+树支持多级索引，可以在数据量较大时不断分裂增加层数，提高查询效率。</li></ol><h2 id="聚集索引和非聚集索引（普通索引）"><a href="#聚集索引和非聚集索引（普通索引）" class="headerlink" title="聚集索引和非聚集索引（普通索引）"></a>聚集索引和非聚集索引（普通索引）</h2><ul><li>聚簇索引：数据行的物理顺序与列值（一般是主键的那一列）的逻辑顺序相同，一个表中只能有一个聚簇索引。<strong>叶子节点存储索引和行记录，聚簇索引查询会很快，因为可以直接定位到行记录</strong></li><li>非聚簇索引：该索引中索引的逻辑顺序与磁盘上行的物理存储顺序不同，一个表中可以拥有多个非聚集索引。<strong>叶子节点存储聚簇索引值（主键id），需要扫码两遍索引树，先通过普通索引定位到主键值id，再通过聚集索引定位到行记录</strong></li></ul><p>InnoDB 必须有一个主键索引，这里给 id 为主键，其次有 a、b 两个字段，再给 a 字段（姓名字段）一个普通索引，目前就有了主键索引和 a 索引树结构，如下图所示：<br><img src="http://qiniu.c77544s.top/picgo/202305111746033.png" alt="image.png"></p><blockquote><p>InnoDB 默认有主键索引，存储的是主键 id 1、2、3…，它是采用 B+ tree 的聚簇索引，所有的数据都存放在叶子结点中，而普通索引 a 采用非聚集索引，数据只包含对应的 id，没有整行数据，所以如果通过普通索引找到了某个 id，需要 select 别的字段，则还需要回表找主键索引中的整行数据取值！</p></blockquote><h2 id="几种调优方式"><a href="#几种调优方式" class="headerlink" title="几种调优方式"></a>几种调优方式</h2><h3 id="索引覆盖"><a href="#索引覆盖" class="headerlink" title="索引覆盖"></a>索引覆盖</h3><p>索引覆盖，即将查询 sql 中的字段添加到联合索引里面，只要保证查询语句里面的字段都在索引文件中，就无需进行回表查询；</p><h3 id="索引下推（系统优化）"><a href="#索引下推（系统优化）" class="headerlink" title="索引下推（系统优化）"></a>索引下推（系统优化）</h3><p>在 MySQL5.6的版本中推出，用于优化查询。<strong>在索引遍历的过程中，对索引中包含的字段先做判断，直接过滤掉不满足条件的记录，减少回表次数</strong>。</p><h3 id="自查询（优化分页）"><a href="#自查询（优化分页）" class="headerlink" title="自查询（优化分页）"></a>自查询（优化分页）</h3><p>优化<strong>超多分页的场景</strong>。查询条件放到子查询中，子查询只查主键，然后使用子查询中确认的主键关联其他属性字段。</p><h3 id="数据压缩"><a href="#数据压缩" class="headerlink" title="数据压缩"></a>数据压缩</h3><p>比如要插入的很多连续的数据值都一样，则可以压缩成一条数据插入。</p><h3 id="硬件调优"><a href="#硬件调优" class="headerlink" title="硬件调优"></a>硬件调优</h3><p>增大 innodb buffer pool 多利用内存,减少硬盘回表</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 后端 </category>
+          
+          <category> 数据库 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>接口幂等</title>
       <link href="/2023/05/11/%E5%90%8E%E7%AB%AF/Spring%20Cloud/%E6%8E%A5%E5%8F%A3%E5%B9%82%E7%AD%89/"/>
       <url>/2023/05/11/%E5%90%8E%E7%AB%AF/Spring%20Cloud/%E6%8E%A5%E5%8F%A3%E5%B9%82%E7%AD%89/</url>
@@ -154,35 +294,6 @@
             <tag> 算法 </tag>
             
             <tag> 中间件 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>面试笔记</title>
-      <link href="/2023/05/10/%E5%90%8E%E7%AB%AF/%E9%9D%A2%E8%AF%95%E7%AC%94%E8%AE%B0/"/>
-      <url>/2023/05/10/%E5%90%8E%E7%AB%AF/%E9%9D%A2%E8%AF%95%E7%AC%94%E8%AE%B0/</url>
-      
-        <content type="html"><![CDATA[<h2 id="极兔速递"><a href="#极兔速递" class="headerlink" title="极兔速递"></a>极兔速递</h2><ul><li><input checked="" disabled="" type="checkbox"> configuration 和 component 区别</li><li><input checked="" disabled="" type="checkbox"> 怎么保证接口参数安全？除了加密之外？</li><li><input disabled="" type="checkbox"> rabbitmq 和 kafka 区别</li><li><input checked="" disabled="" type="checkbox"> 多线程怎么保证并发问题，redis 锁存在哪些问题</li><li><input disabled="" type="checkbox"> 项目中的数据库连接密码加密无用操作</li><li><input checked="" disabled="" type="checkbox"> 分布式怎么保证事物的</li><li><input disabled="" type="checkbox"> 下游服务出问题，上游服务怎么感知到</li><li><input disabled="" type="checkbox"> 如何判断一个文件没有被篡改，文件前面 4 个字节判断文件格式，其他呢？</li></ul><h2 id="小牛互娱"><a href="#小牛互娱" class="headerlink" title="小牛互娱"></a>小牛互娱</h2><ul><li><input disabled="" type="checkbox"> JVM gc 算法的底层原理，卡表？染色？</li><li><input disabled="" type="checkbox"> 项目中做过哪些有技术含量的内容，怎么做的</li><li><input disabled="" type="checkbox"> 项目之前的 qps 多少？</li><li><input disabled="" type="checkbox"> 参加项目架构设计，怎么设计的？</li><li><input disabled="" type="checkbox"> Mysql 索引很慢怎么处理？</li><li><input disabled="" type="checkbox"> Mysql 索引怎么设计的？B+树存在什么问题，比如在插入的时候。</li><li><input disabled="" type="checkbox"> Es 的倒排索引是怎么设计的</li><li><input disabled="" type="checkbox"> Jvm 内存模型，线程栈？</li><li><input checked="" disabled="" type="checkbox"> Mvcc 乐观锁，undolog readview</li><li><input disabled="" type="checkbox"> Docker 启动时，有哪些方式设置 jvm 堆大小</li><li><input checked="" disabled="" type="checkbox"> Redis 用过哪些数据结构</li><li><input checked="" disabled="" type="checkbox"> Java 流里边，串行流和并行流区别，并行流是怎么实现的</li></ul>]]></content>
-      
-      
-      <categories>
-          
-          <category> 后端 </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> Java </tag>
-            
-            <tag> 算法 </tag>
-            
-            <tag> 数据结构 </tag>
             
         </tags>
       
