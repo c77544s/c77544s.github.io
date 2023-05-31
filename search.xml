@@ -410,8 +410,6 @@
       
       <categories>
           
-          <category> Spring </category>
-          
           <category> 后端 </category>
           
           <category> Spring </category>
@@ -422,10 +420,6 @@
         <tags>
             
             <tag> Java </tag>
-            
-            <tag> 事务 </tag>
-            
-            <tag> Spring </tag>
             
         </tags>
       
@@ -483,10 +477,6 @@
             
             <tag> 算法 </tag>
             
-            <tag> Redis </tag>
-            
-            <tag> Lua </tag>
-            
         </tags>
       
     </entry>
@@ -503,10 +493,6 @@
       
       <categories>
           
-          <category> Java8 </category>
-          
-          <category> Java </category>
-          
           <category> 后端 </category>
           
           <category> Java </category>
@@ -517,10 +503,6 @@
         <tags>
             
             <tag> Java </tag>
-            
-            <tag> Optional </tag>
-            
-            <tag> Java8 </tag>
             
         </tags>
       
@@ -538,10 +520,6 @@
       
       <categories>
           
-          <category> Java8 </category>
-          
-          <category> Java </category>
-          
           <category> 后端 </category>
           
           <category> Java </category>
@@ -552,8 +530,6 @@
         <tags>
             
             <tag> Java </tag>
-            
-            <tag> Stream </tag>
             
         </tags>
       
@@ -571,8 +547,6 @@
       
       <categories>
           
-          <category> Mybatis </category>
-          
           <category> 后端 </category>
           
           <category> Mybatis </category>
@@ -585,8 +559,6 @@
             <tag> Java </tag>
             
             <tag> 算法 </tag>
-            
-            <tag> Mybatis </tag>
             
         </tags>
       
@@ -604,8 +576,6 @@
       
       <categories>
           
-          <category> Java </category>
-          
           <category> 后端 </category>
           
           <category> Java </category>
@@ -620,8 +590,6 @@
             <tag> 工具 </tag>
             
             <tag> 数据结构 </tag>
-            
-            <tag> synchronized </tag>
             
         </tags>
       
@@ -639,10 +607,6 @@
       
       <categories>
           
-          <category> 多线程 </category>
-          
-          <category> Java </category>
-          
           <category> 后端 </category>
           
           <category> Java </category>
@@ -655,10 +619,6 @@
             <tag> Java </tag>
             
             <tag> 工具 </tag>
-            
-            <tag> JUC </tag>
-            
-            <tag> 多线程 </tag>
             
         </tags>
       
@@ -676,8 +636,6 @@
       
       <categories>
           
-          <category> 多线程 </category>
-          
           <category> 后端 </category>
           
           <category> Java </category>
@@ -688,8 +646,6 @@
         <tags>
             
             <tag> Java </tag>
-            
-            <tag> 多线程 </tag>
             
         </tags>
       
@@ -707,10 +663,6 @@
       
       <categories>
           
-          <category> 源码 </category>
-          
-          <category> Java </category>
-          
           <category> 后端 </category>
           
           <category> Java </category>
@@ -723,8 +675,6 @@
             <tag> Java </tag>
             
             <tag> 数据结构 </tag>
-            
-            <tag> 源码 </tag>
             
         </tags>
       
@@ -742,10 +692,6 @@
       
       <categories>
           
-          <category> JVM </category>
-          
-          <category> Java </category>
-          
           <category> 后端 </category>
           
           <category> Java </category>
@@ -760,8 +706,6 @@
             <tag> Java </tag>
             
             <tag> 算法 </tag>
-            
-            <tag> JVM </tag>
             
         </tags>
       
@@ -779,8 +723,6 @@
       
       <categories>
           
-          <category> MQ </category>
-          
           <category> 后端 </category>
           
           <category> 中间件 </category>
@@ -793,8 +735,6 @@
             <tag> 算法 </tag>
             
             <tag> 中间件 </tag>
-            
-            <tag> Rabbitmq </tag>
             
         </tags>
       
@@ -812,10 +752,6 @@
       
       <categories>
           
-          <category> 多线程 </category>
-          
-          <category> Java </category>
-          
           <category> 后端 </category>
           
           <category> Java </category>
@@ -830,8 +766,6 @@
             <tag> 工具 </tag>
             
             <tag> 算法 </tag>
-            
-            <tag> 多线程 </tag>
             
         </tags>
       
@@ -849,8 +783,6 @@
       
       <categories>
           
-          <category> Spring Cloud </category>
-          
           <category> 后端 </category>
           
           <category> Spring Cloud </category>
@@ -861,8 +793,6 @@
         <tags>
             
             <tag> 算法 </tag>
-            
-            <tag> Spring Cloud </tag>
             
         </tags>
       
@@ -880,8 +810,6 @@
       
       <categories>
           
-          <category> Spring Boot </category>
-          
           <category> 后端 </category>
           
           <category> Spring Boot </category>
@@ -892,8 +820,6 @@
         <tags>
             
             <tag> Java </tag>
-            
-            <tag> Spring Boot </tag>
             
         </tags>
       
@@ -911,8 +837,6 @@
       
       <categories>
           
-          <category> 工具 </category>
-          
           <category> 杂项 </category>
           
       </categories>
@@ -921,10 +845,6 @@
         <tags>
             
             <tag> 工具 </tag>
-            
-            <tag> frp </tag>
-            
-            <tag> 内网穿透 </tag>
             
         </tags>
       
