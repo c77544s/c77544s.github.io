@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="keywords" content="JavaScript,Hexo" />
+  <meta name="author" content="超能虾米" />
+  <meta name="description" content="" />
+  
+  
+  <title>
+    
+      JVM知识点 
+      
+      
+      |
+    
+     超能虾米的博客
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="/images/favicon.png">
+    <link rel="icon" href="/images/favicon.png">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1886449_67xjft27j1l.css" />
+  <!-- 代码块风格 -->
+  
+
+  <!-- jquery3.3.1 -->
+  
+    <script defer type="text/javascript" src="/plugins/jquery.min.js"></script>
+  
+
+  <!-- fancybox -->
+  
+    <link href="/plugins/jquery.fancybox.min.css" rel="stylesheet">
+    <script defer type="text/javascript" src="/plugins/jquery.fancybox.min.js"></script>
+  
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+<meta name="generator" content="Hexo 5.4.2"><link rel="alternate" href="/atom.xml" title="超能虾米的博客" type="application/atom+xml">
+</head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="/images/头像.JPEG" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">超能虾米</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">主页</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">归档</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">分类</a>
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          <a href="/tags/">标签</a>
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          <a href="/friends/">朋友</a>
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          <a href="/about/">关于我</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">JVM知识点</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+          2021-08-25 19:46:08
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="Categories"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/JVM/" title="JVM">
+                    <b>#</b> JVM
+                  </a>
+                </span>
+                
+                <span class="span--category">
+                  <a href="/categories/JVM/Java/" title="Java">
+                    <b>#</b> Java
+                  </a>
+                </span>
+                
+                <span class="span--category">
+                  <a href="/categories/JVM/Java/%E5%90%8E%E7%AB%AF/" title="后端">
+                    <b>#</b> 后端
+                  </a>
+                </span>
+                
+                <span class="span--category">
+                  <a href="/categories/JVM/Java/%E5%90%8E%E7%AB%AF/Java/" title="Java">
+                    <b>#</b> Java
+                  </a>
+                </span>
+                
+                <span class="span--category">
+                  <a href="/categories/JVM/Java/%E5%90%8E%E7%AB%AF/Java/JVM/" title="JVM">
+                    <b>#</b> JVM
+                  </a>
+                </span>
+                
+              </span>
+          
+              <span class="post-tags">
+                <i class="iconfont icon-tags mr-10" title="Tags"></i>
+                
+                <span class="span--tag mr-8">
+                  <a href="/tags/Java/" title="Java">
+                    #Java
+                  </a>
+                </span>
+                
+                <span class="span--tag mr-8">
+                  <a href="/tags/%E7%AE%97%E6%B3%95/" title="算法">
+                    #算法
+                  </a>
+                </span>
+                
+                <span class="span--tag mr-8">
+                  <a href="/tags/JVM/" title="JVM">
+                    #JVM
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <p><img src="http://qiniu.c77544s.top/picgo/202210121455833.png" alt="image-20210911130213222"></p>
+<img src="http://qiniu.c77544s.top/picgo/202210121455836.png" alt="image-20210825195314252" style="zoom:50%;" />
+
+<p>JVM调优99%都是在调 <strong>方法区</strong> 和 <strong>堆</strong> ，且大部分是堆， 垃圾回收也回收这两个区域</p>
+<p><img src="http://qiniu.c77544s.top/picgo/202210121455837.png" alt="image-20210825215354387"></p>
+<h2 id="Java-类加载机制"><a href="#Java-类加载机制" class="headerlink" title="Java 类加载机制"></a>Java 类加载机制</h2><p><img src="https://img-blog.csdnimg.cn/20200904160557387.png" alt="image.png"></p>
+<ul>
+<li>加载 加载字节码文件。</li>
+<li>链接<ul>
+<li>验证 验证字节码文件的正确性。</li>
+<li>准备 为静态变量分配内存。</li>
+<li>解析 将符号引用（如类的全限定名）解析为直接引用（类在实际内存中的地址）。</li>
+</ul>
+</li>
+<li>初始化 为静态变量赋初值。</li>
+</ul>
+<h2 id="双亲委派机制"><a href="#双亲委派机制" class="headerlink" title="双亲委派机制"></a>双亲委派机制</h2><p>java为了安全会有一个类的加载顺序</p>
+<p><strong>APP –&gt; EXT(ext文件夹下的jar) –&gt; ROOT（rt.jar）（最终执行）</strong></p>
+<p>所以，即使在项目中定义了一个String类，且和rt.jar（rt就是root的缩写） 中的String包明相同，也只会加载 rt.jar中的String</p>
+<h2 id="沙箱安全机制"><a href="#沙箱安全机制" class="headerlink" title="沙箱安全机制"></a>沙箱安全机制</h2><h3 id="组成沙箱的基本组件"><a href="#组成沙箱的基本组件" class="headerlink" title="组成沙箱的基本组件"></a>组成沙箱的基本组件</h3><p>**<code>字节码校验器</code>**：确保Java类文件遵守Java语言规范。也可以帮助Java实现内存保护。但并不是所有的类都会经过字节码校验，比如核心类。（java javax）</p>
+<p><strong>类装载器</strong>：在3个方面对Java沙箱起作用：</p>
+<ul>
+<li>防止恶意代码干涉善意代码  &#x2F;&#x2F;eg 双亲委派机制</li>
+<li>守护了被信任的类库边界 &#x2F;&#x2F;eg 双亲委派机制</li>
+<li>将代码归入保护域，确定了代码可以进行那些操作</li>
+</ul>
+<h2 id="JVM堆内存"><a href="#JVM堆内存" class="headerlink" title="JVM堆内存"></a>JVM堆内存</h2><p><img src="http://qiniu.c77544s.top/picgo/202210121455838.png" alt="image-20210830165415294"></p>
+<p><strong>永久区</strong></p>
+<p>这个区域是常驻内存的。用来存放一些jdk自身存在的Class对象。Interface元数据，存储的是java运行时的一些环境或类信息，这个区域不存在垃圾回收！</p>
+<p>一个启动类加载了太多的第三方jar包、tomcat部署太多应用、大量动态生成的反射类等情况，不断加载，知道内存满，就会出现OOM</p>
+<p>jdk1.6：永久代，常量池在方法区中</p>
+<p>jdk1.7 ：永久代，但是慢慢的退化了，去永久代，常量池在堆中</p>
+<p>jdk1.8后：无永久代，常量池在元空间</p>
+<p><img src="http://qiniu.c77544s.top/picgo/202210121455839.png" alt="image-20210830170324793"></p>
+<h2 id="JVM参数调优"><a href="#JVM参数调优" class="headerlink" title="JVM参数调优"></a>JVM参数调优</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">    <span class="type">long</span> <span class="variable">max</span> <span class="operator">=</span> Runtime.getRuntime().maxMemory();</span><br><span class="line">    <span class="type">long</span> <span class="variable">total</span> <span class="operator">=</span> Runtime.getRuntime().totalMemory();</span><br><span class="line">    System.out.println(<span class="string">&quot;max=&quot;</span>+max/(<span class="type">double</span>)<span class="number">1024</span>/<span class="number">1024</span> + <span class="string">&quot;MB&quot;</span>);</span><br><span class="line">    System.out.println(<span class="string">&quot;total=&quot;</span>+total/(<span class="type">double</span>)<span class="number">1024</span>/<span class="number">1024</span> + <span class="string">&quot;MB&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// OOM问题解决:</span></span><br><span class="line">    <span class="comment">//1.尝试扩大堆内存看结果</span></span><br><span class="line">    <span class="comment">//2。分析内存，看哪里出问题</span></span><br><span class="line">    <span class="comment">// 默认情况下：分配的总内存是 电脑内存的1/4，而初始化的内存：1/64 （粗略值）</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这时候填入JVM参数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-Xms1024m -Xmx1024m -XX:+PrintGCDetails</span><br></pre></td></tr></table></figure>
+
+<p><code>-Xms1024m</code> 是指： JVM启动时整个堆(包括年轻代，年老代)的初始化大小。</p>
+<p><code>-Xmx1024m</code> 是指： JVM启动时整个堆的最大值。</p>
+<p><code>-Xmn1024m</code>是指：年轻代的空间大小，剩下的是年老代的空间。</p>
+<p><code>-XX:+PrintGCDetails</code>	是指，打印GC的信息</p>
+<p><code>-XX:+HeapDumpOnOutOfMemoryError</code> 是指：打印出OOM的Dump文件</p>
+<p><img src="http://qiniu.c77544s.top/picgo/202210121455840.png" alt="image-20210830173444956"></p>
+<h2 id="GC算法"><a href="#GC算法" class="headerlink" title="GC算法"></a>GC算法</h2><p>相关概念：<strong>标记清除法、标记压缩、复制算法</strong>、引用计数器（一般不使用）</p>
+<p><strong>新生代使用：复制算法</strong> （from survivor、to survivor）</p>
+<p><strong>老年代使用：标记清除法+标记压缩法</strong></p>
+<p>一般不使用引用计数器法的实现</p>
+<ul>
+<li><p>Mark-Sweep（标记-清除）算法 标记需要回收的对象，然后清除，会造成许多内存碎片。</p>
+</li>
+<li><p>Copying（复制）算法 将内存分为两块，只使用一块，进行垃圾回收时，先将存活的对象复制到另一块区域，然后清空之前的区域。</p>
+</li>
+<li><p>Mark-Compact（标记-整理）算法（压缩法） 与标记清除算法类似，但是在标记之后，将存活对象向一端移动，然后清除边界外的垃圾对象。</p>
+</li>
+<li><p>Generational Collection（分代收集）算法 分为年轻代和老年代，年轻代时比较活跃的对象，使用复制算法做垃圾回收。老年代每次回收只回收少量对象，使用标记整理法。</p>
+</li>
+</ul>
+<h2 id="典型垃圾回收器"><a href="#典型垃圾回收器" class="headerlink" title="典型垃圾回收器"></a>典型垃圾回收器</h2><h3 id="CMS"><a href="#CMS" class="headerlink" title="CMS"></a>CMS</h3><ul>
+<li>简介 以获取最短回收停顿时间为目标的收集器，它是一种并发收集器，采用的是 Mark-Sweep 算法。</li>
+<li>场景 如果你的应用需要更快的响应，不希望有长时间的停顿，同时你的 CPU 资源也比较丰富，就适合适用 CMS 收集器。</li>
+<li>垃圾回收步骤</li>
+</ul>
+<blockquote>
+<ol>
+<li><p>初始标记 (Stop the World 事件 CPU 停顿， 很短) 初始标记仅标记一下 GC Roots 能直接关联到的对象，速度很快；</p>
+</li>
+<li><p>并发标记 (收集垃圾跟用户线程一起执行) 并发标记过程就是进行 GC Roots 查找的过程；</p>
+</li>
+<li><p>重新标记 (Stop the World 事件 CPU 停顿，比初始标记稍微长，远比并发标记短) 修正由于并发标记时应用运行产生变化的标记。</p>
+</li>
+<li><p>并发清理，标记清除算法；</p>
+</li>
+</ol>
+</blockquote>
+<ul>
+<li>缺点</li>
+</ul>
+<blockquote>
+<ol>
+<li>并发标记时和应用程序同时进行，占用一部分线程，所以吞吐量有所下降。</li>
+<li>并发清除时和应用程序同时进行，这段时间产生的垃圾就要等下一次 GC 再清除。</li>
+<li>采用的标记清除算法，产生内存碎片，如果要新建大对象，会提前触发 Full GC 。</li>
+</ol>
+</blockquote>
+<h3 id="G1"><a href="#G1" class="headerlink" title="G1"></a>G1</h3><ul>
+<li>简介 是一款面向服务端应用的收集器，它能充分利用多 CPU、多核环境。因此它是一款并行与并发收集器，并且它能建立可预测的停顿时间模型，即可以设置 STW 的时间。</li>
+<li>垃圾回收步骤 1、初始标记(stop the world 事件 CPU 停顿只处理垃圾)； 2、并发标记(与用户线程并发执行)； 3、最终标记(stop the world 事件 ,CPU 停顿处理垃圾)； 4、筛选回收(stop the world 事件 根据用户期望的 GC 停顿时间回收)</li>
+<li>特点<ul>
+<li>并发与并行 充分利用多核 CPU ，使用多核来缩短 STW 时间，部分需要停顿应用线程的操作，仍然可以通过并发保证应用程序的执行。</li>
+<li>分代回收 新生代，幸存带，老年代</li>
+<li>空间整合 总体看是采用标记整理算法回收，每个 Region 大小相等，通过复制来回收。</li>
+<li>可预测的停顿时间 使用 -XX:MaxGCPauseMillis&#x3D;200 设置最长目标暂停值。</li>
+</ul>
+</li>
+</ul>
+<h3 id="可作为-GC-Roots-的对象包括-4-种情况："><a href="#可作为-GC-Roots-的对象包括-4-种情况：" class="headerlink" title="可作为 GC Roots 的对象包括 4 种情况："></a>可作为 GC Roots 的对象包括 4 种情况：</h3><blockquote>
+<p>a) 虚拟机栈中引用的对象（栈帧中的本地变量表）；</p>
+<p> b) 方法区中类静态属性引用的对象；</p>
+<p> c) 方法区中常量引用的对象；</p>
+<p> d) 本地方法栈中 Native 方法引用的对象。</p>
+</blockquote>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2021/08/23/%E5%90%8E%E7%AB%AF/%E4%B8%AD%E9%97%B4%E4%BB%B6/Rabbitmq%E7%AC%94%E8%AE%B0/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+              2021-08-25 19:46:08
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="Categories"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/JVM/" title="JVM">
+                        <b>#</b> JVM
+                      </a>
+                    </span>
+                    
+                    <span class="span--category">
+                      <a href="/categories/JVM/Java/" title="Java">
+                        <b>#</b> Java
+                      </a>
+                    </span>
+                    
+                    <span class="span--category">
+                      <a href="/categories/JVM/Java/%E5%90%8E%E7%AB%AF/" title="后端">
+                        <b>#</b> 后端
+                      </a>
+                    </span>
+                    
+                    <span class="span--category">
+                      <a href="/categories/JVM/Java/%E5%90%8E%E7%AB%AF/Java/" title="Java">
+                        <b>#</b> Java
+                      </a>
+                    </span>
+                    
+                    <span class="span--category">
+                      <a href="/categories/JVM/Java/%E5%90%8E%E7%AB%AF/Java/JVM/" title="JVM">
+                        <b>#</b> JVM
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+                  <span class="post-tags">
+                    <i class="iconfont icon-tags mr-10" title="Tags"></i>
+                    
+                    <span class="span--tag mr-8">
+                      <a href="/tags/Java/" title="Java">
+                        #Java
+                      </a>
+                    </span>
+                    
+                    <span class="span--tag mr-8">
+                      <a href="/tags/%E7%AE%97%E6%B3%95/" title="算法">
+                        #算法
+                      </a>
+                    </span>
+                    
+                    <span class="span--tag mr-8">
+                      <a href="/tags/JVM/" title="JVM">
+                        #JVM
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2021/08/28/%E5%90%8E%E7%AB%AF/Java/%E9%9B%86%E5%90%88%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/" target="_self">
+                <span>Next</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Java-%E7%B1%BB%E5%8A%A0%E8%BD%BD%E6%9C%BA%E5%88%B6"><span class="toc-text">Java 类加载机制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%8C%E4%BA%B2%E5%A7%94%E6%B4%BE%E6%9C%BA%E5%88%B6"><span class="toc-text">双亲委派机制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B2%99%E7%AE%B1%E5%AE%89%E5%85%A8%E6%9C%BA%E5%88%B6"><span class="toc-text">沙箱安全机制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%84%E6%88%90%E6%B2%99%E7%AE%B1%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%BB%84%E4%BB%B6"><span class="toc-text">组成沙箱的基本组件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JVM%E5%A0%86%E5%86%85%E5%AD%98"><span class="toc-text">JVM堆内存</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JVM%E5%8F%82%E6%95%B0%E8%B0%83%E4%BC%98"><span class="toc-text">JVM参数调优</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GC%E7%AE%97%E6%B3%95"><span class="toc-text">GC算法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B8%E5%9E%8B%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8"><span class="toc-text">典型垃圾回收器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#CMS"><span class="toc-text">CMS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#G1"><span class="toc-text">G1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%AF%E4%BD%9C%E4%B8%BA-GC-Roots-%E7%9A%84%E5%AF%B9%E8%B1%A1%E5%8C%85%E6%8B%AC-4-%E7%A7%8D%E6%83%85%E5%86%B5%EF%BC%9A"><span class="toc-text">可作为 GC Roots 的对象包括 4 种情况：</span></a></li></ol></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+      <div class="comments-container">
+        
+
+
+
+
+  
+    <script async type="text/javascript" src="/plugins/valine.min.js" onload="loadValineSuc(this)"></script>
+  
+
+  <div id="vcomments"></div>
+
+  <script>
+    function loadValineSuc() {
+      new Valine({
+        el: '#vcomments',
+        appId: 'H2QqshKF8elT2Si5bfKynT9h-9Nh9j0Va',
+        appKey: 'WgtVppOWkTZ8fWNReNI1Ymf7',
+        placeholder: '有问题请留言吧!',
+        avatar: 'retro',
+        lang: 'en'
+      })
+    }
+  </script>
+
+    <style>
+      .comments-container .v .vempty {
+        display: none!important;
+      }
+    </style>
+
+
+
+
+      </div>
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          <a title="github" target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">
+            <i class="iconfont icon-github"></i>
+          </a>
+        </li>
+      
+        <li>
+          <a title="email" target="_blank" rel="noopener" href="https://c77544s.github.io/about/">
+            <i class="iconfont icon-envelope"></i>
+          </a>
+        </li>
+      
+        <li>
+          <a title="wechat" target="_blank" rel="noopener" href="https://c77544s.github.io/about/">
+            <i class="iconfont icon-wechat"></i>
+          </a>
+        </li>
+      
+        <li>
+          <a title="rss" href="/atom.xml">
+            <i class="iconfont icon-rss"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Copyright © 2023 Oranges</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+  <div class="search-icon tools-bar-item" id="search-icon">
+    <a href="javascript: void(0)">
+      <i class="iconfont icon-search"></i>
+    </a>
+  </div>
+
+  <div class="search-overlay hidden">
+    <div class="search-content" tabindex="0">
+      <div class="search-title">
+        <span class="search-icon-input">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-search"></i>
+          </a>
+        </span>
+        
+          <input type="text" class="search-input" id="search-input" placeholder="搜索...">
+        
+        <span class="search-close-icon" id="search-close-icon">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-close"></i>
+          </a>
+        </span>
+      </div>
+      <div class="search-result" id="search-result"></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var inputArea = document.querySelector("#search-input")
+    var searchOverlayArea = document.querySelector(".search-overlay")
+
+    inputArea.onclick = function() {
+      getSearchFile()
+      this.onclick = null
+    }
+
+    inputArea.onkeydown = function() {
+      if(event.keyCode == 13)
+        return false
+    }
+
+    function openOrHideSearchContent() {
+      let isHidden = searchOverlayArea.classList.contains('hidden')
+      if (isHidden) {
+        searchOverlayArea.classList.remove('hidden')
+        document.body.classList.add('hidden')
+        // inputArea.focus()
+      } else {
+        searchOverlayArea.classList.add('hidden')
+        document.body.classList.remove('hidden')
+      }
+    }
+
+    function blurSearchContent(e) {
+      if (e.target === searchOverlayArea) {
+        openOrHideSearchContent()
+      }
+    }
+
+    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
+    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
+    searchOverlayArea.addEventListener("click", blurSearchContent, false)
+
+    var searchFunc = function (path, search_id, content_id) {
+      'use strict';
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      $resultContent.innerHTML = "<ul><span class='local-search-empty'>First search, index file loading, please wait...<span></ul>";
+      $.ajax({
+        // 0x01. load xml file
+        url: path,
+        dataType: "xml",
+        success: function (xmlResponse) {
+          // 0x02. parse xml file
+          var datas = $("entry", xmlResponse).map(function () {
+            return {
+              title: $("title", this).text(),
+              content: $("content", this).text(),
+              url: $("url", this).text()
+            };
+          }).get();
+          $resultContent.innerHTML = "";
+
+          $input.addEventListener('input', function () {
+            // 0x03. parse query to keywords list
+            var str = '<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length <= 0) {
+              return;
+            }
+            // 0x04. perform local searching
+            datas.forEach(function (data) {
+              var isMatch = true;
+              var content_index = [];
+              if (!data.title || data.title.trim() === '') {
+                data.title = "Untitled";
+              }
+              var orig_data_title = data.title.trim();
+              var data_title = orig_data_title.toLowerCase();
+              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+              var data_content = orig_data_content.toLowerCase();
+              var data_url = data.url;
+              var index_title = -1;
+              var index_content = -1;
+              var first_occur = -1;
+              // only match artiles with not empty contents
+              if (data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                  index_title = data_title.indexOf(keyword);
+                  index_content = data_content.indexOf(keyword);
+
+                  if (index_title < 0 && index_content < 0) {
+                    isMatch = false;
+                  } else {
+                    if (index_content < 0) {
+                      index_content = 0;
+                    }
+                    if (i == 0) {
+                      first_occur = index_content;
+                    }
+                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                  }
+                });
+              } else {
+                isMatch = false;
+              }
+              // 0x05. show search results
+              if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
+                var content = orig_data_content;
+                if (first_occur >= 0) {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  var match_content = content.substr(start, end);
+
+                  // highlight all keywords
+                  keywords.forEach(function (keyword) {
+                    var regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
+                  });
+
+                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+              }
+            });
+            str += "</ul>";
+            if (str.indexOf('<li>') === -1) {
+              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>No result<span></ul>";
+            }
+            $resultContent.innerHTML = str;
+          });
+        },
+        error: function(xhr, status, error) {
+          $resultContent.innerHTML = ""
+          if (xhr.status === 404) {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The search.xml file was not found, please refer to：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
+          } else {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The request failed, Try to refresh the page or try again later.<span></ul>";
+          }
+        }
+      });
+      $(document).on('click', '#search-close-icon', function() {
+        $('#search-input').val('');
+        $('#search-result').html('');
+      });
+    }
+
+    var getSearchFile = function() {
+        var path = "/search.xml";
+        searchFunc(path, 'search-input', 'search-result');
+    }
+  </script>
+
+
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + JVM%E7%9F%A5%E8%AF%86%E7%82%B9 + '&url=' + http%3A%2F%2Fc77544s.gitee.io%2F2021%2F08%2F25%2F%25E5%2590%258E%25E7%25AB%25AF%2FJava%2FJVM%2FJVM%25E7%259F%25A5%25E8%25AF%2586%25E7%2582%25B9%2F + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=http://c77544s.gitee.io/2021/08/25/%E5%90%8E%E7%AB%AF/Java/JVM/JVM%E7%9F%A5%E8%AF%86%E7%82%B9/" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
+  
+  
+<script src="/js/shares.js"></script>
+
+
+
+      </div>
+    </div>
+  </body>
+</html>

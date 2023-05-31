@@ -440,4 +440,168 @@
     
   </entry>
   
+  <entry>
+    <title>Spring事务解读</title>
+    <link href="http://c77544s.gitee.io/2021/10/27/%E5%90%8E%E7%AB%AF/Spring/Spring%E4%BA%8B%E5%8A%A1%E8%A7%A3%E8%AF%BB/"/>
+    <id>http://c77544s.gitee.io/2021/10/27/%E5%90%8E%E7%AB%AF/Spring/Spring%E4%BA%8B%E5%8A%A1%E8%A7%A3%E8%AF%BB/</id>
+    <published>2021-10-27T02:16:02.000Z</published>
+    <updated>2022-09-02T02:44:32.186Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;事务是处理逻辑原子性的保证，作为单个逻辑单元执行一系列操作，要么执行完成要么全部不执行。事务遵循</summary>
+        
+      
+    
+    
+    
+    <category term="Spring" scheme="http://c77544s.gitee.io/categories/Spring/"/>
+    
+    <category term="后端" scheme="http://c77544s.gitee.io/categories/Spring/%E5%90%8E%E7%AB%AF/"/>
+    
+    <category term="Spring" scheme="http://c77544s.gitee.io/categories/Spring/%E5%90%8E%E7%AB%AF/Spring/"/>
+    
+    
+    <category term="Java" scheme="http://c77544s.gitee.io/tags/Java/"/>
+    
+    <category term="事务" scheme="http://c77544s.gitee.io/tags/%E4%BA%8B%E5%8A%A1/"/>
+    
+    <category term="Spring" scheme="http://c77544s.gitee.io/tags/Spring/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Mybatis四大对象和生命周期</title>
+    <link href="http://c77544s.gitee.io/2021/10/11/%E5%90%8E%E7%AB%AF/Mybatis/Mybatis%E5%9B%9B%E5%A4%A7%E5%AF%B9%E8%B1%A1%E5%92%8C%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/"/>
+    <id>http://c77544s.gitee.io/2021/10/11/%E5%90%8E%E7%AB%AF/Mybatis/Mybatis%E5%9B%9B%E5%A4%A7%E5%AF%B9%E8%B1%A1%E5%92%8C%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/</id>
+    <published>2021-10-11T02:11:11.000Z</published>
+    <updated>2021-10-11T02:36:59.472Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;&lt;a href=&quot;https://mybatis.net.cn/getting-started.html&quot;&gt;入门_MyBatis中文网&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a</summary>
+        
+      
+    
+    
+    
+    <category term="后端" scheme="http://c77544s.gitee.io/categories/%E5%90%8E%E7%AB%AF/"/>
+    
+    <category term="Mybatis" scheme="http://c77544s.gitee.io/categories/%E5%90%8E%E7%AB%AF/Mybatis/"/>
+    
+    
+    <category term="Java" scheme="http://c77544s.gitee.io/tags/Java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Redis中使用Lua脚本</title>
+    <link href="http://c77544s.gitee.io/2021/10/09/%E5%90%8E%E7%AB%AF/%E4%B8%AD%E9%97%B4%E4%BB%B6/Redis%E4%B8%AD%E4%BD%BF%E7%94%A8Lua%E8%84%9A%E6%9C%AC/"/>
+    <id>http://c77544s.gitee.io/2021/10/09/%E5%90%8E%E7%AB%AF/%E4%B8%AD%E9%97%B4%E4%BB%B6/Redis%E4%B8%AD%E4%BD%BF%E7%94%A8Lua%E8%84%9A%E6%9C%AC/</id>
+    <published>2021-10-09T02:28:50.000Z</published>
+    <updated>2021-10-09T03:17:15.661Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;&lt;a href=&quot;https://zhuanlan.zhihu.com/p/77484377&quot;&gt;Redis中使用Lua脚本（一） - 知乎 (zhihu.com)&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a</summary>
+        
+      
+    
+    
+    
+    <category term="后端" scheme="http://c77544s.gitee.io/categories/%E5%90%8E%E7%AB%AF/"/>
+    
+    <category term="中间件" scheme="http://c77544s.gitee.io/categories/%E5%90%8E%E7%AB%AF/%E4%B8%AD%E9%97%B4%E4%BB%B6/"/>
+    
+    
+    <category term="Java" scheme="http://c77544s.gitee.io/tags/Java/"/>
+    
+    <category term="算法" scheme="http://c77544s.gitee.io/tags/%E7%AE%97%E6%B3%95/"/>
+    
+    <category term="Redis" scheme="http://c77544s.gitee.io/tags/Redis/"/>
+    
+    <category term="Lua" scheme="http://c77544s.gitee.io/tags/Lua/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Optional类</title>
+    <link href="http://c77544s.gitee.io/2021/09/24/%E5%90%8E%E7%AB%AF/Java/Optional%E7%B1%BB/"/>
+    <id>http://c77544s.gitee.io/2021/09/24/%E5%90%8E%E7%AB%AF/Java/Optional%E7%B1%BB/</id>
+    <published>2021-09-24T02:21:11.000Z</published>
+    <updated>2021-09-24T07:31:56.572Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span</summary>
+        
+      
+    
+    
+    
+    <category term="Java8" scheme="http://c77544s.gitee.io/categories/Java8/"/>
+    
+    <category term="Java" scheme="http://c77544s.gitee.io/categories/Java8/Java/"/>
+    
+    <category term="后端" scheme="http://c77544s.gitee.io/categories/Java8/Java/%E5%90%8E%E7%AB%AF/"/>
+    
+    <category term="Java" scheme="http://c77544s.gitee.io/categories/Java8/Java/%E5%90%8E%E7%AB%AF/Java/"/>
+    
+    
+    <category term="Java" scheme="http://c77544s.gitee.io/tags/Java/"/>
+    
+    <category term="Optional" scheme="http://c77544s.gitee.io/tags/Optional/"/>
+    
+    <category term="Java8" scheme="http://c77544s.gitee.io/tags/Java8/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Java8 Stream</title>
+    <link href="http://c77544s.gitee.io/2021/09/23/%E5%90%8E%E7%AB%AF/Java/Java8-Stream/"/>
+    <id>http://c77544s.gitee.io/2021/09/23/%E5%90%8E%E7%AB%AF/Java/Java8-Stream/</id>
+    <published>2021-09-23T08:48:14.000Z</published>
+    <updated>2022-10-12T06:54:30.460Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;&lt;a href=&quot;https://blog.csdn.net/mu_wind/article/details/109516995&quot;&gt;这里引用一个Stream的博客&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img</summary>
+        
+      
+    
+    
+    
+    <category term="Java8" scheme="http://c77544s.gitee.io/categories/Java8/"/>
+    
+    <category term="Java" scheme="http://c77544s.gitee.io/categories/Java8/Java/"/>
+    
+    <category term="后端" scheme="http://c77544s.gitee.io/categories/Java8/Java/%E5%90%8E%E7%AB%AF/"/>
+    
+    <category term="Java" scheme="http://c77544s.gitee.io/categories/Java8/Java/%E5%90%8E%E7%AB%AF/Java/"/>
+    
+    
+    <category term="Java" scheme="http://c77544s.gitee.io/tags/Java/"/>
+    
+    <category term="Stream" scheme="http://c77544s.gitee.io/tags/Stream/"/>
+    
+  </entry>
+  
 </feed>

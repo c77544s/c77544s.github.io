@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="keywords" content="JavaScript,Hexo" />
+  <meta name="author" content="超能虾米" />
+  <meta name="description" content="" />
+  
+  
+  <title>
+    
+      集合源码分析 
+      
+      
+      |
+    
+     超能虾米的博客
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="/images/favicon.png">
+    <link rel="icon" href="/images/favicon.png">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1886449_67xjft27j1l.css" />
+  <!-- 代码块风格 -->
+  
+
+  <!-- jquery3.3.1 -->
+  
+    <script defer type="text/javascript" src="/plugins/jquery.min.js"></script>
+  
+
+  <!-- fancybox -->
+  
+    <link href="/plugins/jquery.fancybox.min.css" rel="stylesheet">
+    <script defer type="text/javascript" src="/plugins/jquery.fancybox.min.js"></script>
+  
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+<meta name="generator" content="Hexo 5.4.2"><link rel="alternate" href="/atom.xml" title="超能虾米的博客" type="application/atom+xml">
+</head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="/images/头像.JPEG" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">超能虾米</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">主页</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">归档</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">分类</a>
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          <a href="/tags/">标签</a>
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          <a href="/friends/">朋友</a>
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          <a href="/about/">关于我</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">集合源码分析</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+          2021-08-28 13:54:49
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="Categories"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/%E6%BA%90%E7%A0%81/" title="源码">
+                    <b>#</b> 源码
+                  </a>
+                </span>
+                
+                <span class="span--category">
+                  <a href="/categories/%E6%BA%90%E7%A0%81/Java/" title="Java">
+                    <b>#</b> Java
+                  </a>
+                </span>
+                
+                <span class="span--category">
+                  <a href="/categories/%E6%BA%90%E7%A0%81/Java/%E5%90%8E%E7%AB%AF/" title="后端">
+                    <b>#</b> 后端
+                  </a>
+                </span>
+                
+                <span class="span--category">
+                  <a href="/categories/%E6%BA%90%E7%A0%81/Java/%E5%90%8E%E7%AB%AF/Java/" title="Java">
+                    <b>#</b> Java
+                  </a>
+                </span>
+                
+              </span>
+          
+              <span class="post-tags">
+                <i class="iconfont icon-tags mr-10" title="Tags"></i>
+                
+                <span class="span--tag mr-8">
+                  <a href="/tags/Java/" title="Java">
+                    #Java
+                  </a>
+                </span>
+                
+                <span class="span--tag mr-8">
+                  <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" title="数据结构">
+                    #数据结构
+                  </a>
+                </span>
+                
+                <span class="span--tag mr-8">
+                  <a href="/tags/%E6%BA%90%E7%A0%81/" title="源码">
+                    #源码
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <h1 id="HashCode为什么使用31作为乘数"><a href="#HashCode为什么使用31作为乘数" class="headerlink" title="HashCode为什么使用31作为乘数"></a>HashCode为什么使用31作为乘数</h1><ol>
+<li><p>31 是⼀个奇质数，如果选择偶数会导致乘积运算时数据溢出。</p>
+</li>
+<li><p>另外在⼆进制中，2个5次⽅是32，那么也就是 31 * i &#x3D;&#x3D; (i &lt;&lt; 5) - i 。这主要是说乘积运算</p>
+</li>
+</ol>
+<p>可以使⽤位移提升性能，同时⽬前的JVM虚拟机也会⾃动⽀持此类的优化。</p>
+<ol start="3">
+<li><p>碰撞少，和33、37、39、41比起来乘数是<strong>31</strong>的时候，碰撞的概率已经很⼩了，基本稳定。</p>
+<p><img src="http://qiniu.c77544s.top/picgo/202210121452903.png" alt="image-20210828140827836"></p>
+</li>
+<li><p>顺着往下看，你会发现199的碰撞概率更⼩，这就相当于⼀排奇数的茅坑量多，⾃然会减少碰撞。</p>
+</li>
+</ol>
+<p>但这个范围值已经远超过<strong>int</strong>的取值范围了，如果⽤此数作为乘数，⼜返回<strong>int</strong>值，就会丢失数据信</p>
+<p>息。</p>
+<ol start="5">
+<li>除199外（不能选），31是Hash值散列分布最均匀的</li>
+</ol>
+<h1 id="HashMap-扰动函数、负载因⼦、扩容链表拆分"><a href="#HashMap-扰动函数、负载因⼦、扩容链表拆分" class="headerlink" title="HashMap 扰动函数、负载因⼦、扩容链表拆分"></a><strong>HashMap</strong> 扰动函数、负载因⼦、扩容链表拆分</h1><p>在Jdk1.8中HashMap是使⽤ <code>桶数组+链表和红⿊树</code> 实现</p>
+<p>HashMap 允许 null 键和 null 值，在计算哈键的哈希值时，null 键哈希值为 0</p>
+<p>在JDK 1.8中包括； <code>1、散列表实现</code> 、 <code>2、扰动函数 </code>、<code>3、初始化容量</code> 、<code> 4、负载因⼦</code> 、 <code>5、扩容元素拆分</code> 、 <code>6、链表树化 </code>、 <code>7、红⿊树</code> 、 <code>8、插⼊</code> 、 <code>9、查找</code> 、<code>10、删除</code> 、 <code>11、遍历</code> 、 <code>12、分段锁</code> 等等</p>
+<h2 id="扰动函数"><a href="#扰动函数" class="headerlink" title="扰动函数"></a>扰动函数</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="title function_">hash</span><span class="params">(Object key)</span> &#123;</span><br><span class="line">    <span class="type">int</span> h;</span><br><span class="line">    <span class="keyword">return</span> (key == <span class="literal">null</span>) ? <span class="number">0</span> : (h = key.hashCode()) ^ (h &gt;&gt;&gt; <span class="number">16</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>key.hashCode()</code>取值范围是[-2147483648, 2147483647]</p>
+<p>默认初始化的Map⼤⼩是16个⻓度 <code>DEFAULT_INITIAL_CAPACITY = 1 &lt;&lt; 4</code> ，所以获取的Hash值</p>
+<p>并不能直接作为下标使⽤，需要与数组⻓度进⾏取模运算得到⼀个下标值，也就是我们上⾯做的散列列</p>
+<p>⼦。</p>
+<p><img src="http://qiniu.c77544s.top/picgo/202210121452905.png" alt="image-20210828143930308"></p>
+<p>说⽩了，使⽤扰动函数就是为了增加随机性，让数据元素更加均衡的散列，减少碰撞</p>
+<h2 id="初始化容量"><a href="#初始化容量" class="headerlink" title="初始化容量"></a>初始化容量</h2><p>HashMap初始化代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="title function_">HashMap</span><span class="params">(<span class="type">int</span> initialCapacity, <span class="type">float</span> loadFactor)</span> &#123;</span><br><span class="line"> 	...</span><br><span class="line">	<span class="built_in">this</span>.loadFactor = loadFactor;</span><br><span class="line">	<span class="built_in">this</span>.threshold = tableSizeFor(initialCapacity);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>阀值 threshold ，通过⽅法 tableSizeFor 进⾏计算，是根据初始化来计算的。</li>
+<li>这个⽅法也就是要寻找⽐初始值⼤的，最⼩的那个2进制数值。⽐如传了17，我应该找到的是32。</li>
+</ul>
+<h2 id="负载因子"><a href="#负载因子" class="headerlink" title="负载因子"></a>负载因子</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="type">float</span> <span class="variable">DEFAULT_LOAD_FACTOR</span> <span class="operator">=</span> <span class="number">0.75f</span>;</span><br></pre></td></tr></table></figure>
+
+<p>负载因⼦决定了数据量多少了以后进⾏扩容。默认值0.75就是说当阀值容量占了3&#x2F;4s时赶紧扩容，减少</p>
+<p>Hash碰撞。</p>
+<h2 id="扩容元素拆分"><a href="#扩容元素拆分" class="headerlink" title="扩容元素拆分"></a>扩容元素拆分</h2><p>如上所述，数组长度是2的倍数，每次扩容是：原先的长度*2</p>
+<p>扩容最直接的问题，就是需要把元素拆分到新的数组中。拆分元素的过程中，原jdk1.7中会需要重新计算哈希值，但是到jdk1.8中已经进⾏优化，不在需要重新计算，提升了拆分的性能。</p>
+<p>原哈希值和扩容后的长度进行<code>&amp;</code>运算,如果值等于0，则下标位置不变。如果不为0，那么新的位置则是原来位置上加老的数组长度。</p>
+<p><img src="http://qiniu.c77544s.top/picgo/202210121452906.png" alt="image-20210828150220532"></p>
+<ul>
+<li>这张图就是原16位⻓度数组元素，像32位数组⻓度中转移的过程。</li>
+<li>其中⻩⾊区域元素 <code>zuio</code> 因计算结果 <code>hash &amp; oldCap</code> 不为1，则被迁移到下标位置24。</li>
+<li>同时还是⽤重新计算哈希值的⽅式验证了，确实分配到24的位置，因为这是在⼆进制计算中补1的过程，所以可以通过上⾯简化的⽅式确定哈希值的位置。</li>
+</ul>
+<h2 id="插入"><a href="#插入" class="headerlink" title="插入"></a>插入</h2><h3 id="插入流程："><a href="#插入流程：" class="headerlink" title="插入流程："></a>插入流程：</h3><p><img src="http://qiniu.c77544s.top/picgo/202210121452907.png" alt="image-20210828151943345"></p>
+<p>以上就是HashMap中⼀个数据插⼊的整体流程，包括了；计算下标、何时扩容、何时链表转红⿊树等，</p>
+<p>具体如下；</p>
+<ol>
+<li><p>⾸先进⾏哈希值的扰动，获取⼀个新的哈希值。 <code>(key == null) ? 0 : (h =key.hashCode()) ^ (h &gt;&gt;&gt; 16)</code>;</p>
+</li>
+<li><p>判断tab是否位空或者⻓度为0，如果是则进⾏扩容操作。</p>
+</li>
+<li><p>根据哈希值计算下标，如果对应⼩标正好没有存放数据，则直接插⼊即可否则需要覆盖。 <code>tab[i =(n - 1) &amp; hash])</code></p>
+</li>
+<li><p>判断tab[i]是否为树节点，否则向链表中插⼊数据，是则向树中插⼊节点。</p>
+</li>
+<li><p>如果链表中插⼊节点的时候，链表⻓度⼤于等于8，则需要把链表转换为红⿊树。<code> treeifyBin(tab, hash)</code>;</p>
+</li>
+<li><p>最后所有元素处理完成后，判断是否超过阈值:<code>threshold</code> ，超过则扩容。</p>
+</li>
+<li><p><code>treeifyBin</code> ,是⼀个链表转树的⽅法，但不是所有的链表⻓度为8后都会转成树，还需要判断存放key值的数组桶⻓度是否⼩于64 <code>MIN_TREEIFY_CAPACITY</code> 。如果⼩于则需要扩容，扩容后链表上的数据会被拆分散列的相应的桶节点上，也就把链表⻓度缩短了。</p>
+</li>
+</ol>
+<h3 id="扩容机制"><a href="#扩容机制" class="headerlink" title="扩容机制"></a>扩容机制</h3><p>参考上一小节的扩容元素拆分</p>
+<h3 id="链表树化"><a href="#链表树化" class="headerlink" title="链表树化"></a>链表树化</h3><p>jdk1.8之前的设计只是采⽤链表的⽅式进⾏存放，如果需要从链表中定位到数据时间复杂度就是O(n)，链表越⻓性能越差。因为在jdk1.8中把过⻓的链表也就是<strong>8个</strong>，优化为⾃平衡的红⿊树结构，以此让定位元素的时间复杂度优化近似于O(logn)，这样来提升元素查找的效率。但也不是完全抛弃链表，因为在元素相对不多的情况下，链表的插⼊速度更快，所以综合考虑下设定<strong>阈值为8</strong>才进⾏红⿊树转换操作。</p>
+<p><img src="http://qiniu.c77544s.top/picgo/202210121452908.png" alt="image-20210828153305822"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">final</span> <span class="keyword">void</span> <span class="title function_">treeifyBin</span><span class="params">(Node&lt;K,V&gt;[] tab, <span class="type">int</span> hash)</span> &#123;</span><br><span class="line">    <span class="type">int</span> n, index; Node&lt;K,V&gt; e;</span><br><span class="line">    <span class="comment">// 这块就是我们上⾯提到的，不⼀定树化还可能只是扩容。主要桶数组容量是否⼩于64 MIN_TREEIFY_CAPACITY</span></span><br><span class="line">    <span class="keyword">if</span> (tab == <span class="literal">null</span> || (n = tab.length) &lt; MIN_TREEIFY_CAPACITY)</span><br><span class="line">        resize();</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> ((e = tab[index = (n - <span class="number">1</span>) &amp; hash]) != <span class="literal">null</span>) &#123;</span><br><span class="line">        <span class="comment">// ⼜是单词缩写；hd = head (头部)，tl = tile (结尾)</span></span><br><span class="line">        TreeNode&lt;K,V&gt; hd = <span class="literal">null</span>, tl = <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">do</span> &#123;</span><br><span class="line">            <span class="comment">// 将普通节点转换为树节点，但此时还不是红⿊树，也就是说还不⼀定平衡</span></span><br><span class="line">            TreeNode&lt;K,V&gt; p = replacementTreeNode(e, <span class="literal">null</span>);</span><br><span class="line">            <span class="keyword">if</span> (tl == <span class="literal">null</span>)</span><br><span class="line">                hd = p;</span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">                p.prev = tl;</span><br><span class="line">                tl.next = p;</span><br><span class="line">            &#125;</span><br><span class="line">            tl = p;</span><br><span class="line">        &#125; <span class="keyword">while</span> ((e = e.next) != <span class="literal">null</span>);</span><br><span class="line">        <span class="keyword">if</span> ((tab[index] = hd) != <span class="literal">null</span>)</span><br><span class="line">            <span class="comment">// 转红⿊树操作，这⾥需要循环⽐较，染⾊、旋转。关于红⿊树，在下⼀章节详细讲解</span></span><br><span class="line">            hd.treeify(tab);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>以上源码主要包括的知识点如下；</p>
+<ol>
+<li>链表树化的条件有两点；链表⻓度⼤于等于8、桶容量⼤于64，否则只是扩容，不会树化。</li>
+<li>链表树化的过程中是先由链表转换为树节点，此时的树可能不是⼀颗平衡树。同时在树转换过程中会记录链表的顺序， <code>tl.next = p</code> ，这主要<strong>⽅便后续树转链表和拆分更⽅便</strong>。</li>
+<li>链表转换成树完成后，在进⾏红⿊树的转换。先简单介绍下，红⿊树的转换需要染⾊和旋转，以及⽐对⼤⼩。在⽐较元素的⼤⼩中，有⼀个⽐较有意思的⽅法， <code>tieBreakOrder</code> 加时赛，这主要是因为HashMap没有像TreeMap那样本身就有Comparator的实现。</li>
+</ol>
+<h3 id="红黑树转链表"><a href="#红黑树转链表" class="headerlink" title="红黑树转链表"></a>红黑树转链表</h3><p>在链表转红⿊树中，记录了原有链表的顺序。那么，这就简单了，红⿊树转链表时候，直接把TreeNode转换为Node即可，源码如下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">final</span> Node&lt;K, V&gt; <span class="title function_">untreeify</span><span class="params">(HashMap&lt;K, V&gt; map)</span> &#123;</span><br><span class="line">    Node&lt;K, V&gt; hd = <span class="literal">null</span>, tl = <span class="literal">null</span>;</span><br><span class="line">    <span class="comment">// 遍历TreeNode</span></span><br><span class="line">    <span class="keyword">for</span> (Node&lt;K, V&gt; q = <span class="built_in">this</span>; q != <span class="literal">null</span>; q = q.next) &#123;</span><br><span class="line">        <span class="comment">// TreeNode替换Node</span></span><br><span class="line">        Node&lt;K, V&gt; p = map.replacementNode(q, <span class="literal">null</span>);</span><br><span class="line">        <span class="keyword">if</span> (tl == <span class="literal">null</span>)</span><br><span class="line">            hd = p;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            tl.next = p;</span><br><span class="line">        tl = p;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> hd;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 替换⽅法</span></span><br><span class="line">Node&lt;K, V&gt; <span class="title function_">replacementNode</span><span class="params">(Node&lt;K, V&gt; p, Node&lt;K, V&gt; next)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Node</span>&lt;&gt;(p.hash, p.key, p.value, next);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="查找"><a href="#查找" class="headerlink" title="查找"></a>查找</h2><p><img src="http://qiniu.c77544s.top/picgo/202210121452909.png" alt="image-20210828154724482"></p>
+<h2 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h2><p>比较简单，不做介绍</p>
+<h2 id="遍历"><a href="#遍历" class="headerlink" title="遍历"></a>遍历</h2><p><strong>KeySet</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (String key : map.keySet()) &#123;</span><br><span class="line">	System.out.print(key + <span class="string">&quot; &quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>EntrySet</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (HashMap.Entry entry : map.entrySet()) &#123;</span><br><span class="line">    System.out.print(entry + <span class="string">&quot; &quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>从⽅法上以及⽇常使⽤都知道，KeySet是遍历是⽆序的，但每次使⽤不同⽅式遍历包括 <code>keys.iterator()</code> ，它们遍历的结果是固定的。</p>
+<p><strong>链表和红黑树的遍历如下图所示：</strong></p>
+<p><img src="http://qiniu.c77544s.top/picgo/202210121452910.png"></p>
+<p><img src="http://qiniu.c77544s.top/picgo/202210121452911.png" alt="image-20210828160132910"></p>
+<h1 id="ArrayList数据结构"><a href="#ArrayList数据结构" class="headerlink" title="ArrayList数据结构"></a>ArrayList数据结构</h1><p><code>Array + List = 数组 + 列表 = ArrayList = 数组列表</code></p>
+<p><img src="http://qiniu.c77544s.top/picgo/202210121452912.png" alt="image-20210829120240946"></p>
+<p>ArrayList默认初始化时会申请<strong>10</strong>个⻓度的空间</p>
+<h1 id="ArrayList扩容"><a href="#ArrayList扩容" class="headerlink" title="ArrayList扩容"></a>ArrayList扩容</h1><p>扩容的⻓度计算； <code>int newCapacity = oldCapacity + (oldCapacity &gt;&gt; 1);</code> ，旧容量 + 旧</p>
+<p>容量右移1位，这相当于扩容了原来容量的 <code>(int)3/2</code> 。</p>
+<p>10，扩容时：1010 + 1010 &gt;&gt; 1 &#x3D; 1010 + 0101 &#x3D; 10 + 5 &#x3D; 15</p>
+<p>7，扩容时：0111 + 0111 &gt;&gt; 1 &#x3D; 0111 + 0011 &#x3D; 7 + 3 &#x3D; 10</p>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2021/08/25/%E5%90%8E%E7%AB%AF/Java/JVM/JVM%E7%9F%A5%E8%AF%86%E7%82%B9/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+              2021-08-28 13:54:49
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="Categories"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/%E6%BA%90%E7%A0%81/" title="源码">
+                        <b>#</b> 源码
+                      </a>
+                    </span>
+                    
+                    <span class="span--category">
+                      <a href="/categories/%E6%BA%90%E7%A0%81/Java/" title="Java">
+                        <b>#</b> Java
+                      </a>
+                    </span>
+                    
+                    <span class="span--category">
+                      <a href="/categories/%E6%BA%90%E7%A0%81/Java/%E5%90%8E%E7%AB%AF/" title="后端">
+                        <b>#</b> 后端
+                      </a>
+                    </span>
+                    
+                    <span class="span--category">
+                      <a href="/categories/%E6%BA%90%E7%A0%81/Java/%E5%90%8E%E7%AB%AF/Java/" title="Java">
+                        <b>#</b> Java
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+                  <span class="post-tags">
+                    <i class="iconfont icon-tags mr-10" title="Tags"></i>
+                    
+                    <span class="span--tag mr-8">
+                      <a href="/tags/Java/" title="Java">
+                        #Java
+                      </a>
+                    </span>
+                    
+                    <span class="span--tag mr-8">
+                      <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" title="数据结构">
+                        #数据结构
+                      </a>
+                    </span>
+                    
+                    <span class="span--tag mr-8">
+                      <a href="/tags/%E6%BA%90%E7%A0%81/" title="源码">
+                        #源码
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2021/09/13/%E5%90%8E%E7%AB%AF/Java/%E5%A4%9A%E7%BA%BF%E7%A8%8B1/" target="_self">
+                <span>Next</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#HashCode%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%BF%E7%94%A831%E4%BD%9C%E4%B8%BA%E4%B9%98%E6%95%B0"><span class="toc-text">HashCode为什么使用31作为乘数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#HashMap-%E6%89%B0%E5%8A%A8%E5%87%BD%E6%95%B0%E3%80%81%E8%B4%9F%E8%BD%BD%E5%9B%A0%E2%BC%A6%E3%80%81%E6%89%A9%E5%AE%B9%E9%93%BE%E8%A1%A8%E6%8B%86%E5%88%86"><span class="toc-text">HashMap 扰动函数、负载因⼦、扩容链表拆分</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%B0%E5%8A%A8%E5%87%BD%E6%95%B0"><span class="toc-text">扰动函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E5%AE%B9%E9%87%8F"><span class="toc-text">初始化容量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B4%9F%E8%BD%BD%E5%9B%A0%E5%AD%90"><span class="toc-text">负载因子</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%A9%E5%AE%B9%E5%85%83%E7%B4%A0%E6%8B%86%E5%88%86"><span class="toc-text">扩容元素拆分</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8F%92%E5%85%A5"><span class="toc-text">插入</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%92%E5%85%A5%E6%B5%81%E7%A8%8B%EF%BC%9A"><span class="toc-text">插入流程：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%A9%E5%AE%B9%E6%9C%BA%E5%88%B6"><span class="toc-text">扩容机制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%93%BE%E8%A1%A8%E6%A0%91%E5%8C%96"><span class="toc-text">链表树化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BA%A2%E9%BB%91%E6%A0%91%E8%BD%AC%E9%93%BE%E8%A1%A8"><span class="toc-text">红黑树转链表</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%A5%E6%89%BE"><span class="toc-text">查找</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%A0%E9%99%A4"><span class="toc-text">删除</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%81%8D%E5%8E%86"><span class="toc-text">遍历</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ArrayList%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="toc-text">ArrayList数据结构</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ArrayList%E6%89%A9%E5%AE%B9"><span class="toc-text">ArrayList扩容</span></a></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+      <div class="comments-container">
+        
+
+
+
+
+  
+    <script async type="text/javascript" src="/plugins/valine.min.js" onload="loadValineSuc(this)"></script>
+  
+
+  <div id="vcomments"></div>
+
+  <script>
+    function loadValineSuc() {
+      new Valine({
+        el: '#vcomments',
+        appId: 'H2QqshKF8elT2Si5bfKynT9h-9Nh9j0Va',
+        appKey: 'WgtVppOWkTZ8fWNReNI1Ymf7',
+        placeholder: '有问题请留言吧!',
+        avatar: 'retro',
+        lang: 'en'
+      })
+    }
+  </script>
+
+    <style>
+      .comments-container .v .vempty {
+        display: none!important;
+      }
+    </style>
+
+
+
+
+      </div>
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          <a title="github" target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">
+            <i class="iconfont icon-github"></i>
+          </a>
+        </li>
+      
+        <li>
+          <a title="email" target="_blank" rel="noopener" href="https://c77544s.github.io/about/">
+            <i class="iconfont icon-envelope"></i>
+          </a>
+        </li>
+      
+        <li>
+          <a title="wechat" target="_blank" rel="noopener" href="https://c77544s.github.io/about/">
+            <i class="iconfont icon-wechat"></i>
+          </a>
+        </li>
+      
+        <li>
+          <a title="rss" href="/atom.xml">
+            <i class="iconfont icon-rss"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Copyright © 2023 Oranges</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+  <div class="search-icon tools-bar-item" id="search-icon">
+    <a href="javascript: void(0)">
+      <i class="iconfont icon-search"></i>
+    </a>
+  </div>
+
+  <div class="search-overlay hidden">
+    <div class="search-content" tabindex="0">
+      <div class="search-title">
+        <span class="search-icon-input">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-search"></i>
+          </a>
+        </span>
+        
+          <input type="text" class="search-input" id="search-input" placeholder="搜索...">
+        
+        <span class="search-close-icon" id="search-close-icon">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-close"></i>
+          </a>
+        </span>
+      </div>
+      <div class="search-result" id="search-result"></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var inputArea = document.querySelector("#search-input")
+    var searchOverlayArea = document.querySelector(".search-overlay")
+
+    inputArea.onclick = function() {
+      getSearchFile()
+      this.onclick = null
+    }
+
+    inputArea.onkeydown = function() {
+      if(event.keyCode == 13)
+        return false
+    }
+
+    function openOrHideSearchContent() {
+      let isHidden = searchOverlayArea.classList.contains('hidden')
+      if (isHidden) {
+        searchOverlayArea.classList.remove('hidden')
+        document.body.classList.add('hidden')
+        // inputArea.focus()
+      } else {
+        searchOverlayArea.classList.add('hidden')
+        document.body.classList.remove('hidden')
+      }
+    }
+
+    function blurSearchContent(e) {
+      if (e.target === searchOverlayArea) {
+        openOrHideSearchContent()
+      }
+    }
+
+    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
+    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
+    searchOverlayArea.addEventListener("click", blurSearchContent, false)
+
+    var searchFunc = function (path, search_id, content_id) {
+      'use strict';
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      $resultContent.innerHTML = "<ul><span class='local-search-empty'>First search, index file loading, please wait...<span></ul>";
+      $.ajax({
+        // 0x01. load xml file
+        url: path,
+        dataType: "xml",
+        success: function (xmlResponse) {
+          // 0x02. parse xml file
+          var datas = $("entry", xmlResponse).map(function () {
+            return {
+              title: $("title", this).text(),
+              content: $("content", this).text(),
+              url: $("url", this).text()
+            };
+          }).get();
+          $resultContent.innerHTML = "";
+
+          $input.addEventListener('input', function () {
+            // 0x03. parse query to keywords list
+            var str = '<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length <= 0) {
+              return;
+            }
+            // 0x04. perform local searching
+            datas.forEach(function (data) {
+              var isMatch = true;
+              var content_index = [];
+              if (!data.title || data.title.trim() === '') {
+                data.title = "Untitled";
+              }
+              var orig_data_title = data.title.trim();
+              var data_title = orig_data_title.toLowerCase();
+              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+              var data_content = orig_data_content.toLowerCase();
+              var data_url = data.url;
+              var index_title = -1;
+              var index_content = -1;
+              var first_occur = -1;
+              // only match artiles with not empty contents
+              if (data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                  index_title = data_title.indexOf(keyword);
+                  index_content = data_content.indexOf(keyword);
+
+                  if (index_title < 0 && index_content < 0) {
+                    isMatch = false;
+                  } else {
+                    if (index_content < 0) {
+                      index_content = 0;
+                    }
+                    if (i == 0) {
+                      first_occur = index_content;
+                    }
+                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                  }
+                });
+              } else {
+                isMatch = false;
+              }
+              // 0x05. show search results
+              if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
+                var content = orig_data_content;
+                if (first_occur >= 0) {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  var match_content = content.substr(start, end);
+
+                  // highlight all keywords
+                  keywords.forEach(function (keyword) {
+                    var regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
+                  });
+
+                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+              }
+            });
+            str += "</ul>";
+            if (str.indexOf('<li>') === -1) {
+              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>No result<span></ul>";
+            }
+            $resultContent.innerHTML = str;
+          });
+        },
+        error: function(xhr, status, error) {
+          $resultContent.innerHTML = ""
+          if (xhr.status === 404) {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The search.xml file was not found, please refer to：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
+          } else {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The request failed, Try to refresh the page or try again later.<span></ul>";
+          }
+        }
+      });
+      $(document).on('click', '#search-close-icon', function() {
+        $('#search-input').val('');
+        $('#search-result').html('');
+      });
+    }
+
+    var getSearchFile = function() {
+        var path = "/search.xml";
+        searchFunc(path, 'search-input', 'search-result');
+    }
+  </script>
+
+
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + %E9%9B%86%E5%90%88%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90 + '&url=' + http%3A%2F%2Fc77544s.gitee.io%2F2021%2F08%2F28%2F%25E5%2590%258E%25E7%25AB%25AF%2FJava%2F%25E9%259B%2586%25E5%2590%2588%25E6%25BA%2590%25E7%25A0%2581%25E5%2588%2586%25E6%259E%2590%2F + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=http://c77544s.gitee.io/2021/08/28/%E5%90%8E%E7%AB%AF/Java/%E9%9B%86%E5%90%88%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
+  
+  
+<script src="/js/shares.js"></script>
+
+
+
+      </div>
+    </div>
+  </body>
+</html>
