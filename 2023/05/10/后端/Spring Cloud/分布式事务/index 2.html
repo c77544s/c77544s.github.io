@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="keywords" content="JavaScript,Hexo" />
+  <meta name="author" content="超能虾米" />
+  <meta name="description" content="" />
+  
+  
+  <title>
+    
+      分布式事务 
+      
+      
+      |
+    
+     超能虾米的博客
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="/images/favicon.png">
+    <link rel="icon" href="/images/favicon.png">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1886449_67xjft27j1l.css" />
+  <!-- 代码块风格 -->
+  
+
+  <!-- jquery3.3.1 -->
+  
+    <script defer type="text/javascript" src="/plugins/jquery.min.js"></script>
+  
+
+  <!-- fancybox -->
+  
+    <link href="/plugins/jquery.fancybox.min.css" rel="stylesheet">
+    <script defer type="text/javascript" src="/plugins/jquery.fancybox.min.js"></script>
+  
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+<meta name="generator" content="Hexo 5.4.2"><link rel="alternate" href="/atom.xml" title="超能虾米的博客" type="application/atom+xml">
+</head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="/images/头像.JPEG" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">超能虾米</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">主页</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">归档</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">分类</a>
+        </li>
+      
+        <li class="nav-item" data-path="/tags/">
+          <a href="/tags/">标签</a>
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          <a href="/friends/">朋友</a>
+        </li>
+      
+        <li class="nav-item" data-path="/about/">
+          <a href="/about/">关于我</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">分布式事务</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+          2023-05-10 15:01:55
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="Categories"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/%E5%90%8E%E7%AB%AF/" title="后端">
+                    <b>#</b> 后端
+                  </a>
+                </span>
+                
+                <span class="span--category">
+                  <a href="/categories/%E5%90%8E%E7%AB%AF/Spring-Cloud/" title="Spring Cloud">
+                    <b>#</b> Spring Cloud
+                  </a>
+                </span>
+                
+              </span>
+          
+              <span class="post-tags">
+                <i class="iconfont icon-tags mr-10" title="Tags"></i>
+                
+                <span class="span--tag mr-8">
+                  <a href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" title="中间件">
+                    #中间件
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <h2 id="分布式事务产生的场景"><a href="#分布式事务产生的场景" class="headerlink" title="分布式事务产生的场景"></a>分布式事务产生的场景</h2><ul>
+<li><strong>跨 JVM 进程产生分布式事务</strong><br><img src="http://qiniu.c77544s.top/picgo/202305101502764.png" alt="image.png"></li>
+<li><strong>跨数据库实例产生分布式事务</strong><br><img src="http://qiniu.c77544s.top/picgo/202305101504958.png" alt="image.png"></li>
+<li><strong>多服务访问同一个数据库实例</strong><br><img src="http://qiniu.c77544s.top/picgo/202305101504389.png" alt="image.png"></li>
+</ul>
+<h2 id="分布式事务的基础理论"><a href="#分布式事务的基础理论" class="headerlink" title="分布式事务的基础理论"></a>分布式事务的基础理论</h2><h3 id="CAP-理论"><a href="#CAP-理论" class="headerlink" title="CAP 理论"></a>CAP 理论</h3><p>CAP 是 Consistency、Availability、Partition tolerance 三个单词的缩写，分别表示一致性、可用性、分区容忍性。</p>
+<ol>
+<li>C - Consistency    一致性</li>
+<li>A - Availability   可用性</li>
+<li>P - Partition tolerance    分区容忍性</li>
+</ol>
+<p><strong>CAP 的组合方式</strong></p>
+<ol>
+<li>AP<ol>
+<li>放弃一致性，追求分区容忍性和可用性，只要保证最终一致性就行。这是很多分布式系统设计时的选择。因为大部分业务用户都能够接受在一段时间内获取不到最新的数据，最要最终能够获取到就可以。</li>
+</ol>
+</li>
+<li>CP<ol>
+<li>放弃可用性，追求一致性和分区容错性，zookeeper 其实就是追求的强一致，又比如跨行转账，一次转账请求要等待双方银行系统都完成整个事务才算完成。</li>
+</ol>
+</li>
+<li>CA<ol>
+<li>放弃分区容忍性，即不进行分区，不考虑由于网络不通或结点挂掉的问题，则可以实现一致性和可用性。那么系统将不是一个标准的分布式系统，最常用的关系型数据就满足了 CA。</li>
+</ol>
+</li>
+</ol>
+<h3 id="BASE-理论"><a href="#BASE-理论" class="headerlink" title="BASE 理论"></a>BASE 理论</h3><blockquote>
+<p>BASE 是 Basically Available（基本可用）、Soft state（软状态）和 Eventually consistent （最终一致性）三个短语的缩写。BASE 理论是对 CAP 中 AP 的一个扩展，通过牺牲强一致性来获得可用性，当出现故障允许部分不可用但要保证核心功能可用，允许数据在一段时间内是不一致的，但最终达到一致状态。满足 BASE 理论的事务，我们称之为“<strong>柔性事务</strong>”。  </p>
+</blockquote>
+<ol>
+<li><strong>基本可用</strong>：分布式系统在出现故障时，允许损失部分可用功能，保证核心功能可用。如电商网站交易付款出现问题了，商品依然可以正常浏览。</li>
+<li><strong>软状态</strong>：由于不要求强一致性，所以 BASE 允许系统中存在中间状态（也叫<strong>软状态</strong>），这个状态不影响系统可用性，如订单的”支付中”、“数据同步中”等状态，待数据最终一致后状态改为“成功”状态。</li>
+<li><strong>最终一致</strong>：最终一致是指经过一段时间后，所有节点数据都将会达到一致。如订单的”支付中”状态，最终会变为“支付成功”或者”支付失败”，使订单状态与实际交易结果达成一致，但需要一定时间的延迟、等待。</li>
+</ol>
+<p>针对不同的分布式场景业界常见的解决方案有 <strong>2PC、3PC、TCC、可靠消息最终一致性、最大努力通知</strong>这几种</p>
+<h2 id="2PC-解决方案"><a href="#2PC-解决方案" class="headerlink" title="2PC 解决方案"></a>2PC 解决方案</h2><h3 id="什么是-2PC"><a href="#什么是-2PC" class="headerlink" title="什么是 2PC"></a>什么是 2PC</h3><p>2PC 即两阶段提交协议，是将整个事务流程分为两个阶段，准备阶段（Prepare phase）、提交阶段（commit phase），2 是指两个阶段，P 是指准备阶段，C 是指提交阶段。</p>
+<p>在计算机中部分关系数据库如 Oracle、MySQL 支持两阶段提交协议：</p>
+<ol>
+<li>准备阶段（Prepare phase）：事务管理器给每个参与者发送 Prepare 消息，每个数据库参与者在本地执行事务，并写本地的 Undo&#x2F;Redo 日志，此时事务没有提交。（Undo 日志是记录修改前的数据，用于数据库回滚，Redo 日志是记录修改后的数据，用于提交事务后写入数据文件）</li>
+<li>提交阶段（commit phase）：如果事务管理器收到了参与者的执行失败或者超时消息时，直接给每个参与者发送回滚（Rollback）消息；否则，发送提交（Commit）消息；参与者根据事务管理器的指令执行提交或者回滚操作，并释放事务处理过程中使用的锁资源。注意：<strong>必须在最后阶段释放锁资源</strong>。</li>
+</ol>
+<h3 id="XA-解决方案"><a href="#XA-解决方案" class="headerlink" title="XA 解决方案"></a>XA 解决方案</h3><p>2PC 的传统方案是在数据库层面实现的，如 Oracle、MySQL 都支持 2PC 协议，为了统一标准减少行业内不必要的对接成本，需要制定标准化的处理模型及接口标准，国际开放标准组织 Open Group 定义了分布式事务处理模型<strong>DTP</strong>（Distributed Transaction Processing Reference Model）。<br>下面以新用户注册送积分为例来说明 XA 方案：<br><img src="http://qiniu.c77544s.top/picgo/202305111040213.png" alt="image.png"><br>执行流程如下：</p>
+<ol>
+<li>应用程序（AP）持有用户库和积分库两个数据源。</li>
+<li>应用程序（AP）通过 TM 通知用户库 RM 新增用户，同时通知积分库RM为该用户新增积分，RM 此时并未提交事务，此时用户和积分资源锁定。</li>
+<li>TM 收到执行回复，只要有一方失败则分别向其他 RM 发起回滚事务，回滚完毕，资源锁释放。</li>
+<li>TM 收到执行回复，全部成功，此时向所有 RM 发起提交事务，提交完毕，资源锁释放。</li>
+</ol>
+<p>DTP 模型定义如下角色：</p>
+<ul>
+<li><strong>AP</strong>（Application Program）：即应用程序，可以理解为使用 DTP 分布式事务的程序。</li>
+<li><strong>RM</strong>（Resource Manager）：即资源管理器，可以理解为事务的参与者，一般情况下是指一个数据库实例，通过资源管理器对该数据库进行控制，资源管理器控制着分支事务。</li>
+<li><strong>TM</strong>（Transaction Manager）：事务管理器，负责协调和管理事务，事务管理器控制着全局事务，管理事务生命周期，并协调各个 RM。<strong>全局事务</strong>是指分布式事务处理环境中，需要操作多个数据库共同完成一个工作，这个工作即是一个全局事务。</li>
+<li>DTP 模型定义 TM 和 RM 之间通讯的接口规范叫 <strong>XA</strong>，简单理解为数据库提供的 2PC 接口协议，<strong>基于数据库的 XA 协议来实现 2PC 又称为 XA 方案</strong></li>
+</ul>
+<p><strong>XA 方案的问题</strong></p>
+<ol>
+<li>需要本地数据库支持XA协议。</li>
+<li>资源锁需要等到两个阶段结束才释放，性能较差</li>
+</ol>
+<h3 id="Seata-方案"><a href="#Seata-方案" class="headerlink" title="Seata 方案"></a>Seata 方案</h3><p>Seata 是由阿里中间件团队开源的分布式事务框架。</p>
+<p>Seata 通过对本地关系数据库的分支事务的协调来驱动完成全局事务，是<strong>工作在应用层</strong>的中间件。主要优点是性能较好，且不长时间占用连接资源，它以高效并且对业务 0 侵入的方式解决微服务场景下面临的分布式事务问题，它目前提供 AT 模式（即 2PC）及 TCC 模式的分布式事务解决方案。</p>
+<p>Seata 把一个分布式事务理解成一个包含了若干<strong>分支事务</strong>的<strong>全局事务</strong>。全局事务的职责是协调其下管辖的分支事务达成一致，要么一起成功提交，要么一起失败回滚。此外，通常分支事务本身就是一个关系数据库的本地事务。</p>
+<ul>
+<li>Transaction Coordinator（TC）：事务协调器，它是独立的中间件，需要独立部署运行，它维护全局事务的运行状态，接收 TM 指令发起全局事务的提交与回滚，负责与 RM 通信协调各各分支事务的提交或回滚。</li>
+<li>Transaction Manager（TM）： 事务管理器，TM 需要嵌入应用程序中工作，它负责开启一个全局事务，并最终向 TC 发起全局提交或全局回滚的指令。</li>
+<li>Resource Manager（RM）：控制分支事务，负责分支注册、状态汇报，并接收事务协调器 TC 的指令，驱动分支（本地）事务的提交和回滚。<br><img src="http://qiniu.c77544s.top/picgo/202305111045883.png" alt="image.png"><br>具体的执行流程如下：</li>
+</ul>
+<ol>
+<li>用户服务的 TM 向 TC 申请开启一个全局事务，全局事务创建成功并生成一个全局唯一的 XID。  </li>
+<li>用户服务的 RM 向 TC 注册分支事务，该分支事务在用户服务执行新增用户逻辑，并将其纳入 XID 对应全局事务的管辖。</li>
+<li>用户服务执行分支事务，向用户表插入一条记录。  </li>
+<li>逻辑执行到远程调用积分服务时（XID 在微服务调用链路的上下文中传播）。积分服务的 RM 向 TC 注册分支事务，该分支事务执行增加积分的逻辑，并将其纳入 XID 对应全局事务的管辖。  </li>
+<li>积分服务执行分支事务，向积分记录表插入一条记录，执行完毕后，返回用户服务。  </li>
+<li>用户服务分支事务执行完毕。  </li>
+<li>TM 向 TC 发起针对 XID 的全局提交或回滚决议。  </li>
+<li>TC 调度 XID 下管辖的全部分支事务完成提交或回滚请求。</li>
+<li><strong>Seata 实现2PC 与传统2PC 的差别</strong><br><strong>架构层次方面</strong>：传统 2PC 方案的 RM 实际上是在数据库层，RM 本质上就是数据库自身，通过 XA 协议实现，而 Seata 的 RM 是以 jar 包的形式作为中间件层部署在应用程序这一侧的。<br><strong>两阶段提交方面</strong>：传统 2PC 无论第二阶段的决议是 commit 还是 rollback ，事务性资源的锁都要保持到 Phase2 完成才释放。而 Seata 的做法是在 Phase1 就将本地事务提交，这样就可以省去 Phase2 持锁的时间，整体提高效率。</li>
+</ol>
+<h2 id="TCC-解决方案"><a href="#TCC-解决方案" class="headerlink" title="TCC 解决方案"></a>TCC 解决方案</h2><p>TCC 是 Try、Conﬁrm、Cancel 三个词语的缩写，TCC 要求每个分支事务实现三个操作：预处理 Try、确认 Conﬁrm、撤销 Cancel。Try 操作做业务检查及资源预留，Conﬁrm 做业务确认操作，Cancel 实现一个与 Try 相反的操作即回滚操作。TM 首先发起所有的分支事务的 Try 操作，任何一个分支事务的 Try 操作执行失败，TM 将会发起所有分支事务的 Cancel 操作，若 Try 操作全部成功，TM 将会发起所有分支事务的 Conﬁrm 操作，其中 Conﬁrm&#x2F;Cancel 操作若执行失败，TM 会进行重试。</p>
+<p>TCC 分为三个阶段：</p>
+<ol>
+<li><strong>Try</strong> 阶段是做完业务检查（一致性）及资源预留（隔离），此阶段仅是一个初步操作，它和后续的 Conﬁrm 一起才能真正构成一个完整的业务逻辑。</li>
+<li><strong>Confirm</strong> 阶段是做确认提交，Try 阶段所有分支事务执行成功后开始执行 Conﬁrm。通常情况下，采用 TCC 则认为 Conﬁrm 阶段是不会出错的。即：只要 Try 成功，Conﬁrm 一定成功。若 Conﬁrm 阶段真的出错了，需引入重试机制或人工处理。</li>
+<li><strong>Cancel</strong> 阶段是在业务执行错误需要回滚的状态下执行分支事务的业务取消，预留资源释放。通常情况下，采用 TCC 则认为 Cancel 阶段也是一定成功的。若 Cancel 阶段真的出错了，需引入重试机制或人工处理。</li>
+</ol>
+<h3 id="TCC-异常处理"><a href="#TCC-异常处理" class="headerlink" title="TCC 异常处理"></a>TCC 异常处理</h3><p>TCC 需要注意三种异常处理分别是<strong>空回滚</strong>、<strong>幂等</strong>、<strong>悬挂</strong></p>
+<p>TM 在发起全局事务时生成全局事务记录，全局事务 ID 贯穿整个分布式事务调用链条，可通过额外增加一张分支事务记录表，其中有全局事务 ID 和分支事务 ID。比如，第一阶段 Try 方法里会插入一条记录，表示一阶段执行了。</p>
+<ol>
+<li><strong>空回滚</strong><br>在没有调用 TCC 资源 Try 方法的情况下，调用了二阶段的 Cancel 方法，Cancel 方法需要识别出这是一个空回滚（分支事务记录表中没 try 数据），然后直接返回成功。</li>
+<li>幂等<br> TCC 二阶段提交重试机制可能会造成数据不一致，要求 TCC 的二阶段 Try、Conﬁrm 和 Cancel 接口保证幂等</li>
+<li>悬挂<br>悬挂就是对于一个分布式事务，其二阶段 Cancel 接口比 Try 接口先执行。<br>出现原因是在 RPC 调用分支事务 Try 时，先注册分支事务，再执行 RPC 调用，如果此时 RPC 调用的网络发生拥堵，通常 RPC 调用是有超时时间的，RPC 超时以后，TM 就会通知 RM 回滚该分布式事务，可能回滚完成后，RPC 请求才到达参与者真正执行。而该分布式事务第一阶段预留的业务资源就再也没有人能够处理了<br>解决思路是：”分支事务记录”表中是否已经有二阶段事务记录，如果有则不执行 Try。</li>
+</ol>
+<p>如果拿 TCC 事务的处理流程与 2PC 两阶段提交做比较，2PC 通常都是在跨库的 DB 层面，而 TCC 则在应用层面的处理，需要通过业务逻辑来实现。这种分布式事务的实现方式的优势在于，可以让<strong>应用自己定义数据操作的粒度，使得降低锁冲突、提高吞吐量成为可能</strong>。</p>
+<h2 id="可靠消息最终一致性"><a href="#可靠消息最终一致性" class="headerlink" title="可靠消息最终一致性"></a>可靠消息最终一致性</h2><p>可靠消息最终一致性方案是指当事务发起方执行完成本地事务后并发出一条消息，事务参与方（消息消费者）一定能够接收消息并处理事务成功，此方案强调的是只要消息发给事务参与方最终事务要达到一致。<br><img src="http://qiniu.c77544s.top/picgo/202305111110457.png" alt="image.png"><br>可靠消息最终一致性方案要解决以下几个问题：</p>
+<ol>
+<li><strong>本地事务与消息发送的原子性问题</strong><br>本地事务与消息发送的原子性问题即：要么都成功，要么都失败。本地事务与消息发送的原子性问题是实现可靠消息最终一致性方案的关键问题。<br>下面这种操作，先发送消息，在操作数据库：<br><code>mysql begin transaction； //1.发送MQ //2.数据库操作 commit transation;</code><br>这种情况下无法保证数据库操作与发送消息的一致性，因为可能发送消息成功，数据库操作失败。 那么第二种方案，先进行数据库操作，再发送消息：<br><code>mysql begin transaction； //1.数据库操作 //2.发送MQ commit transation;</code><br>这种情况下貌似没有问题，如果发送 MQ 消息失败，就会抛出异常，导致数据库事务回滚。但如果是超时异常，数据库回滚，但 MQ 其实已经正常发送了，同样会导致不一致。  </li>
+<li><strong>事务参与方接收消息的可靠性</strong><br>事务参与方必须能够从消息队列接收到消息，如果接收消息失败可以重复接收消息。  </li>
+<li><strong>消息重复消费的问题</strong><br>由于网络2的存在，若某一个消费节点超时但是消费成功，此时消息中间件会重复投递此消息，就导致了消息的重复消费。<br>要解决消息重复消费的问题就要实现事务参与方的方法幂等性。</li>
+</ol>
+<h3 id="解决方案：本地消息表方案"><a href="#解决方案：本地消息表方案" class="headerlink" title="解决方案：本地消息表方案"></a>解决方案：本地消息表方案</h3><p>此方案的核心是通过本地事务保证数据业务操作和消息的一致性，然后通过定时任务将消息发送至消息中间件，待确认消息发送给消费方成功再将消息删除。<br><img src="http://qiniu.c77544s.top/picgo/202305111114290.png" alt="image.png"></p>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>可靠消息最终一致性就是保证消息从生产方经过消息中间件传递到消费方的一致性：</p>
+<ol>
+<li>本地事务与消息发送的原子性问题。</li>
+<li>事务参与方接收消息的可靠性。</li>
+</ol>
+<p>可靠消息最终一致性事务适合执行周期长且实时性要求不高的场景。引入消息机制后，同步的事务操作变为基于消息执行的异步操作, 避免了分布式事务中的同步阻塞操作的影响，并实现了两个服务的解耦。</p>
+<h2 id="最大努力通知"><a href="#最大努力通知" class="headerlink" title="最大努力通知"></a>最大努力通知</h2><p><img src="http://qiniu.c77544s.top/picgo/202305111137304.png" alt="image.png"><br>交互流程：</p>
+<ol>
+<li>账户系统调用充值系统接口</li>
+<li>充值系统完成支付处理向账户发起充值结果通知，若通知失败，则充值系统按策略进行重复通知</li>
+<li>账户系统接收到充值结果通知修改充值状态</li>
+<li>账户系统未接收到通知会主动调用充值系统的接口查询充值结果</li>
+</ol>
+<p>通过上边的例子我们总结最大努力通知方案的目标：<strong>发起通知方通过一定的机制最大努力将业务处理结果通知到接收方</strong>。</p>
+<ol>
+<li>有一定的消息重复通知机制。因为接收通知方可能没有接收到通知，此时要有一定的机制对消息重复通知</li>
+<li>消息校对机制。如果尽最大努力也没有通知到接收方，或者接收方消费消息后要再次消费，此时可由接收方主动向通知方查询消息信息来满足需求</li>
+</ol>
+<h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><p>方案 1 :<br><img src="http://qiniu.c77544s.top/picgo/202305111139581.png" alt="image.png"><br>本方案是利用 MQ 的 ack 机制由 MQ 向接收通知方发送通知<br>方案 2 ：<br><img src="http://qiniu.c77544s.top/picgo/202305111140811.png" alt="image.png"><br><strong>方案1和方案2的不同点</strong>：</p>
+<ol>
+<li>方案 1 中接收通知方与 MQ 接口，即接收通知方案监听 MQ，此方案主要应用与内部应用之间的通知。</li>
+<li>方案 2 中由通知程序与 MQ 接口，通知程序监听 MQ，收到 MQ 的消息后由通知程序通过互联网接口协议调用接收通知方。此方案主要应用于外部应用之间的通知，例如支付宝、微信的支付结果通知。</li>
+</ol>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><strong>分布式事务对比分析</strong></p>
+<p><strong>2PC</strong> 最大的诟病是一个阻塞协议。RM 在执行分支事务后需要等待 TM 的决定，此时服务会阻塞并锁定资源。由于其阻塞机制和最差时间复杂度高，因此，这种设计不能适应随着事务涉及的服务数量增加而扩展的需要，很难用于并发较高以及子事务生命周期较长（long-running transactions） 的分布式服务中。</p>
+<p>如果拿<strong>TCC</strong>事务的处理流程与2PC两阶段提交做比较，2PC 通常都是在跨库的 DB 层面，而 TCC 则在应用层面的处理，需要通过业务逻辑来实现。这种分布式事务的实现方式的优势在于，可以让<strong>应用自己定义数据操作的粒度，使得降低锁冲突、提高吞吐量成为可能</strong>。而不足之处则在于对应用的侵入性非常强，业务逻辑的每个分支都需要实现 Try、Conﬁrm、Cancel 三个操作。此外，其实现难度也比较大，需要按照网络状态、系统故障等不同的失败原因实 现不同的回滚策略。典型的使用场景：满减，登录送优惠券等。</p>
+<p><strong>可靠消息最终一致性</strong>事务适合执行周期长且实时性要求不高的场景。引入消息机制后，同步的事务操作变为基于消息执行的异步操作, 避免了分布式事务中的同步阻塞操作的影响，并实现了两个服务的解耦。典型的使用场景：注册送积分，登录送优惠券等。</p>
+<p><strong>最大努力通知</strong>是分布式事务中要求最低的一种,适用于一些最终一致性时间敏感度低的业务；允许发起通知方处理业务失败，在接收通知方收到通知后积极进行失败处理，无论发起通知方如何处理结果都会不影响到接收通知方的后续处理；发起通知方需提供查询执行情况接口，用于接收通知方校对结果。典型的使用场景：银行通知、支付结果通知等。<br><img src="http://qiniu.c77544s.top/picgo/202305111141517.png" alt="image.png"></p>
+<p>无论是数据库层的 XA、还是应用层 TCC、可靠消息、最大努力通知等方案，都没有完美解决分布式事务问题，它们不过是各自在性能、一致性、可用性等方面做取舍，寻求某些场景偏好下的权衡。</p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/263555694">分布式事务有这一篇就够了！ - 知乎 (zhihu.com)</a></p>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2023/05/10/%E5%90%8E%E7%AB%AF/Spring%20Cloud/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%E7%9A%84%E5%AE%9E%E7%8E%B0/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+              2023-05-10 15:01:55
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="Categories"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/%E5%90%8E%E7%AB%AF/" title="后端">
+                        <b>#</b> 后端
+                      </a>
+                    </span>
+                    
+                    <span class="span--category">
+                      <a href="/categories/%E5%90%8E%E7%AB%AF/Spring-Cloud/" title="Spring Cloud">
+                        <b>#</b> Spring Cloud
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+                  <span class="post-tags">
+                    <i class="iconfont icon-tags mr-10" title="Tags"></i>
+                    
+                    <span class="span--tag mr-8">
+                      <a href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" title="中间件">
+                        #中间件
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2023/05/10/%E5%90%8E%E7%AB%AF/Java/%E5%B9%B6%E8%A1%8C%E6%B5%81/" target="_self">
+                <span>Next</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1%E4%BA%A7%E7%94%9F%E7%9A%84%E5%9C%BA%E6%99%AF"><span class="toc-text">分布式事务产生的场景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1%E7%9A%84%E5%9F%BA%E7%A1%80%E7%90%86%E8%AE%BA"><span class="toc-text">分布式事务的基础理论</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#CAP-%E7%90%86%E8%AE%BA"><span class="toc-text">CAP 理论</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#BASE-%E7%90%86%E8%AE%BA"><span class="toc-text">BASE 理论</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2PC-%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="toc-text">2PC 解决方案</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF-2PC"><span class="toc-text">什么是 2PC</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#XA-%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="toc-text">XA 解决方案</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Seata-%E6%96%B9%E6%A1%88"><span class="toc-text">Seata 方案</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TCC-%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="toc-text">TCC 解决方案</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#TCC-%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86"><span class="toc-text">TCC 异常处理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%AF%E9%9D%A0%E6%B6%88%E6%81%AF%E6%9C%80%E7%BB%88%E4%B8%80%E8%87%B4%E6%80%A7"><span class="toc-text">可靠消息最终一致性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88%EF%BC%9A%E6%9C%AC%E5%9C%B0%E6%B6%88%E6%81%AF%E8%A1%A8%E6%96%B9%E6%A1%88"><span class="toc-text">解决方案：本地消息表方案</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93"><span class="toc-text">小结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E5%A4%A7%E5%8A%AA%E5%8A%9B%E9%80%9A%E7%9F%A5"><span class="toc-text">最大努力通知</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="toc-text">解决方案</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text">总结</span></a></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+      <div class="comments-container">
+        
+
+
+
+
+
+
+  <div id="gitalk-container"></div>
+
+  <script>
+    function loadGitalkSuc() {
+      const gitalk = new Gitalk({
+        clientID: 'f37acf2820e6916417f9',
+        clientSecret: '3e4ceb298926da09a830bf9b66cc52c043c24164',
+        repo: 'c77544s.github.io',
+        owner: 'c77544s',
+        admin: ['c77544s'],
+        id: location.pathname,
+        distractionFreeMode: false
+      })
+
+      gitalk.render('gitalk-container')
+    }
+  </script>
+  
+    <link rel="stylesheet" href="/plugins/gitalk.css">
+    <script type="text/javascript" src="/plugins/gitalk.min.js" onload="loadGitalkSuc(this)"></script>
+  
+
+
+
+      </div>
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          <a title="github" target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">
+            <i class="iconfont icon-github"></i>
+          </a>
+        </li>
+      
+        <li>
+          <a title="email" href="https://c77544s.github.io/about/">
+            <i class="iconfont icon-envelope"></i>
+          </a>
+        </li>
+      
+        <li>
+          <a title="wechat" href="https://c77544s.github.io/about/">
+            <i class="iconfont icon-wechat"></i>
+          </a>
+        </li>
+      
+        <li>
+          <a title="rss" href="/atom.xml">
+            <i class="iconfont icon-rss"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Copyright © 2023 Oranges</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+  <div class="search-icon tools-bar-item" id="search-icon">
+    <a href="javascript: void(0)">
+      <i class="iconfont icon-search"></i>
+    </a>
+  </div>
+
+  <div class="search-overlay hidden">
+    <div class="search-content" tabindex="0">
+      <div class="search-title">
+        <span class="search-icon-input">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-search"></i>
+          </a>
+        </span>
+        
+          <input type="text" class="search-input" id="search-input" placeholder="搜索...">
+        
+        <span class="search-close-icon" id="search-close-icon">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-close"></i>
+          </a>
+        </span>
+      </div>
+      <div class="search-result" id="search-result"></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var inputArea = document.querySelector("#search-input")
+    var searchOverlayArea = document.querySelector(".search-overlay")
+
+    inputArea.onclick = function() {
+      getSearchFile()
+      this.onclick = null
+    }
+
+    inputArea.onkeydown = function() {
+      if(event.keyCode == 13)
+        return false
+    }
+
+    function openOrHideSearchContent() {
+      let isHidden = searchOverlayArea.classList.contains('hidden')
+      if (isHidden) {
+        searchOverlayArea.classList.remove('hidden')
+        document.body.classList.add('hidden')
+        // inputArea.focus()
+      } else {
+        searchOverlayArea.classList.add('hidden')
+        document.body.classList.remove('hidden')
+      }
+    }
+
+    function blurSearchContent(e) {
+      if (e.target === searchOverlayArea) {
+        openOrHideSearchContent()
+      }
+    }
+
+    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
+    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
+    searchOverlayArea.addEventListener("click", blurSearchContent, false)
+
+    var searchFunc = function (path, search_id, content_id) {
+      'use strict';
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      $resultContent.innerHTML = "<ul><span class='local-search-empty'>First search, index file loading, please wait...<span></ul>";
+      $.ajax({
+        // 0x01. load xml file
+        url: path,
+        dataType: "xml",
+        success: function (xmlResponse) {
+          // 0x02. parse xml file
+          var datas = $("entry", xmlResponse).map(function () {
+            return {
+              title: $("title", this).text(),
+              content: $("content", this).text(),
+              url: $("url", this).text()
+            };
+          }).get();
+          $resultContent.innerHTML = "";
+
+          $input.addEventListener('input', function () {
+            // 0x03. parse query to keywords list
+            var str = '<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length <= 0) {
+              return;
+            }
+            // 0x04. perform local searching
+            datas.forEach(function (data) {
+              var isMatch = true;
+              var content_index = [];
+              if (!data.title || data.title.trim() === '') {
+                data.title = "Untitled";
+              }
+              var orig_data_title = data.title.trim();
+              var data_title = orig_data_title.toLowerCase();
+              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+              var data_content = orig_data_content.toLowerCase();
+              var data_url = data.url;
+              var index_title = -1;
+              var index_content = -1;
+              var first_occur = -1;
+              // only match artiles with not empty contents
+              if (data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                  index_title = data_title.indexOf(keyword);
+                  index_content = data_content.indexOf(keyword);
+
+                  if (index_title < 0 && index_content < 0) {
+                    isMatch = false;
+                  } else {
+                    if (index_content < 0) {
+                      index_content = 0;
+                    }
+                    if (i == 0) {
+                      first_occur = index_content;
+                    }
+                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                  }
+                });
+              } else {
+                isMatch = false;
+              }
+              // 0x05. show search results
+              if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
+                var content = orig_data_content;
+                if (first_occur >= 0) {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  var match_content = content.substr(start, end);
+
+                  // highlight all keywords
+                  keywords.forEach(function (keyword) {
+                    var regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
+                  });
+
+                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+              }
+            });
+            str += "</ul>";
+            if (str.indexOf('<li>') === -1) {
+              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>No result<span></ul>";
+            }
+            $resultContent.innerHTML = str;
+          });
+        },
+        error: function(xhr, status, error) {
+          $resultContent.innerHTML = ""
+          if (xhr.status === 404) {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The search.xml file was not found, please refer to：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
+          } else {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The request failed, Try to refresh the page or try again later.<span></ul>";
+          }
+        }
+      });
+      $(document).on('click', '#search-close-icon', function() {
+        $('#search-input').val('');
+        $('#search-result').html('');
+      });
+    }
+
+    var getSearchFile = function() {
+        var path = "/search.xml";
+        searchFunc(path, 'search-input', 'search-result');
+    }
+  </script>
+
+
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + %E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1 + '&url=' + https%3A%2F%2Fc77544s.github.io%2F2023%2F05%2F10%2F%25E5%2590%258E%25E7%25AB%25AF%2FSpring%2520Cloud%2F%25E5%2588%2586%25E5%25B8%2583%25E5%25BC%258F%25E4%25BA%258B%25E5%258A%25A1%2F + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=https://c77544s.github.io/2023/05/10/%E5%90%8E%E7%AB%AF/Spring%20Cloud/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
+  
+  
+<script src="/js/shares.js"></script>
+
+
+
+      </div>
+    </div>
+  </body>
+</html>

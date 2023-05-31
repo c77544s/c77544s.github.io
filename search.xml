@@ -4,35 +4,6 @@
   
     
     <entry>
-      <title>面试笔记</title>
-      <link href="/2023/05/13/%E5%90%8E%E7%AB%AF/%E9%9D%A2%E8%AF%95%E7%AC%94%E8%AE%B0/"/>
-      <url>/2023/05/13/%E5%90%8E%E7%AB%AF/%E9%9D%A2%E8%AF%95%E7%AC%94%E8%AE%B0/</url>
-      
-        <content type="html"><![CDATA[<h2 id="极兔速递"><a href="#极兔速递" class="headerlink" title="极兔速递"></a>极兔速递</h2><ul><li><input checked="" disabled="" type="checkbox"> configuration 和 component 区别</li><li><input checked="" disabled="" type="checkbox"> 怎么保证接口参数安全？除了加密之外？</li><li><input disabled="" type="checkbox"> rabbitmq 和 kafka 区别</li><li><input checked="" disabled="" type="checkbox"> 多线程怎么保证并发问题，redis 锁存在哪些问题</li><li><input disabled="" type="checkbox"> 项目中的数据库连接密码加密无用操作</li><li><input checked="" disabled="" type="checkbox"> 分布式怎么保证事物的</li><li><input disabled="" type="checkbox"> 下游服务出问题，上游服务怎么感知到</li><li><input disabled="" type="checkbox"> 如何判断一个文件没有被篡改，文件前面 4 个字节判断文件格式，其他呢？</li></ul><h2 id="小牛互娱"><a href="#小牛互娱" class="headerlink" title="小牛互娱"></a>小牛互娱</h2><ul><li><input disabled="" type="checkbox"> JVM gc 算法的底层原理，卡表？染色？</li><li><input disabled="" type="checkbox"> 项目中做过哪些有技术含量的内容，怎么做的</li><li><input disabled="" type="checkbox"> 项目之前的 qps 多少？</li><li><input disabled="" type="checkbox"> 参加项目架构设计，怎么设计的？</li><li><input checked="" disabled="" type="checkbox"> Mysql 索引很慢怎么处理？</li><li><input disabled="" type="checkbox"> Mysql 索引怎么设计的？B+树存在什么问题，比如在插入的时候。</li><li><input checked="" disabled="" type="checkbox"> Es 的倒排索引是怎么设计的</li><li><input disabled="" type="checkbox"> Jvm 内存模型，线程栈？</li><li><input checked="" disabled="" type="checkbox"> Mvcc 乐观锁，undolog readview</li><li><input disabled="" type="checkbox"> Docker 启动时，有哪些方式设置 jvm 堆大小<ul><li>docker run 方法 <code>-e</code> 参数设置</li><li>dockerfile 中 <code>java -jar</code> 命令后设置</li></ul></li><li><input checked="" disabled="" type="checkbox"> Redis 用过哪些数据结构</li><li><input checked="" disabled="" type="checkbox"> Java 流里边，串行流和并行流区别，并行流是怎么实现的</li></ul>]]></content>
-      
-      
-      <categories>
-          
-          <category> 后端 </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> Java </tag>
-            
-            <tag> 算法 </tag>
-            
-            <tag> 数据结构 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>JVM</title>
       <link href="/2023/05/13/%E5%90%8E%E7%AB%AF/Java/JVM/JVM/"/>
       <url>/2023/05/13/%E5%90%8E%E7%AB%AF/Java/JVM/JVM/</url>

@@ -6,7 +6,7 @@
   <link href="https://c77544s.github.io/atom.xml" rel="self"/>
   
   <link href="https://c77544s.github.io/"/>
-  <updated>2023-05-13T07:50:29.447Z</updated>
+  <updated>2023-05-15T08:10:05.433Z</updated>
   <id>https://c77544s.github.io/</id>
   
   <author>
@@ -15,36 +15,6 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
-  
-  <entry>
-    <title>面试笔记</title>
-    <link href="https://c77544s.github.io/2023/05/13/%E5%90%8E%E7%AB%AF/%E9%9D%A2%E8%AF%95%E7%AC%94%E8%AE%B0/"/>
-    <id>https://c77544s.github.io/2023/05/13/%E5%90%8E%E7%AB%AF/%E9%9D%A2%E8%AF%95%E7%AC%94%E8%AE%B0/</id>
-    <published>2023-05-13T07:50:29.447Z</published>
-    <updated>2023-05-13T07:50:29.447Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h2 id=&quot;极兔速递&quot;&gt;&lt;a href=&quot;#极兔速递&quot; class=&quot;headerlink&quot; title=&quot;极兔速递&quot;&gt;&lt;/a&gt;极兔速递&lt;/h2&gt;&lt;ul&gt;
-&lt;li&gt;&lt;input checked=&quot;&quot; disabled=&quot;&quot; type=&quot;checkbox&quot;&gt;</summary>
-        
-      
-    
-    
-    
-    <category term="后端" scheme="https://c77544s.github.io/categories/%E5%90%8E%E7%AB%AF/"/>
-    
-    
-    <category term="Java" scheme="https://c77544s.github.io/tags/Java/"/>
-    
-    <category term="算法" scheme="https://c77544s.github.io/tags/%E7%AE%97%E6%B3%95/"/>
-    
-    <category term="数据结构" scheme="https://c77544s.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
-    
-  </entry>
   
   <entry>
     <title>JVM</title>
@@ -577,6 +547,35 @@
     
     
     <category term="Java" scheme="https://c77544s.github.io/tags/Java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Mybatis笔记</title>
+    <link href="https://c77544s.github.io/2021/09/17/%E5%90%8E%E7%AB%AF/Mybatis/Mybatis%E7%AC%94%E8%AE%B0/"/>
+    <id>https://c77544s.github.io/2021/09/17/%E5%90%8E%E7%AB%AF/Mybatis/Mybatis%E7%AC%94%E8%AE%B0/</id>
+    <published>2021-09-17T03:13:47.000Z</published>
+    <updated>2023-05-31T06:56:33.264Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;缓存&quot;&gt;&lt;a href=&quot;#缓存&quot; class=&quot;headerlink&quot; title=&quot;缓存&quot;&gt;&lt;/a&gt;缓存&lt;/h2&gt;&lt;h3 id=&quot;SqlSession-一级缓存的工作流程：&quot;&gt;&lt;a href=&quot;#SqlSession-一级缓存的工作流程：&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="后端" scheme="https://c77544s.github.io/categories/%E5%90%8E%E7%AB%AF/"/>
+    
+    <category term="Mybatis" scheme="https://c77544s.github.io/categories/%E5%90%8E%E7%AB%AF/Mybatis/"/>
+    
+    
+    <category term="Java" scheme="https://c77544s.github.io/tags/Java/"/>
+    
+    <category term="算法" scheme="https://c77544s.github.io/tags/%E7%AE%97%E6%B3%95/"/>
     
   </entry>
   
